@@ -57,17 +57,15 @@ public class RawMaterialCategoryServiceImpl implements RawMaterialCategoryServic
 	@Override
 	public RawMaterialCategoryServiceOutput updateRawMaterialCategory(Integer id,
 			RawMaterialCategoryServiceInput rawMaterialCategoryServiceInput) throws DataNotFoundException {
-		RawMaterialCategoryModel rawMaterialCategoryModel = rawMaterialCategoryRepository
-				.findByName(rawMaterialCategoryServiceInput.getName());
+		Optional<RawMaterialCategoryModel> rawMaterialCategoryModel = rawMaterialCategoryRepository.findById(id);
 
-		if (rawMaterialCategoryModel == null) {
-			throw new DataNotFoundException("bulunamadı");
+		if (rawMaterialCategoryModel.isPresent()) {
+			RawMaterialCategoryModel updatedRawMaterialCategoryModel = updateRawMaterialCategoryModel(
+					rawMaterialCategoryModel.get(), rawMaterialCategoryServiceInput);
+			return prepareRawMaterialCategoryServiceOutput(updatedRawMaterialCategoryModel);
 		}
 
-		RawMaterialCategoryModel updatedRawMaterialCategoryModel = updateRawMaterialCategoryModel(
-				rawMaterialCategoryModel, rawMaterialCategoryServiceInput);
-
-		return prepareRawMaterialCategoryServiceOutput(updatedRawMaterialCategoryModel);
+		throw new DataNotFoundException("bulunamadı");
 	}
 
 	@Override
@@ -116,7 +114,7 @@ public class RawMaterialCategoryServiceImpl implements RawMaterialCategoryServic
 
 	public RawMaterialCategoryModel updateRawMaterialCategoryModel(RawMaterialCategoryModel rawMaterialCategoryModel,
 			RawMaterialCategoryServiceInput rawMaterialCategoryServiceInput) {
-		rawMaterialCategoryServiceInput.setName(rawMaterialCategoryServiceInput.getName());
+		rawMaterialCategoryModel.setName(rawMaterialCategoryServiceInput.getName());
 
 		return rawMaterialCategoryRepository.save(rawMaterialCategoryModel);
 	}

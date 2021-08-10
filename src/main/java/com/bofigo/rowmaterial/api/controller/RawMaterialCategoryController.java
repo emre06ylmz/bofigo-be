@@ -41,7 +41,7 @@ public class RawMaterialCategoryController {
 	}
 
 	@GetMapping(path = "")
-	public Response<List<RawaterialCategoryApiResponse>> listRawMaterialCategory() throws DataNotFoundException {
+	public Response<List<RawMaterialCategoryApiResponse>> listRawMaterialCategory() throws DataNotFoundException {
 		List<RawMaterialCategoryServiceOutput> rawMaterialCategoryServiceOutputList = rawMaterialCategoryService
 				.listAll();
 		List<RawMaterialCategoryApiResponse> rawMaterialCategoryApiResponseList = rawMaterialCategoryMapper
@@ -78,7 +78,7 @@ public class RawMaterialCategoryController {
 
 	@PutMapping(path = "/{id}")
 	public Response<RawMaterialCategoryApiResponse> updateRawMaterialCategory(@PathVariable("id") Integer id,
-			@RequestBody @Validated RawMateriMalCategoryApiRequest rawMaterialCategoryApiRequest)
+			@RequestBody @Validated RawMaterialCategoryApiRequest rawMaterialCategoryApiRequest)
 			throws DataNotFoundException, DataAlreadyExistException {
 
 		RawMaterialCategoryServiceInput rawMaterialCategoryServiceInput = rawMaterialCategoryMapper
