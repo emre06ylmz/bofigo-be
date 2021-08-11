@@ -11,19 +11,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class RawMaterialCategoryServiceOutput extends BaseServiceOutput {
+public class UserTypeServiceInput {
 
-	private Integer id;
 	private String name;
-	private String explanation;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	private String detail;
 
 	public String getName() {
 		return name;
@@ -33,13 +25,12 @@ public class RawMaterialCategoryServiceOutput extends BaseServiceOutput {
 		this.name = name;
 	}
 
-	public String getExplanation() {
-		return explanation;
+	public String getDetail() {
+		return detail;
 	}
 
-	public void setExplanation(String explanation) {
-		this.explanation = explanation;
+	public void setDetail(String detail) {
+		this.detail = detail;
 	}
 
-	
 }

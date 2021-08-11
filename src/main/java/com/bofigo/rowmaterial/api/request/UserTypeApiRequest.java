@@ -1,4 +1,4 @@
-package com.bofigo.rowmaterial.domain.dto;
+package com.bofigo.rowmaterial.api.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,12 +11,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class RawMaterialCategoryServiceInput extends BaseServiceInput {
+public class UserTypeApiRequest {
 
 	private String name;
 
-	private String explanation;
-	
+	private String detail;
+
 	public String getName() {
 		return name;
 	}
@@ -25,12 +25,12 @@ public class RawMaterialCategoryServiceInput extends BaseServiceInput {
 		this.name = name;
 	}
 
-	public String getExplanation() {
-		return explanation;
+	public String getDetail() {
+		return detail;
 	}
 
-	public void setExplanation(String explanation) {
-		this.explanation = explanation;
+	public void setDetail(String detail) {
+		this.detail = detail;
 	}
 
 }

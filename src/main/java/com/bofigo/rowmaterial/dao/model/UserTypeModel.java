@@ -18,7 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class RawMaterialCategoryModel extends BaseModel {
+public class UserTypeModel extends BaseModel {
 
 	@Id
 	@Column(unique = true, updatable = false)
@@ -29,8 +29,8 @@ public class RawMaterialCategoryModel extends BaseModel {
 	private String name;
 
 	@Column(length = 100, nullable = false)
-	private String explanation;
-	
+	private String detail;
+
 	public Integer getId() {
 		return id;
 	}
@@ -47,12 +47,11 @@ public class RawMaterialCategoryModel extends BaseModel {
 		this.name = name;
 	}
 
-	public String getExplanation() {
-		return explanation;
+	public String getDetail() {
+		return detail;
 	}
 
-	public void setExplanation(String explanation) {
-		this.explanation = explanation;
+	public void setDetail(String detail) {
+		this.detail = detail;
 	}
-
 }

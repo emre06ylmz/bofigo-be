@@ -25,12 +25,6 @@ public class AuthenticationProviderService implements AuthenticationProvider {
 	public AuthenticationProviderService(UserRepository userRepository, JwtUtil jwtUtil) {
 		this.userRepository = userRepository;
 		this.jwtUtil = jwtUtil;
-		
-		UserModel userModel = MockUtil.mockUser();
-		if(userRepository.findByUsername(userModel.getUsername()) == null) {
-			userRepository.save(userModel);
-		}
-		
 	}
 
 	@Override
@@ -38,10 +32,6 @@ public class AuthenticationProviderService implements AuthenticationProvider {
 		String username = authentication.getName();
 		String password = authentication.getCredentials().toString();
 
-		//TODO
-		username = "emre";
-		password = "emre";
-		
 		boolean isAuthenticated = true;
 
 		if (isAuthenticated) {
