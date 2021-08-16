@@ -96,7 +96,7 @@ public class UserController {
 	}
 
 	@DeleteMapping(path = "/{id}")
-	public Response<UserApiResponse> updateUser(@PathVariable("id") Integer id)
+	public Response<UserApiResponse> deleteUser(@PathVariable("id") Integer id)
 			throws DataNotFoundException, DataAlreadyExistException {
 
 		UserServiceOutput userServiceOutput = userService

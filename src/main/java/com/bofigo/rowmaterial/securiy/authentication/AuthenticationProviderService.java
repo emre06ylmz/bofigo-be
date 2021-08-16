@@ -14,7 +14,6 @@ import com.bofigo.rowmaterial.dao.model.UserModel;
 import com.bofigo.rowmaterial.dao.repository.UserRepository;
 import com.bofigo.rowmaterial.securiy.model.JWTAuthenticationToken;
 import com.bofigo.rowmaterial.securiy.util.JwtUtil;
-import com.bofigo.rowmaterial.util.MockUtil;
 
 @Component
 public class AuthenticationProviderService implements AuthenticationProvider {
@@ -29,21 +28,25 @@ public class AuthenticationProviderService implements AuthenticationProvider {
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		String username = authentication.getName();
-		String password = authentication.getCredentials().toString();
+
+		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = (UsernamePasswordAuthenticationToken) authentication;
+
+		//TODO
+		String username = "h@gmail.com"; //usernamePasswordAuthenticationToken.getName();
+		String password = "a"; //usernamePasswordAuthenticationToken.getCredentials().toString();
 
 		boolean isAuthenticated = true;
 
 		if (isAuthenticated) {
 			UserModel userModel = userRepository.findByUsername(username);
 
-			if(userModel.getPassword().equals(password)) {
+			if (userModel.getPassword().equals(password)) {
 				final String token = jwtUtil.generateToken(userModel);
 				SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(userModel.getRole());
 				JWTAuthenticationToken jwtAuthenticationToken = new JWTAuthenticationToken(userModel, token,
 						Arrays.asList(simpleGrantedAuthority));
 				return jwtAuthenticationToken;
-			}else {
+			} else {
 				throw new UsernameNotFoundException("kullanıcı veya şifre yanlış");
 			}
 		}

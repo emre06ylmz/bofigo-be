@@ -96,7 +96,7 @@ public class RawMaterialCategoryController {
 	}
 
 	@DeleteMapping(path = "/{id}")
-	public Response<RawMaterialCategoryApiResponse> updateRawMaterialCategory(@PathVariable("id") Integer id)
+	public Response<RawMaterialCategoryApiResponse> deleteRawMaterialCategory(@PathVariable("id") Integer id)
 			throws DataNotFoundException, DataAlreadyExistException {
 
 		RawMaterialCategoryServiceOutput rawMaterialCategoryServiceOutput = rawMaterialCategoryService

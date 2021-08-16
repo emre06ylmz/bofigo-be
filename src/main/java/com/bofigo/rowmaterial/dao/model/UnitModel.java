@@ -18,50 +18,25 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class UserModel extends BaseModel {
+public class UnitModel extends BaseModel {
 
 	@Id
 	@Column(unique = true, updatable = false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(length = 100, nullable = false, unique = true)
-	private String username;
-
-	@Column(length = 100, nullable = false)
-	private String password;
-	
 	@Column(length = 100, nullable = false)
 	private String name;
 
 	@Column(length = 100, nullable = false)
-	private String surname;
-
-	@Column(length = 100, nullable = false)
-	private String role;
-
+	private String explanation;
+	
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getName() {
@@ -72,21 +47,12 @@ public class UserModel extends BaseModel {
 		this.name = name;
 	}
 
-	public String getSurname() {
-		return surname;
+	public String getExplanation() {
+		return explanation;
 	}
 
-	public void setSurname(String surname) {
-		this.surname = surname;
+	public void setExplanation(String explanation) {
+		this.explanation = explanation;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-	
-	
 }

@@ -1,14 +1,19 @@
 package com.bofigo.rowmaterial;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import com.bofigo.rowmaterial.constant.ApplicationConstants;
+import com.bofigo.rowmaterial.dao.model.CurrencySettingsModel;
 import com.bofigo.rowmaterial.dao.model.RawMaterialCategoryModel;
 import com.bofigo.rowmaterial.dao.model.UserModel;
 import com.bofigo.rowmaterial.dao.model.UserTypeModel;
+import com.bofigo.rowmaterial.dao.repository.CurrencySettingsRepository;
 import com.bofigo.rowmaterial.dao.repository.RawMaterialCategoryRepository;
 import com.bofigo.rowmaterial.dao.repository.UserRepository;
 import com.bofigo.rowmaterial.dao.repository.UserTypeRepository;
@@ -19,19 +24,22 @@ public class DataLoader implements ApplicationRunner {
 	private RawMaterialCategoryRepository rawMaterialCategoryRepository;
 	private UserRepository userRepository;
 	private UserTypeRepository userTypeRepository;
+	private CurrencySettingsRepository currencySettingsRepository;
 
 	@Autowired
 	public DataLoader(RawMaterialCategoryRepository rawMaterialCategoryRepository, UserRepository userRepository,
-			UserTypeRepository userTypeRepository) {
+			UserTypeRepository userTypeRepository, CurrencySettingsRepository currencySettingsRepository) {
 		this.rawMaterialCategoryRepository = rawMaterialCategoryRepository;
 		this.userRepository = userRepository;
 		this.userTypeRepository = userTypeRepository;
+		this.currencySettingsRepository = currencySettingsRepository;
 	}
 
 	public void run(ApplicationArguments args) {
 		insertUsers();
 		insertUserTypes();
 		insertRawMaterialCategories();
+		insertCurrencySetting();
 	}
 
 	private void insertUsers() {
@@ -56,9 +64,13 @@ public class DataLoader implements ApplicationRunner {
 		user3.setPassword("a");
 		user3.setRole(ApplicationConstants.ROLE_ADMIN);
 
-		userRepository.save(user1);
-		userRepository.save(user2);
-		userRepository.save(user3);
+		List<UserModel> list = userRepository.findAll();
+		if (list.size() < 1) {
+			userRepository.save(user1);
+			userRepository.save(user2);
+			userRepository.save(user3);
+		}
+
 	}
 
 	private void insertUserTypes() {
@@ -73,10 +85,14 @@ public class DataLoader implements ApplicationRunner {
 		UserTypeModel userType3 = new UserTypeModel();
 		userType3.setName(ApplicationConstants.ROLE_ADMIN);
 		userType3.setDetail("ADMIN");
-		
-		userTypeRepository.save(userType1);
-		userTypeRepository.save(userType2);
-		userTypeRepository.save(userType3);
+
+		List<UserTypeModel> list = userTypeRepository.findAll();
+		if (list.size() < 1) {
+			userTypeRepository.save(userType1);
+			userTypeRepository.save(userType2);
+			userTypeRepository.save(userType3);
+		}
+
 	}
 
 	private void insertRawMaterialCategories() {
@@ -88,7 +104,24 @@ public class DataLoader implements ApplicationRunner {
 		category2.setName("Demir");
 		category2.setExplanation("Demir");
 
-		rawMaterialCategoryRepository.save(category1);
-		rawMaterialCategoryRepository.save(category2);
+		List<RawMaterialCategoryModel> list = rawMaterialCategoryRepository.findAll();
+		if (list.size() < 1) {
+			rawMaterialCategoryRepository.save(category1);
+			rawMaterialCategoryRepository.save(category2);
+		}
+
 	}
+
+	private void insertCurrencySetting() {
+		CurrencySettingsModel model = new CurrencySettingsModel();
+		model.setDollar(4);
+		model.setEuro(5);
+		model.setLastUpdateDate(new Date());
+
+		List<CurrencySettingsModel> list = currencySettingsRepository.findAll();
+		if (list.size() < 1) {
+			currencySettingsRepository.save(model);
+		}
+	}
+
 }

@@ -80,7 +80,7 @@ public class UserTypeController {
 	}
 
 	@PutMapping(path = "/{id}")
-	public Response<UserTypeApiResponse> updateUserType(@PathVariable("id") Integer id,
+	public Response<UserTypeApiResponse> deleteUserType(@PathVariable("id") Integer id,
 			@RequestBody @Validated UserTypeApiRequest userTypeApiRequest)
 			throws DataNotFoundException, DataAlreadyExistException {
 
