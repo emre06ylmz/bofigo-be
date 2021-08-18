@@ -1,4 +1,4 @@
-package com.bofigo.rowmaterial.domain.dto.output;
+package com.bofigo.rowmaterial.domain.dto.input;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,22 +11,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class SupplierServiceOutput extends BaseServiceOutput {
+public class ProductServiceInput extends BaseServiceInput {
 
-	private Integer id;
-	
 	private String name;
-	
+
 	private String explanation;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -43,5 +33,4 @@ public class SupplierServiceOutput extends BaseServiceOutput {
 		this.explanation = explanation;
 	}
 
-	
 }

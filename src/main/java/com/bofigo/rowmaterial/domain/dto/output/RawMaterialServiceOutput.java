@@ -14,11 +14,14 @@ import lombok.Setter;
 public class RawMaterialServiceOutput extends BaseServiceOutput {
 
 	private Integer id;
+	
 	private String name;
+	
 	private String explanation;
 
-	private RawMaterialCategoryServiceOutput rawMaterialCategoryServiceOutput;
-	private UnitServiceOutput unitServiceOutput;
+	private RawMaterialCategoryServiceOutput rawMaterialCategory;
+	
+	private UnitServiceOutput unit;
 
 	public Integer getId() {
 		return id;
@@ -44,20 +47,20 @@ public class RawMaterialServiceOutput extends BaseServiceOutput {
 		this.explanation = explanation;
 	}
 
-	public RawMaterialCategoryServiceOutput getRawMaterialCategoryServiceOutput() {
-		return rawMaterialCategoryServiceOutput;
+	public RawMaterialCategoryServiceOutput getRawMaterialCategory() {
+		return rawMaterialCategory;
 	}
 
-	public void setRawMaterialCategoryServiceOutput(RawMaterialCategoryServiceOutput rawMaterialCategoryServiceOutput) {
-		this.rawMaterialCategoryServiceOutput = rawMaterialCategoryServiceOutput;
+	public void setRawMaterialCategory(RawMaterialCategoryServiceOutput rawMaterialCategory) {
+		this.rawMaterialCategory = rawMaterialCategory;
 	}
 
-	public UnitServiceOutput getUnitServiceOutput() {
-		return unitServiceOutput;
+	public UnitServiceOutput getUnit() {
+		return unit;
 	}
 
-	public void setUnitServiceOutput(UnitServiceOutput unitServiceOutput) {
-		this.unitServiceOutput = unitServiceOutput;
+	public void setUnit(UnitServiceOutput unit) {
+		this.unit = unit;
 	}
 
 }

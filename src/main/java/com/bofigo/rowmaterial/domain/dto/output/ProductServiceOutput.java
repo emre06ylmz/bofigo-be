@@ -11,12 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class SupplierServiceOutput extends BaseServiceOutput {
+public class ProductServiceOutput extends BaseServiceOutput {
 
 	private Integer id;
-	
 	private String name;
-	
 	private String explanation;
 
 	public Integer getId() {

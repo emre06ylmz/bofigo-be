@@ -21,9 +21,9 @@ public class RawMaterialServiceInput extends BaseServiceInput {
 
 	private int unitId;
 
-	private RawMaterialCategoryServiceInput rawMaterialCategoryServiceInput;
+	private RawMaterialCategoryServiceInput rawMaterialCategory;
 
-	private UnitServiceInput unitServiceInput;
+	private UnitServiceInput unit;
 
 	public String getName() {
 		return name;
@@ -57,20 +57,20 @@ public class RawMaterialServiceInput extends BaseServiceInput {
 		this.unitId = unitId;
 	}
 
-	public RawMaterialCategoryServiceInput getRawMaterialCategoryServiceInput() {
-		return rawMaterialCategoryServiceInput;
+	public RawMaterialCategoryServiceInput getRawMaterialCategory() {
+		return rawMaterialCategory;
 	}
 
-	public void setRawMaterialCategoryServiceInput(RawMaterialCategoryServiceInput rawMaterialCategoryServiceInput) {
-		this.rawMaterialCategoryServiceInput = rawMaterialCategoryServiceInput;
+	public void setRawMaterialCategory(RawMaterialCategoryServiceInput rawMaterialCategory) {
+		this.rawMaterialCategory = rawMaterialCategory;
 	}
 
-	public UnitServiceInput getUnitServiceInput() {
-		return unitServiceInput;
+	public UnitServiceInput getUnit() {
+		return unit;
 	}
 
-	public void setUnitServiceInput(UnitServiceInput unitServiceInput) {
-		this.unitServiceInput = unitServiceInput;
+	public void setUnit(UnitServiceInput unit) {
+		this.unit = unit;
 	}
 
 }

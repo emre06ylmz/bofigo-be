@@ -16,7 +16,9 @@ import lombok.Setter;
 public class CurrencySettingsServiceInput {
 
 	private double dollar;
+	
 	private double euro;
+	
 	private Date lastUpdateDate;
 
 	public double getDollar() {

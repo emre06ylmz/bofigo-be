@@ -1,10 +1,13 @@
 package com.bofigo.rowmaterial.dao.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +33,10 @@ public class UnitModel extends BaseModel {
 
 	@Column(length = 100, nullable = false)
 	private String explanation;
-	
+
+	@OneToMany(mappedBy = "unit")
+	private List<RawMaterialModel> rawMaterials;
+
 	public Integer getId() {
 		return id;
 	}
@@ -53,6 +59,14 @@ public class UnitModel extends BaseModel {
 
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
+	}
+
+	public List<RawMaterialModel> getRawMaterials() {
+		return rawMaterials;
+	}
+
+	public void setRawMaterials(List<RawMaterialModel> rawMaterials) {
+		this.rawMaterials = rawMaterials;
 	}
 
 }

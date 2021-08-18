@@ -1,5 +1,8 @@
 package com.bofigo.rowmaterial.dao.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,16 +35,19 @@ public class RawMaterialModel extends BaseModel {
 	@Column(length = 100, nullable = false)
 	private String name;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "raw_material_category_id", referencedColumnName = "id", nullable = false)
-	private RawMaterialCategoryModel rawMaterialCategoryModel;
+	private RawMaterialCategoryModel rawMaterialCategory;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "unit_id", referencedColumnName = "id", nullable = false)
-	private UnitModel unitModel;
+	private UnitModel unit;
 
 	@Column(length = 100, nullable = false)
 	private String explanation;
+
+	@OneToMany(mappedBy = "rawMaterial")
+	private List<PurchaseModel> purchases;
 
 	public Integer getId() {
 		return id;
@@ -58,20 +65,20 @@ public class RawMaterialModel extends BaseModel {
 		this.name = name;
 	}
 
-	public RawMaterialCategoryModel getRawMaterialCategoryModel() {
-		return rawMaterialCategoryModel;
+	public RawMaterialCategoryModel getRawMaterialCategory() {
+		return rawMaterialCategory;
 	}
 
-	public void setRawMaterialCategoryModel(RawMaterialCategoryModel rawMaterialCategoryModel) {
-		this.rawMaterialCategoryModel = rawMaterialCategoryModel;
+	public void setRawMaterialCategoryModel(RawMaterialCategoryModel rawMaterialCategory) {
+		this.rawMaterialCategory = rawMaterialCategory;
 	}
 
-	public UnitModel getUnitModel() {
-		return unitModel;
+	public UnitModel getUnit() {
+		return unit;
 	}
 
-	public void setUnitModel(UnitModel unitModel) {
-		this.unitModel = unitModel;
+	public void setUnitModel(UnitModel unit) {
+		this.unit = unit;
 	}
 
 	public String getExplanation() {
@@ -80,6 +87,22 @@ public class RawMaterialModel extends BaseModel {
 
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
+	}
+
+	public List<PurchaseModel> getPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(List<PurchaseModel> purchases) {
+		this.purchases = purchases;
+	}
+
+	public void setRawMaterialCategory(RawMaterialCategoryModel rawMaterialCategory) {
+		this.rawMaterialCategory = rawMaterialCategory;
+	}
+
+	public void setUnit(UnitModel unit) {
+		this.unit = unit;
 	}
 
 }

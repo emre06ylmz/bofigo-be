@@ -51,6 +51,16 @@ public class RawMaterialController {
 		return new Response<>(rawMaterialApiResponseList);
 	}
 
+	@GetMapping(path = "/listByCategoryId/{id}")
+	public Response<List<RawMaterialApiResponse>> listRawMaterialByRawMaterialCategoryId(
+			@PathVariable("id") Integer rawMaterialCategoryId) throws DataNotFoundException {
+		List<RawMaterialServiceOutput> rawMaterialServiceOutputList = rawMaterialService
+				.listByCategoryId(rawMaterialCategoryId);
+		List<RawMaterialApiResponse> rawMaterialApiResponseList = rawMaterialMapper
+				.mapServiceOutputToApiResponseList(rawMaterialServiceOutputList);
+		return new Response<>(rawMaterialApiResponseList);
+	}
+
 	@GetMapping(path = "/{id}")
 	public Response<RawMaterialApiResponse> getRawMaterial(@PathVariable("id") Integer id)
 			throws DataNotFoundException {
@@ -67,7 +77,7 @@ public class RawMaterialController {
 
 		RawMaterialServiceInput rawMaterialServiceInput = rawMaterialMapper
 				.mapApiRequestToServiceInput(rawMaterialApiRequest);
-		
+
 		RawMaterialServiceOutput rawMaterialServiceOutput = rawMaterialService
 				.createRawMaterial(rawMaterialServiceInput);
 

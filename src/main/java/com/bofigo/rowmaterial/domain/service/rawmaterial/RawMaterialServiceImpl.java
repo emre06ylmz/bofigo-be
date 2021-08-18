@@ -14,7 +14,9 @@ import com.bofigo.rowmaterial.domain.dto.input.RawMaterialServiceInput;
 import com.bofigo.rowmaterial.domain.dto.output.RawMaterialServiceOutput;
 import com.bofigo.rowmaterial.exception.DataAlreadyExistException;
 import com.bofigo.rowmaterial.exception.DataNotFoundException;
+import com.bofigo.rowmaterial.mapper.RawMaterialCategoryMapper;
 import com.bofigo.rowmaterial.mapper.RawMaterialMapper;
+import com.bofigo.rowmaterial.mapper.UnitMapper;
 
 @Service
 public class RawMaterialServiceImpl implements RawMaterialService {
@@ -22,15 +24,22 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 	private RawMaterialMapper rawMaterialMapper;
 	private RawMaterialRepository rawMaterialRepository;
 
+	private UnitMapper unitMapper;
 	private UnitRepository unitRepository;
+
+	private RawMaterialCategoryMapper rawMaterialCategoryMapper;
 	private RawMaterialCategoryRepository rawMaterialCategoryRepository;
 
 	public RawMaterialServiceImpl(RawMaterialRepository rawMaterialRepository, RawMaterialMapper rawMaterialMapper,
-			UnitRepository unitRepository, RawMaterialCategoryRepository rawMaterialCategoryRepository) {
+			UnitRepository unitRepository, UnitMapper unitMapper,
+			RawMaterialCategoryRepository rawMaterialCategoryRepository,
+			RawMaterialCategoryMapper rawMaterialCategoryMapper) {
 		this.rawMaterialRepository = rawMaterialRepository;
 		this.rawMaterialMapper = rawMaterialMapper;
 		this.unitRepository = unitRepository;
+		this.unitMapper = unitMapper;
 		this.rawMaterialCategoryRepository = rawMaterialCategoryRepository;
+		this.rawMaterialCategoryMapper = rawMaterialCategoryMapper;
 	}
 
 	@Override
@@ -86,12 +95,19 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 		return rawMaterialMapper.mapModelToServiceOutputList(rawMaterialModelList);
 	}
 
+	@Override
+	public List<RawMaterialServiceOutput> listByCategoryId(int rawMaterialCategoryId) {
+		List<RawMaterialModel> rawMaterialModelList = rawMaterialRepository.listByCategoryId(rawMaterialCategoryId);
+		return rawMaterialMapper.mapModelToServiceOutputList(rawMaterialModelList);
+	}
+	
 	private RawMaterialModel getRawMaterialModel(Integer id) throws DataNotFoundException {
 		Optional<RawMaterialModel> rawMaterial = rawMaterialRepository.findById(id);
 
 		if (!rawMaterial.isPresent()) {
 			throw new DataNotFoundException("bulunamadı");
 		}
+
 		return rawMaterial.get();
 	}
 
@@ -102,7 +118,13 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 			return rawMaterialServiceOutput;
 		}
 
+		rawMaterialServiceOutput.setId(rawMaterialModel.getId());
 		rawMaterialServiceOutput.setName(rawMaterialModel.getName());
+		rawMaterialServiceOutput.setExplanation(rawMaterialModel.getExplanation());
+
+		rawMaterialServiceOutput.setRawMaterialCategory(
+				rawMaterialCategoryMapper.mapModelToServiceOutput(rawMaterialModel.getRawMaterialCategory()));
+		rawMaterialServiceOutput.setUnit(unitMapper.mapModelToServiceOutput(rawMaterialModel.getUnit()));
 
 		return rawMaterialServiceOutput;
 	}
@@ -112,7 +134,8 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 		rawMaterialModel.setStatus(ApplicationConstants.ACTIVE);
 
 		rawMaterialModel.setUnitModel(unitRepository.findById(rawMaterialServiceInput.getUnitId()).get());
-		rawMaterialModel.setRawMaterialCategoryModel(rawMaterialCategoryRepository.findById(rawMaterialServiceInput.getRawMaterialCategoryId()).get());
+		rawMaterialModel.setRawMaterialCategoryModel(
+				rawMaterialCategoryRepository.findById(rawMaterialServiceInput.getRawMaterialCategoryId()).get());
 
 		return rawMaterialRepository.save(rawMaterialModel);
 	}
@@ -124,5 +147,6 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 
 		return rawMaterialRepository.save(rawMaterialModel);
 	}
+
 
 }

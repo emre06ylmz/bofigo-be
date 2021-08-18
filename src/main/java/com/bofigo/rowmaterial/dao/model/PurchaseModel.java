@@ -2,6 +2,7 @@ package com.bofigo.rowmaterial.dao.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,19 +34,22 @@ public class PurchaseModel extends BaseModel {
 	@Column(length = 100, nullable = false)
 	private Date date;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "raw_material_id", referencedColumnName = "id", nullable = false)
-	private RawMaterialModel rawMaterialModel;
+	private RawMaterialModel rawMaterial;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "supplier_id", referencedColumnName = "id", nullable = false)
-	private SupplierModel supplierModel;
+	private SupplierModel supplier;
 
 	@Column(length = 100, nullable = false)
 	private String explanation;
 
 	@Column(nullable = false)
 	private double amount;
+
+	@Column(nullable = false)
+	private double price;
 
 	public Integer getId() {
 		return id;
@@ -63,20 +67,20 @@ public class PurchaseModel extends BaseModel {
 		this.date = date;
 	}
 
-	public RawMaterialModel getRawMaterialModel() {
-		return rawMaterialModel;
+	public RawMaterialModel getRawMaterial() {
+		return rawMaterial;
 	}
 
-	public void setRawMaterialModel(RawMaterialModel rawMaterialModel) {
-		this.rawMaterialModel = rawMaterialModel;
+	public void setRawMaterial(RawMaterialModel rawMaterial) {
+		this.rawMaterial = rawMaterial;
 	}
 
-	public SupplierModel getSupplierModel() {
-		return supplierModel;
+	public SupplierModel getSupplier() {
+		return supplier;
 	}
 
-	public void setSupplierModel(SupplierModel supplierModel) {
-		this.supplierModel = supplierModel;
+	public void setSupplier(SupplierModel supplier) {
+		this.supplier = supplier;
 	}
 
 	public String getExplanation() {
@@ -93,6 +97,14 @@ public class PurchaseModel extends BaseModel {
 
 	public void setAmount(double amount) {
 		this.amount = amount;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 }

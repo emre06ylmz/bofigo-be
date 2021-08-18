@@ -23,5 +23,7 @@ public interface RawMaterialService extends Service {
 	RawMaterialServiceOutput deleteRawMaterial(Integer id) throws DataNotFoundException;
 
 	List<RawMaterialServiceOutput> listAll();
+	
+	List<RawMaterialServiceOutput> listByCategoryId(int rawMaterialCategoryId);
 
 }

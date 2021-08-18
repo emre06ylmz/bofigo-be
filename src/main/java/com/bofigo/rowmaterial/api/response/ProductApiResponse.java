@@ -1,4 +1,4 @@
-package com.bofigo.rowmaterial.domain.dto.output;
+package com.bofigo.rowmaterial.api.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,12 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class SupplierServiceOutput extends BaseServiceOutput {
+public class ProductApiResponse {
 
 	private Integer id;
-	
 	private String name;
-	
 	private String explanation;
 
 	public Integer getId() {
@@ -43,5 +41,4 @@ public class SupplierServiceOutput extends BaseServiceOutput {
 		this.explanation = explanation;
 	}
 
-	
 }
