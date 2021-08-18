@@ -8,8 +8,8 @@ import org.mapstruct.factory.Mappers;
 import com.bofigo.rowmaterial.api.request.UserApiRequest;
 import com.bofigo.rowmaterial.api.response.UserApiResponse;
 import com.bofigo.rowmaterial.dao.model.UserModel;
-import com.bofigo.rowmaterial.domain.dto.UserServiceInput;
-import com.bofigo.rowmaterial.domain.dto.UserServiceOutput;
+import com.bofigo.rowmaterial.domain.dto.input.UserServiceInput;
+import com.bofigo.rowmaterial.domain.dto.output.UserServiceOutput;
 
 @Mapper(componentModel = "spring")
 public abstract class UserMapper {

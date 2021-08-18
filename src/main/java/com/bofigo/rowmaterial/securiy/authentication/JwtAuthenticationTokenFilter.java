@@ -18,7 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
 import com.bofigo.rowmaterial.dao.model.UserModel;
-import com.bofigo.rowmaterial.domain.service.UserService;
+import com.bofigo.rowmaterial.domain.service.user.UserService;
 import com.bofigo.rowmaterial.securiy.model.JWTAuthenticationToken;
 import com.bofigo.rowmaterial.securiy.util.JwtUtil;
 

@@ -32,7 +32,7 @@ public class RawMaterialModel extends BaseModel {
 	private String name;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "row_material_category_id", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "raw_material_category_id", referencedColumnName = "id", nullable = false)
 	private RawMaterialCategoryModel rawMaterialCategoryModel;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -8,8 +8,8 @@ import org.mapstruct.factory.Mappers;
 import com.bofigo.rowmaterial.api.request.CurrencySettingsApiRequest;
 import com.bofigo.rowmaterial.api.response.CurrencySettingsApiResponse;
 import com.bofigo.rowmaterial.dao.model.CurrencySettingsModel;
-import com.bofigo.rowmaterial.domain.dto.CurrencySettingsServiceInput;
-import com.bofigo.rowmaterial.domain.dto.CurrencySettingsServiceOutput;
+import com.bofigo.rowmaterial.domain.dto.input.CurrencySettingsServiceInput;
+import com.bofigo.rowmaterial.domain.dto.output.CurrencySettingsServiceOutput;
 
 @Mapper(componentModel = "spring")
 public abstract class CurrencySettingsMapper {

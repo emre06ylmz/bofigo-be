@@ -8,8 +8,8 @@ import org.mapstruct.factory.Mappers;
 import com.bofigo.rowmaterial.api.request.RawMaterialCategoryApiRequest;
 import com.bofigo.rowmaterial.api.response.RawMaterialCategoryApiResponse;
 import com.bofigo.rowmaterial.dao.model.RawMaterialCategoryModel;
-import com.bofigo.rowmaterial.domain.dto.RawMaterialCategoryServiceInput;
-import com.bofigo.rowmaterial.domain.dto.RawMaterialCategoryServiceOutput;
+import com.bofigo.rowmaterial.domain.dto.input.RawMaterialCategoryServiceInput;
+import com.bofigo.rowmaterial.domain.dto.output.RawMaterialCategoryServiceOutput;
 
 @Mapper(componentModel = "spring")
 public abstract class RawMaterialCategoryMapper {

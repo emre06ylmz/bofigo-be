@@ -8,8 +8,8 @@ import org.mapstruct.factory.Mappers;
 import com.bofigo.rowmaterial.api.request.UnitApiRequest;
 import com.bofigo.rowmaterial.api.response.UnitApiResponse;
 import com.bofigo.rowmaterial.dao.model.UnitModel;
-import com.bofigo.rowmaterial.domain.dto.UnitServiceInput;
-import com.bofigo.rowmaterial.domain.dto.UnitServiceOutput;
+import com.bofigo.rowmaterial.domain.dto.input.UnitServiceInput;
+import com.bofigo.rowmaterial.domain.dto.output.UnitServiceOutput;
 
 @Mapper(componentModel = "spring")
 public abstract class UnitMapper {
