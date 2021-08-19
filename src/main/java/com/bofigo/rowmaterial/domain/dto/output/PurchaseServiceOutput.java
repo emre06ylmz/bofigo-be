@@ -15,6 +15,8 @@ import lombok.Setter;
 @Getter
 public class PurchaseServiceOutput extends BaseServiceOutput {
 
+	private Integer id;
+
 	private double amount;
 
 	private double price;
@@ -24,8 +26,16 @@ public class PurchaseServiceOutput extends BaseServiceOutput {
 	private String explanation;
 
 	private RawMaterialServiceOutput rawMaterial;
-	
+
 	private SupplierServiceOutput supplier;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public double getAmount() {
 		return amount;

@@ -14,7 +14,9 @@ import lombok.Setter;
 public class RawMaterialCategoryServiceOutput extends BaseServiceOutput {
 
 	private Integer id;
+	
 	private String name;
+	
 	private String explanation;
 
 	public Integer getId() {

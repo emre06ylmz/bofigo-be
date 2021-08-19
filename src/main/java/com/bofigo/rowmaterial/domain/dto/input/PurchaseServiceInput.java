@@ -29,7 +29,7 @@ public class PurchaseServiceInput extends BaseServiceInput {
 
 	private RawMaterialServiceInput rawMaterial;
 
-	private SupplierServiceInput supplierService;
+	private SupplierServiceInput supplier;
 
 	public double getAmount() {
 		return amount;
@@ -87,12 +87,12 @@ public class PurchaseServiceInput extends BaseServiceInput {
 		this.rawMaterial = rawMaterial;
 	}
 
-	public SupplierServiceInput getSupplierService() {
-		return supplierService;
+	public SupplierServiceInput getSupplier() {
+		return supplier;
 	}
 
-	public void setSupplierService(SupplierServiceInput supplierService) {
-		this.supplierService = supplierService;
+	public void setSupplier(SupplierServiceInput supplier) {
+		this.supplier = supplier;
 	}
 
 }
