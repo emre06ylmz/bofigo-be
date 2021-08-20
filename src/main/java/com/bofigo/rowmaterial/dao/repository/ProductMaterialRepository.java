@@ -17,10 +17,12 @@ public interface ProductMaterialRepository
 	@Override
 	Optional<ProductMaterialModel> findById(Integer id);
 
+	Optional<ProductMaterialModel> findByProductIdAndRawMaterialId(Integer productId, Integer rawMaterialId);
+
 	@Override
 	void deleteAll();
 
-	@Query( "select r from ProductMaterialModel r where r.product.id=:productId" )
+	@Query("select r from ProductMaterialModel r where r.product.id=:productId")
 	List<ProductMaterialModel> listByProductId(Integer productId);
 
 }

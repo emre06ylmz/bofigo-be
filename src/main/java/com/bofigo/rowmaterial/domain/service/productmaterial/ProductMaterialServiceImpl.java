@@ -7,14 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.bofigo.rowmaterial.constant.ApplicationConstants;
 import com.bofigo.rowmaterial.dao.model.ProductMaterialModel;
-import com.bofigo.rowmaterial.dao.model.RawMaterialModel;
 import com.bofigo.rowmaterial.dao.repository.ProductMaterialRepository;
 import com.bofigo.rowmaterial.dao.repository.ProductRepository;
 import com.bofigo.rowmaterial.dao.repository.RawMaterialCategoryRepository;
 import com.bofigo.rowmaterial.dao.repository.RawMaterialRepository;
 import com.bofigo.rowmaterial.domain.dto.input.ProductMaterialServiceInput;
 import com.bofigo.rowmaterial.domain.dto.output.ProductMaterialServiceOutput;
-import com.bofigo.rowmaterial.domain.dto.output.RawMaterialServiceOutput;
 import com.bofigo.rowmaterial.exception.DataAlreadyExistException;
 import com.bofigo.rowmaterial.exception.DataNotFoundException;
 import com.bofigo.rowmaterial.mapper.ProductMaterialMapper;
@@ -48,6 +46,14 @@ public class ProductMaterialServiceImpl implements ProductMaterialService {
 	@Override
 	public ProductMaterialServiceOutput createProductMaterial(ProductMaterialServiceInput productMaterialServiceInput)
 			throws DataAlreadyExistException {
+
+		Optional<ProductMaterialModel> productMaterial = productMaterialRepository.findByProductIdAndRawMaterialId(
+				productMaterialServiceInput.getProductId(), productMaterialServiceInput.getRawMaterialId());
+
+		if (!productMaterial.isPresent()) {
+			throw new DataAlreadyExistException("zaten var");
+		}
+
 		ProductMaterialModel insertedProductMaterialModel = insertProductMaterialModel(productMaterialServiceInput);
 		return prepareProductMaterialServiceOutput(insertedProductMaterialModel);
 	}
@@ -84,7 +90,7 @@ public class ProductMaterialServiceImpl implements ProductMaterialService {
 		List<ProductMaterialModel> productMaterialModelList = productMaterialRepository.listByProductId(productId);
 		return productMaterialMapper.mapModelToServiceOutputList(productMaterialModelList);
 	}
-	
+
 	private ProductMaterialModel getProductMaterialModel(Integer id) throws DataNotFoundException {
 		Optional<ProductMaterialModel> productMaterial = productMaterialRepository.findById(id);
 
@@ -127,5 +133,19 @@ public class ProductMaterialServiceImpl implements ProductMaterialService {
 		return productMaterialRepository.save(productMaterialModel);
 	}
 
-	
+	@Override
+	public ProductMaterialServiceOutput getProductMaterialByProductIdAndRawMaterialId(Integer productId,
+			Integer rawMaterialId) throws DataNotFoundException {
+
+		Optional<ProductMaterialModel> productMaterial = productMaterialRepository
+				.findByProductIdAndRawMaterialId(productId, rawMaterialId);
+
+		if (!productMaterial.isPresent()) {
+			throw new DataNotFoundException("bulunamadı");
+		}
+		ProductMaterialModel productMaterialModel = productMaterial.get();
+
+		return prepareProductMaterialServiceOutput(productMaterialModel);
+	}
+
 }

@@ -12,6 +12,8 @@ public interface ProductMaterialService extends Service {
 
 	ProductMaterialServiceOutput getProductMaterialById(Integer id) throws DataNotFoundException;
 
+	ProductMaterialServiceOutput getProductMaterialByProductIdAndRawMaterialId(Integer productId, Integer rawMaterialId) throws DataNotFoundException;
+
 	ProductMaterialServiceOutput createProductMaterial(ProductMaterialServiceInput productMaterialServiceInput)
 			throws DataAlreadyExistException;
 
