@@ -1,7 +1,5 @@
 package com.bofigo.rowmaterial.domain.dto.output;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -15,13 +13,23 @@ import lombok.Setter;
 @Getter
 public class ProductMaterialServiceOutput extends BaseServiceOutput {
 
+	private Integer id;
+
 	private double amount;
 
 	private RawMaterialServiceOutput rawMaterial;
 
 	private RawMaterialCategoryServiceOutput rawMaterialCategory;
-	
+
 	private ProductServiceOutput product;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public double getAmount() {
 		return amount;
@@ -54,6 +62,5 @@ public class ProductMaterialServiceOutput extends BaseServiceOutput {
 	public void setProduct(ProductServiceOutput product) {
 		this.product = product;
 	}
-
 
 }

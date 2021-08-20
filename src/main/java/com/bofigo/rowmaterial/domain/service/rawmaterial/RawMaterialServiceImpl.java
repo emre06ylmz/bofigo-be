@@ -121,6 +121,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 		rawMaterialServiceOutput.setId(rawMaterialModel.getId());
 		rawMaterialServiceOutput.setName(rawMaterialModel.getName());
 		rawMaterialServiceOutput.setExplanation(rawMaterialModel.getExplanation());
+		rawMaterialServiceOutput.setStock(rawMaterialModel.getStock());
 
 		rawMaterialServiceOutput.setRawMaterialCategory(
 				rawMaterialCategoryMapper.mapModelToServiceOutput(rawMaterialModel.getRawMaterialCategory()));
@@ -144,6 +145,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 			RawMaterialServiceInput rawMaterialServiceInput) {
 		rawMaterialModel.setName(rawMaterialServiceInput.getName());
 		rawMaterialModel.setExplanation(rawMaterialServiceInput.getExplanation());
+		rawMaterialModel.setStock(rawMaterialServiceInput.getStock());
 
 		return rawMaterialRepository.save(rawMaterialModel);
 	}

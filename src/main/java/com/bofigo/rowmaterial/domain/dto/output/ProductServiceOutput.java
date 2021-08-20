@@ -14,8 +14,12 @@ import lombok.Setter;
 public class ProductServiceOutput extends BaseServiceOutput {
 
 	private Integer id;
+
 	private String name;
+
 	private String explanation;
+
+	private String selectedCurrency;
 
 	public Integer getId() {
 		return id;
@@ -41,5 +45,12 @@ public class ProductServiceOutput extends BaseServiceOutput {
 		this.explanation = explanation;
 	}
 
-	
+	public String getSelectedCurrency() {
+		return selectedCurrency;
+	}
+
+	public void setSelectedCurrency(String selectedCurrency) {
+		this.selectedCurrency = selectedCurrency;
+	}
+
 }

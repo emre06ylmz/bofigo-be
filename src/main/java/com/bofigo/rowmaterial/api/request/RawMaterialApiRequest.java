@@ -28,6 +28,9 @@ public class RawMaterialApiRequest {
 
 	private int unitId;
 
+	@NotNull(message = "Stock cannot be null.")
+	private double stock;
+
 	public String getName() {
 		return name;
 	}
@@ -58,6 +61,14 @@ public class RawMaterialApiRequest {
 
 	public void setUnitId(int unitId) {
 		this.unitId = unitId;
+	}
+
+	public double getStock() {
+		return stock;
+	}
+
+	public void setStock(double stock) {
+		this.stock = stock;
 	}
 
 }

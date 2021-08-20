@@ -49,6 +49,9 @@ public class RawMaterialModel extends BaseModel {
 	@OneToMany(mappedBy = "rawMaterial")
 	private List<PurchaseModel> purchases;
 
+	@Column
+	private double stock;
+
 	public Integer getId() {
 		return id;
 	}
@@ -103,6 +106,14 @@ public class RawMaterialModel extends BaseModel {
 
 	public void setUnit(UnitModel unit) {
 		this.unit = unit;
+	}
+
+	public double getStock() {
+		return stock;
+	}
+
+	public void setStock(double stock) {
+		this.stock = stock;
 	}
 
 }

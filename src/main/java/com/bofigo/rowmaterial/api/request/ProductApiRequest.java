@@ -21,8 +21,12 @@ public class ProductApiRequest {
 	private String name;
 
 	@NotNull(message = "Explanation cannot be null.")
-	@Size(min = 3, max = 50, message = "Explanation must be 1-200 characters long.")
+	@Size(min = 3, max = 50, message = "Explanation must be 3-50 characters long.")
 	private String explanation;
+
+	@NotNull(message = "Currency cannot be null.")
+	@Size(min = 1, max = 10, message = "Currency must be 1-10 characters long.")
+	private String selectedCurrency;
 
 	public String getName() {
 		return name;
@@ -38,6 +42,14 @@ public class ProductApiRequest {
 
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
+	}
+
+	public String getSelectedCurrency() {
+		return selectedCurrency;
+	}
+
+	public void setSelectedCurrency(String selectedCurrency) {
+		this.selectedCurrency = selectedCurrency;
 	}
 
 }

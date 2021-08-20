@@ -14,14 +14,16 @@ import lombok.Setter;
 public class RawMaterialServiceOutput extends BaseServiceOutput {
 
 	private Integer id;
-	
+
 	private String name;
-	
+
 	private String explanation;
 
 	private RawMaterialCategoryServiceOutput rawMaterialCategory;
-	
+
 	private UnitServiceOutput unit;
+
+	private double stock;
 
 	public Integer getId() {
 		return id;
@@ -61,6 +63,14 @@ public class RawMaterialServiceOutput extends BaseServiceOutput {
 
 	public void setUnit(UnitServiceOutput unit) {
 		this.unit = unit;
+	}
+
+	public double getStock() {
+		return stock;
+	}
+
+	public void setStock(double stock) {
+		this.stock = stock;
 	}
 
 }

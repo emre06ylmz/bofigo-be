@@ -31,6 +31,9 @@ public class ProductModel extends BaseModel {
 	@Column(length = 100, nullable = false)
 	private String explanation;
 
+	@Column(length = 10, nullable = false, name = "selectedCurrency")
+	private String selectedCurrency;
+
 	public Integer getId() {
 		return id;
 	}
@@ -53,6 +56,14 @@ public class ProductModel extends BaseModel {
 
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
+	}
+
+	public String getSelectedCurrency() {
+		return selectedCurrency;
+	}
+
+	public void setSelectedCurrency(String selectedCurrency) {
+		this.selectedCurrency = selectedCurrency;
 	}
 
 }

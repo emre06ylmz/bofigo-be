@@ -14,12 +14,16 @@ import lombok.Setter;
 public class RawMaterialApiResponse {
 
 	private Integer id;
+
 	private String name;
+
 	private String explanation;
 
 	private RawMaterialCategoryApiResponse rawMaterialCategory;
 
 	private UnitApiResponse unit;
+
+	private double stock;
 
 	public Integer getId() {
 		return id;
@@ -59,6 +63,14 @@ public class RawMaterialApiResponse {
 
 	public void setUnit(UnitApiResponse unit) {
 		this.unit = unit;
+	}
+
+	public double getStock() {
+		return stock;
+	}
+
+	public void setStock(double stock) {
+		this.stock = stock;
 	}
 
 }

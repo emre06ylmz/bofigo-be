@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bofigo.rowmaterial.constant.ApplicationConstants;
 import com.bofigo.rowmaterial.dao.model.PurchaseModel;
+import com.bofigo.rowmaterial.dao.model.RawMaterialModel;
 import com.bofigo.rowmaterial.dao.repository.PurchaseRepository;
 import com.bofigo.rowmaterial.dao.repository.RawMaterialRepository;
 import com.bofigo.rowmaterial.dao.repository.SupplierRepository;
@@ -43,6 +44,11 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public PurchaseServiceOutput createPurchase(PurchaseServiceInput purchaseServiceInput)
 			throws DataAlreadyExistException {
 		PurchaseModel insertedPurchaseModel = insertPurchaseModel(purchaseServiceInput);
+
+		//UPDATE STOCK
+		RawMaterialModel rawMaterial = rawMaterialRepository.findById(purchaseServiceInput.getRawMaterialId()).get();
+		rawMaterial.setStock(rawMaterial.getStock() + purchaseServiceInput.getAmount());
+
 		return preparePurchaseServiceOutput(insertedPurchaseModel);
 	}
 
@@ -50,9 +56,17 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public PurchaseServiceOutput updatePurchase(Integer id, PurchaseServiceInput purchaseServiceInput)
 			throws DataNotFoundException {
 		Optional<PurchaseModel> purchaseModel = purchaseRepository.findById(id);
-
+		double oldStock = purchaseModel.get().getAmount();
 		if (purchaseModel.isPresent()) {
 			PurchaseModel updatedPurchaseModel = updatePurchaseModel(purchaseModel.get(), purchaseServiceInput);
+
+			//UPDATE STOCK
+			if (updatedPurchaseModel.getAmount() != oldStock) {
+				RawMaterialModel rawMaterial = rawMaterialRepository.findById(purchaseServiceInput.getRawMaterialId())
+						.get();
+				rawMaterial.setStock(rawMaterial.getStock() + purchaseServiceInput.getAmount() - oldStock);
+			}
+
 			return preparePurchaseServiceOutput(updatedPurchaseModel);
 		}
 
@@ -63,6 +77,12 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public PurchaseServiceOutput deletePurchase(Integer id) throws DataNotFoundException {
 		PurchaseModel purchaseModel = getPurchaseModel(id);
 		purchaseRepository.deleteById(id);
+		
+		//UPDATE STOCK
+		RawMaterialModel rawMaterial = rawMaterialRepository.findById(purchaseModel.getRawMaterial().getId())
+				.get();
+		rawMaterial.setStock(rawMaterial.getStock() - purchaseModel.getAmount());
+		
 		return purchaseMapper.mapModelToServiceOutput(purchaseModel);
 	}
 

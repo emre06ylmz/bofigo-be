@@ -25,6 +25,8 @@ public class RawMaterialServiceInput extends BaseServiceInput {
 
 	private UnitServiceInput unit;
 
+	private double stock;
+
 	public String getName() {
 		return name;
 	}
@@ -71,6 +73,14 @@ public class RawMaterialServiceInput extends BaseServiceInput {
 
 	public void setUnit(UnitServiceInput unit) {
 		this.unit = unit;
+	}
+
+	public double getStock() {
+		return stock;
+	}
+
+	public void setStock(double stock) {
+		this.stock = stock;
 	}
 
 }
