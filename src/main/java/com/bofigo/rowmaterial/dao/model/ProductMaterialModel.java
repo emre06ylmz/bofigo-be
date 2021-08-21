@@ -29,15 +29,15 @@ public class ProductMaterialModel extends BaseModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "raw_material_id", referencedColumnName = "id", nullable = false)
 	private RawMaterialModel rawMaterial;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "raw_material_category_id", referencedColumnName = "id", nullable = false)
 	private RawMaterialCategoryModel rawMaterialCategory;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
 	private ProductModel product;
 

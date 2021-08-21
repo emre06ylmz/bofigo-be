@@ -48,7 +48,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 		//UPDATE STOCK
 		RawMaterialModel rawMaterial = rawMaterialRepository.findById(purchaseServiceInput.getRawMaterialId()).get();
 		rawMaterial.setStock(rawMaterial.getStock() + purchaseServiceInput.getAmount());
-
+		rawMaterialRepository.save(rawMaterial);
+		
 		return preparePurchaseServiceOutput(insertedPurchaseModel);
 	}
 
@@ -65,6 +66,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 				RawMaterialModel rawMaterial = rawMaterialRepository.findById(purchaseServiceInput.getRawMaterialId())
 						.get();
 				rawMaterial.setStock(rawMaterial.getStock() + purchaseServiceInput.getAmount() - oldStock);
+				rawMaterialRepository.save(rawMaterial);
 			}
 
 			return preparePurchaseServiceOutput(updatedPurchaseModel);
@@ -82,6 +84,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 		RawMaterialModel rawMaterial = rawMaterialRepository.findById(purchaseModel.getRawMaterial().getId())
 				.get();
 		rawMaterial.setStock(rawMaterial.getStock() - purchaseModel.getAmount());
+		rawMaterialRepository.save(rawMaterial);
 		
 		return purchaseMapper.mapModelToServiceOutput(purchaseModel);
 	}

@@ -34,11 +34,11 @@ public class PurchaseModel extends BaseModel {
 	@Column(length = 100, nullable = false)
 	private Date date;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "raw_material_id", referencedColumnName = "id", nullable = false)
 	private RawMaterialModel rawMaterial;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "supplier_id", referencedColumnName = "id", nullable = false)
 	private SupplierModel supplier;
 

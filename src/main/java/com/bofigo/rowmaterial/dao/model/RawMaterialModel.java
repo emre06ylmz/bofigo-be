@@ -35,18 +35,18 @@ public class RawMaterialModel extends BaseModel {
 	@Column(length = 100, nullable = false)
 	private String name;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "raw_material_category_id", referencedColumnName = "id", nullable = false)
 	private RawMaterialCategoryModel rawMaterialCategory;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "unit_id", referencedColumnName = "id", nullable = false)
 	private UnitModel unit;
 
 	@Column(length = 100, nullable = false)
 	private String explanation;
 
-	@OneToMany(mappedBy = "rawMaterial")
+	@OneToMany(mappedBy = "rawMaterial", cascade = CascadeType.ALL)
 	private List<PurchaseModel> purchases;
 
 	@Column
