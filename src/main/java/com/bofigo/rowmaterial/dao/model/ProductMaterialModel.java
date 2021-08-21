@@ -24,11 +24,6 @@ import lombok.Setter;
 @Getter
 public class ProductMaterialModel extends BaseModel {
 
-	@Id
-	@Column(unique = true, updatable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "raw_material_id", referencedColumnName = "id", nullable = false)
 	private RawMaterialModel rawMaterial;
@@ -43,14 +38,6 @@ public class ProductMaterialModel extends BaseModel {
 
 	@Column(nullable = false)
 	private double amount;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public RawMaterialModel getRawMaterial() {
 		return rawMaterial;

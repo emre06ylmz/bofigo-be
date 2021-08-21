@@ -15,9 +15,14 @@ import lombok.Setter;
 @Getter
 public abstract class BaseServiceOutput implements Comparable<BaseServiceOutput> {
 
+	private Integer id;
+	
 	private String createdBy;
+	
 	private String updatedBy;
+	
 	private Date createDate;
+	
 	private Date updatedDate;
 
 	@Override
@@ -57,4 +62,13 @@ public abstract class BaseServiceOutput implements Comparable<BaseServiceOutput>
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 }

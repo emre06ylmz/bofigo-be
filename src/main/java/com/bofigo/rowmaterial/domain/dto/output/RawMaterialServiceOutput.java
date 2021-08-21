@@ -13,8 +13,6 @@ import lombok.Setter;
 @Getter
 public class RawMaterialServiceOutput extends BaseServiceOutput {
 
-	private Integer id;
-
 	private String name;
 
 	private String explanation;
@@ -25,13 +23,7 @@ public class RawMaterialServiceOutput extends BaseServiceOutput {
 
 	private double stock;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	private String selectedCurrency;
 
 	public String getName() {
 		return name;
@@ -71,6 +63,14 @@ public class RawMaterialServiceOutput extends BaseServiceOutput {
 
 	public void setStock(double stock) {
 		this.stock = stock;
+	}
+
+	public String getSelectedCurrency() {
+		return selectedCurrency;
+	}
+
+	public void setSelectedCurrency(String selectedCurrency) {
+		this.selectedCurrency = selectedCurrency;
 	}
 
 }

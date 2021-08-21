@@ -13,9 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class PurchaseApiResponse {
-
-	private Integer id;
+public class PurchaseApiResponse extends BaseApiResponse {
 
 	private Date date;
 
@@ -28,14 +26,6 @@ public class PurchaseApiResponse {
 	private RawMaterialApiResponse rawMaterial;
 
 	private SupplierApiResponse supplier;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public Date getDate() {
 		return date;

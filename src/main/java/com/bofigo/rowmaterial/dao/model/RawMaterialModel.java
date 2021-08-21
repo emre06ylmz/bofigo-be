@@ -27,11 +27,6 @@ import lombok.Setter;
 @Getter
 public class RawMaterialModel extends BaseModel {
 
-	@Id
-	@Column(unique = true, updatable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
 	@Column(length = 100, nullable = false)
 	private String name;
 
@@ -52,13 +47,8 @@ public class RawMaterialModel extends BaseModel {
 	@Column
 	private double stock;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	@Column(length = 10, nullable = false, name = "selectedCurrency")
+	private String selectedCurrency;
 
 	public String getName() {
 		return name;
@@ -116,4 +106,11 @@ public class RawMaterialModel extends BaseModel {
 		this.stock = stock;
 	}
 
+	public String getSelectedCurrency() {
+		return selectedCurrency;
+	}
+
+	public void setSelectedCurrency(String selectedCurrency) {
+		this.selectedCurrency = selectedCurrency;
+	}
 }

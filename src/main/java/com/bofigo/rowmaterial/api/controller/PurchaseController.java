@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bofigo.rowmaterial.api.request.PurchaseApiRequest;
 import com.bofigo.rowmaterial.api.response.PurchaseApiResponse;
+import com.bofigo.rowmaterial.api.response.RawMaterialApiResponse;
 import com.bofigo.rowmaterial.api.response.Response;
 import com.bofigo.rowmaterial.domain.dto.input.PurchaseServiceInput;
 import com.bofigo.rowmaterial.domain.dto.output.PurchaseServiceOutput;
+import com.bofigo.rowmaterial.domain.dto.output.RawMaterialServiceOutput;
 import com.bofigo.rowmaterial.domain.service.purchase.PurchaseService;
 import com.bofigo.rowmaterial.exception.DataAlreadyExistException;
 import com.bofigo.rowmaterial.exception.DataNotFoundException;
@@ -50,6 +52,15 @@ public class PurchaseController {
 				.mapServiceOutputToApiResponseList(purchaseServiceOutputList);
 		return new Response<>(purchaseApiResponseList);
 	}
+	
+	@GetMapping(path = "/listByMaterialId/{id}")
+	public Response<List<PurchaseApiResponse>> listPurchaseByRawMaterialId(@PathVariable("id") Integer rawMaterialId) throws DataNotFoundException {
+		List<PurchaseServiceOutput> purchaseServiceOutputList = purchaseService.listByMaterialId(rawMaterialId);
+		List<PurchaseApiResponse> purchaseApiResponseList = purchaseMapper
+				.mapServiceOutputToApiResponseList(purchaseServiceOutputList);
+		return new Response<>(purchaseApiResponseList);
+	}
+	
 
 	@GetMapping(path = "/{id}")
 	public Response<PurchaseApiResponse> getPurchase(@PathVariable("id") Integer id) throws DataNotFoundException {

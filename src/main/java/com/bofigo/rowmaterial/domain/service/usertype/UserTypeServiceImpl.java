@@ -20,8 +20,7 @@ public class UserTypeServiceImpl implements UserTypeService {
 	private UserTypeMapper userTypeMapper;
 	private UserTypeRepository userTypeRepository;
 
-	public UserTypeServiceImpl(UserTypeRepository userTypeRepository,
-			UserTypeMapper userTypeMapper) {
+	public UserTypeServiceImpl(UserTypeRepository userTypeRepository, UserTypeMapper userTypeMapper) {
 		this.userTypeRepository = userTypeRepository;
 		this.userTypeMapper = userTypeMapper;
 	}
@@ -39,33 +38,29 @@ public class UserTypeServiceImpl implements UserTypeService {
 	}
 
 	@Override
-	public UserTypeServiceOutput createUserType(
-			UserTypeServiceInput userTypeServiceInput) throws DataAlreadyExistException {
-		UserTypeModel userTypeModel = userTypeRepository
-				.findByName(userTypeServiceInput.getName());
+	public UserTypeServiceOutput createUserType(UserTypeServiceInput userTypeServiceInput)
+			throws DataAlreadyExistException {
+		UserTypeModel userTypeModel = userTypeRepository.findByName(userTypeServiceInput.getName());
 
 		if (userTypeModel != null) {
 			throw new DataAlreadyExistException("zaten var");
 		}
 
-		UserTypeModel insertedUserTypeModel = insertUserTypeModel(
-				userTypeServiceInput);
+		UserTypeModel insertedUserTypeModel = insertUserTypeModel(userTypeServiceInput);
 
 		return prepareUserTypeServiceOutput(insertedUserTypeModel);
 	}
 
 	@Override
-	public UserTypeServiceOutput updateUserType(Integer id,
-			UserTypeServiceInput userTypeServiceInput) throws DataNotFoundException {
-		UserTypeModel userTypeModel = userTypeRepository
-				.findByName(userTypeServiceInput.getName());
+	public UserTypeServiceOutput updateUserType(Integer id, UserTypeServiceInput userTypeServiceInput)
+			throws DataNotFoundException {
+		UserTypeModel userTypeModel = userTypeRepository.findByName(userTypeServiceInput.getName());
 
 		if (userTypeModel == null) {
 			throw new DataNotFoundException("bulunamadı");
 		}
 
-		UserTypeModel updatedUserTypeModel = updateUserTypeModel(
-				userTypeModel, userTypeServiceInput);
+		UserTypeModel updatedUserTypeModel = updateUserTypeModel(userTypeModel, userTypeServiceInput);
 
 		return prepareUserTypeServiceOutput(updatedUserTypeModel);
 	}
@@ -92,31 +87,26 @@ public class UserTypeServiceImpl implements UserTypeService {
 		return userType.get();
 	}
 
-	public UserTypeServiceOutput prepareUserTypeServiceOutput(
-			UserTypeModel userTypeModel) {
+	public UserTypeServiceOutput prepareUserTypeServiceOutput(UserTypeModel userTypeModel) {
 		UserTypeServiceOutput userTypeServiceOutput = new UserTypeServiceOutput();
 
 		if (userTypeModel == null) {
 			return userTypeServiceOutput;
 		}
 
-		userTypeServiceOutput.setName(userTypeModel.getName());
-		userTypeServiceOutput.setDetail(userTypeModel.getDetail());
+		userTypeServiceOutput = userTypeMapper.mapModelToServiceOutput(userTypeModel);
 
 		return userTypeServiceOutput;
 	}
 
-	public UserTypeModel insertUserTypeModel(
-			UserTypeServiceInput userTypeServiceInput) {
-		UserTypeModel userTypeModel = userTypeMapper
-				.mapServiceInputToModel(userTypeServiceInput);
+	public UserTypeModel insertUserTypeModel(UserTypeServiceInput userTypeServiceInput) {
+		UserTypeModel userTypeModel = userTypeMapper.mapServiceInputToModel(userTypeServiceInput);
 		userTypeModel.setStatus(ApplicationConstants.ACTIVE);
 
 		return userTypeRepository.save(userTypeModel);
 	}
 
-	public UserTypeModel updateUserTypeModel(UserTypeModel userTypeModel,
-			UserTypeServiceInput userTypeServiceInput) {
+	public UserTypeModel updateUserTypeModel(UserTypeModel userTypeModel, UserTypeServiceInput userTypeServiceInput) {
 		userTypeServiceInput.setName(userTypeServiceInput.getName());
 		userTypeServiceInput.setDetail(userTypeServiceInput.getDetail());
 

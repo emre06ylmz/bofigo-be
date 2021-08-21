@@ -1,5 +1,6 @@
 package com.bofigo.rowmaterial.domain.service.purchase;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,6 +95,13 @@ public class PurchaseServiceImpl implements PurchaseService {
 		List<PurchaseModel> purchaseModelList = purchaseRepository.findAll();
 		return purchaseMapper.mapModelToServiceOutputList(purchaseModelList);
 	}
+	
+
+	@Override
+	public List<PurchaseServiceOutput> listByMaterialId(Integer rawMaterialId) {
+		List<PurchaseModel> purchaseModelList = purchaseRepository.listByMaterialId(rawMaterialId);
+		return purchaseMapper.mapModelToServiceOutputList(purchaseModelList);
+	}
 
 	private PurchaseModel getPurchaseModel(Integer id) throws DataNotFoundException {
 		Optional<PurchaseModel> purchase = purchaseRepository.findById(id);
@@ -111,10 +119,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 			return purchaseServiceOutput;
 		}
 
-		purchaseServiceOutput.setAmount(purchaseModel.getAmount());
-		purchaseServiceOutput.setDate(purchaseModel.getDate());
-		purchaseServiceOutput.setExplanation(purchaseModel.getExplanation());
-		purchaseServiceOutput.setPrice(purchaseModel.getPrice());
+		purchaseServiceOutput = purchaseMapper.mapModelToServiceOutput(purchaseModel);
 
 		return purchaseServiceOutput;
 	}
@@ -123,6 +128,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 		PurchaseModel purchaseModel = purchaseMapper.mapServiceInputToModel(purchaseServiceInput);
 		purchaseModel.setStatus(ApplicationConstants.ACTIVE);
 
+		purchaseModel.setDate(new Date());
 		purchaseModel.setSupplier(supplierRepository.findById(purchaseServiceInput.getSupplierId()).get());
 		purchaseModel.setRawMaterial(rawMaterialRepository.findById(purchaseServiceInput.getRawMaterialId()).get());
 
@@ -137,5 +143,6 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 		return purchaseRepository.save(purchaseModel);
 	}
+
 
 }

@@ -98,7 +98,7 @@ public class SupplierServiceImpl implements SupplierService {
 			return supplierServiceOutput;
 		}
 
-		supplierServiceOutput.setName(supplierModel.getName());
+		supplierServiceOutput = supplierMapper.mapModelToServiceOutput(supplierModel);
 
 		return supplierServiceOutput;
 	}

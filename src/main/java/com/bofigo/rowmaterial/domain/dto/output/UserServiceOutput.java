@@ -11,9 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class UserServiceOutput {
-
-	private Integer id;
+public class UserServiceOutput extends BaseServiceOutput {
 
 	private String username;
 
@@ -24,14 +22,6 @@ public class UserServiceOutput {
 	private String surname;
 
 	private String role;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getUsername() {
 		return username;

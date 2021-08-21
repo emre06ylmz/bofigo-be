@@ -84,9 +84,7 @@ public class CurrencySettingsServiceImpl implements CurrencySettingsService {
 			return currenySettingsServiceOutput;
 		}
 
-		currenySettingsServiceOutput.setDollar(currenySettingsModel.getDollar());
-		currenySettingsServiceOutput.setEuro(currenySettingsModel.getEuro());
-		currenySettingsServiceOutput.setLastUpdateDate(new Date());
+		currenySettingsServiceOutput = currenySettingsMapper.mapModelToServiceOutput(currenySettingsModel);
 
 		return currenySettingsServiceOutput;
 	}
@@ -101,6 +99,7 @@ public class CurrencySettingsServiceImpl implements CurrencySettingsService {
 
 	public CurrencySettingsModel updateCurrencySettingsModel(CurrencySettingsModel currenySettingsModel,
 			CurrencySettingsServiceInput currenySettingsServiceInput) {
+		
 		currenySettingsModel.setDollar(currenySettingsServiceInput.getDollar());
 		currenySettingsModel.setEuro(currenySettingsServiceInput.getEuro());
 		currenySettingsModel.setLastUpdateDate(new Date());

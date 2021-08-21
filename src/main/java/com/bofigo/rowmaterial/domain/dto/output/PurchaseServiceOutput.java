@@ -15,8 +15,6 @@ import lombok.Setter;
 @Getter
 public class PurchaseServiceOutput extends BaseServiceOutput {
 
-	private Integer id;
-
 	private double amount;
 
 	private double price;
@@ -29,13 +27,7 @@ public class PurchaseServiceOutput extends BaseServiceOutput {
 
 	private SupplierServiceOutput supplier;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	private String selectedCurrency;
 
 	public double getAmount() {
 		return amount;
@@ -83,6 +75,14 @@ public class PurchaseServiceOutput extends BaseServiceOutput {
 
 	public void setSupplier(SupplierServiceOutput supplier) {
 		this.supplier = supplier;
+	}
+
+	public String getSelectedCurrency() {
+		return selectedCurrency;
+	}
+
+	public void setSelectedCurrency(String selectedCurrency) {
+		this.selectedCurrency = selectedCurrency;
 	}
 
 }

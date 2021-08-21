@@ -50,7 +50,7 @@ public class ProductMaterialServiceImpl implements ProductMaterialService {
 		Optional<ProductMaterialModel> productMaterial = productMaterialRepository.findByProductIdAndRawMaterialId(
 				productMaterialServiceInput.getProductId(), productMaterialServiceInput.getRawMaterialId());
 
-		if (!productMaterial.isPresent()) {
+		if (productMaterial.isPresent()) {
 			throw new DataAlreadyExistException("zaten var");
 		}
 
@@ -107,7 +107,7 @@ public class ProductMaterialServiceImpl implements ProductMaterialService {
 			return productMaterialServiceOutput;
 		}
 
-		productMaterialServiceOutput.setAmount(productMaterialModel.getAmount());
+		productMaterialServiceOutput = productMaterialMapper.mapModelToServiceOutput(productMaterialModel);
 
 		return productMaterialServiceOutput;
 	}

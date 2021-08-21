@@ -22,11 +22,6 @@ import lombok.Setter;
 @Getter
 public class CurrencySettingsModel extends BaseModel {
 
-	@Id
-	@Column(unique = true, updatable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
 	@Column(nullable = false)
 	private double dollar;
 
@@ -35,14 +30,6 @@ public class CurrencySettingsModel extends BaseModel {
 
 	@Column(nullable = false)
 	private Date lastUpdateDate;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public double getDollar() {
 		return dollar;

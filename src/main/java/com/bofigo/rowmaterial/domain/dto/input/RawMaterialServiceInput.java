@@ -27,6 +27,8 @@ public class RawMaterialServiceInput extends BaseServiceInput {
 
 	private double stock;
 
+	private String selectedCurrency;
+
 	public String getName() {
 		return name;
 	}
@@ -83,4 +85,11 @@ public class RawMaterialServiceInput extends BaseServiceInput {
 		this.stock = stock;
 	}
 
+	public String getSelectedCurrency() {
+		return selectedCurrency;
+	}
+
+	public void setSelectedCurrency(String selectedCurrency) {
+		this.selectedCurrency = selectedCurrency;
+	}
 }

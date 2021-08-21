@@ -98,7 +98,7 @@ public class UnitServiceImpl implements UnitService {
 			return unitServiceOutput;
 		}
 
-		unitServiceOutput.setName(unitModel.getName());
+		unitServiceOutput = unitMapper.mapModelToServiceOutput(unitModel);
 
 		return unitServiceOutput;
 	}

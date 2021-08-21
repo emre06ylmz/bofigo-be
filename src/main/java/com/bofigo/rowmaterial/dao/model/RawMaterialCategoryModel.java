@@ -24,11 +24,6 @@ import lombok.Setter;
 @Getter
 public class RawMaterialCategoryModel extends BaseModel {
 
-	@Id
-	@Column(unique = true, updatable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
 	@Column(length = 100, nullable = false)
 	private String name;
 
@@ -37,14 +32,6 @@ public class RawMaterialCategoryModel extends BaseModel {
 
 	@OneToMany(mappedBy = "rawMaterialCategory", cascade = CascadeType.ALL)
 	private List<RawMaterialModel> rawMaterials;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;

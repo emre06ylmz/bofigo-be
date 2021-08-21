@@ -11,9 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class UserApiResponse {
-
-	private Integer id;
+public class UserApiResponse extends BaseApiResponse {
 
 	private String username;
 
@@ -24,14 +22,6 @@ public class UserApiResponse {
 	private String surname;
 
 	private String role;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getUsername() {
 		return username;

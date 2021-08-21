@@ -11,23 +11,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class ProductApiResponse {
-
-	private Integer id;
+public class ProductApiResponse extends BaseApiResponse {
 
 	private String name;
 
 	private String explanation;
-
-	private String selectedCurrency;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -43,14 +31,6 @@ public class ProductApiResponse {
 
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
-	}
-
-	public String getSelectedCurrency() {
-		return selectedCurrency;
-	}
-
-	public void setSelectedCurrency(String selectedCurrency) {
-		this.selectedCurrency = selectedCurrency;
 	}
 
 }

@@ -6,9 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.bofigo.rowmaterial.constant.ApplicationConstants;
-import com.bofigo.rowmaterial.dao.model.CurrencySettingsModel;
 import com.bofigo.rowmaterial.dao.model.ProductModel;
-import com.bofigo.rowmaterial.dao.repository.CurrencySettingsRepository;
 import com.bofigo.rowmaterial.dao.repository.ProductRepository;
 import com.bofigo.rowmaterial.domain.dto.input.ProductServiceInput;
 import com.bofigo.rowmaterial.domain.dto.output.ProductServiceOutput;
@@ -22,7 +20,7 @@ public class ProductServiceImpl implements ProductService {
 	private ProductMapper productMapper;
 	private ProductRepository productRepository;
 
-	public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper ) {
+	public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper) {
 		this.productRepository = productRepository;
 		this.productMapper = productMapper;
 	}
@@ -95,24 +93,22 @@ public class ProductServiceImpl implements ProductService {
 			return productServiceOutput;
 		}
 
-		productServiceOutput.setName(productModel.getName());
-		productServiceOutput.setExplanation(productModel.getExplanation());
-		productServiceOutput.setSelectedCurrency(productModel.getSelectedCurrency());
+		productServiceOutput = productMapper.mapModelToServiceOutput(productModel);
 
+		
 		return productServiceOutput;
 	}
 
 	public ProductModel insertProductModel(ProductServiceInput productServiceInput) {
 		ProductModel productModel = productMapper.mapServiceInputToModel(productServiceInput);
 		productModel.setStatus(ApplicationConstants.ACTIVE);
-		
+
 		return productRepository.save(productModel);
 	}
 
 	public ProductModel updateProductModel(ProductModel productModel, ProductServiceInput productServiceInput) {
 		productModel.setName(productServiceInput.getName());
 		productModel.setExplanation(productServiceInput.getExplanation());
-		productModel.setSelectedCurrency(productServiceInput.getSelectedCurrency());
 
 		return productRepository.save(productModel);
 	}

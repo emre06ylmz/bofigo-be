@@ -22,4 +22,6 @@ public interface PurchaseService extends Service {
 
 	List<PurchaseServiceOutput> listAll();
 
+	List<PurchaseServiceOutput> listByMaterialId(Integer rawMaterialId);
+
 }

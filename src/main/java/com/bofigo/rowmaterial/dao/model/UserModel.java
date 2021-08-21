@@ -20,11 +20,6 @@ import lombok.Setter;
 @Getter
 public class UserModel extends BaseModel {
 
-	@Id
-	@Column(unique = true, updatable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
 	@Column(length = 100, nullable = false, unique = true)
 	private String username;
 
@@ -39,14 +34,6 @@ public class UserModel extends BaseModel {
 
 	@Column(length = 100, nullable = false)
 	private String role;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getUsername() {
 		return username;

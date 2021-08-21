@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
 			return userServiceOutput;
 		}
 
-		userServiceOutput.setName(userModel.getName());
+		userServiceOutput = userMapper.mapModelToServiceOutput(userModel);
 
 		return userServiceOutput;
 	}

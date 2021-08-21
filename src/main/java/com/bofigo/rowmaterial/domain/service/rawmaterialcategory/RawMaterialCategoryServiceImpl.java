@@ -98,7 +98,7 @@ public class RawMaterialCategoryServiceImpl implements RawMaterialCategoryServic
 			return rawMaterialCategoryServiceOutput;
 		}
 
-		rawMaterialCategoryServiceOutput.setName(rawMaterialCategoryModel.getName());
+		rawMaterialCategoryServiceOutput = rawMaterialCategoryMapper.mapModelToServiceOutput(rawMaterialCategoryModel);
 
 		return rawMaterialCategoryServiceOutput;
 	}

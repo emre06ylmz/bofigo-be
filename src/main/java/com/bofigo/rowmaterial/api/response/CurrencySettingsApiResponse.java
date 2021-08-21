@@ -13,20 +13,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class CurrencySettingsApiResponse {
+public class CurrencySettingsApiResponse extends BaseApiResponse{
 
-	private Integer id;
 	private double dollar;
+	
 	private double euro;
+	
 	private Date lastUpdateDate;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public double getDollar() {
 		return dollar;

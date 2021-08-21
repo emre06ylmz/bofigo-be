@@ -17,8 +17,6 @@ public class ProductServiceInput extends BaseServiceInput {
 
 	private String explanation;
 
-	private String selectedCurrency;
-
 	private double stock;
 
 	public String getName() {
@@ -35,14 +33,6 @@ public class ProductServiceInput extends BaseServiceInput {
 
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
-	}
-
-	public String getSelectedCurrency() {
-		return selectedCurrency;
-	}
-
-	public void setSelectedCurrency(String selectedCurrency) {
-		this.selectedCurrency = selectedCurrency;
 	}
 
 	public double getStock() {

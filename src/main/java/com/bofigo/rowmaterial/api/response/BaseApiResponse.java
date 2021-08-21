@@ -18,7 +18,10 @@ import lombok.Setter;
 @Getter
 public class BaseApiResponse {
 
+	private Integer id;
+
 	private String createdBy;
+
 	private String updatedBy;
 
 	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Eurepa/Istanbul")
@@ -59,6 +62,12 @@ public class BaseApiResponse {
 		this.updateDate = updateDate;
 	}
 
-	
-	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 }

@@ -26,11 +26,6 @@ import lombok.Setter;
 @Getter
 public class PurchaseModel extends BaseModel {
 
-	@Id
-	@Column(unique = true, updatable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
 	@Column(length = 100, nullable = false)
 	private Date date;
 
@@ -50,14 +45,6 @@ public class PurchaseModel extends BaseModel {
 
 	@Column(nullable = false)
 	private double price;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public Date getDate() {
 		return date;

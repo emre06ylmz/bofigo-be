@@ -100,7 +100,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 		List<RawMaterialModel> rawMaterialModelList = rawMaterialRepository.listByCategoryId(rawMaterialCategoryId);
 		return rawMaterialMapper.mapModelToServiceOutputList(rawMaterialModelList);
 	}
-	
+
 	private RawMaterialModel getRawMaterialModel(Integer id) throws DataNotFoundException {
 		Optional<RawMaterialModel> rawMaterial = rawMaterialRepository.findById(id);
 
@@ -118,14 +118,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 			return rawMaterialServiceOutput;
 		}
 
-		rawMaterialServiceOutput.setId(rawMaterialModel.getId());
-		rawMaterialServiceOutput.setName(rawMaterialModel.getName());
-		rawMaterialServiceOutput.setExplanation(rawMaterialModel.getExplanation());
-		rawMaterialServiceOutput.setStock(rawMaterialModel.getStock());
-
-		rawMaterialServiceOutput.setRawMaterialCategory(
-				rawMaterialCategoryMapper.mapModelToServiceOutput(rawMaterialModel.getRawMaterialCategory()));
-		rawMaterialServiceOutput.setUnit(unitMapper.mapModelToServiceOutput(rawMaterialModel.getUnit()));
+		rawMaterialServiceOutput = rawMaterialMapper.mapModelToServiceOutput(rawMaterialModel);
 
 		return rawMaterialServiceOutput;
 	}
@@ -143,12 +136,13 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 
 	public RawMaterialModel updateRawMaterialModel(RawMaterialModel rawMaterialModel,
 			RawMaterialServiceInput rawMaterialServiceInput) {
+
 		rawMaterialModel.setName(rawMaterialServiceInput.getName());
 		rawMaterialModel.setExplanation(rawMaterialServiceInput.getExplanation());
 		rawMaterialModel.setStock(rawMaterialServiceInput.getStock());
+		rawMaterialModel.setSelectedCurrency(rawMaterialServiceInput.getSelectedCurrency());
 
 		return rawMaterialRepository.save(rawMaterialModel);
 	}
-
 
 }

@@ -11,9 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class ProductMaterialApiResponse {
-
-	private Integer id;
+public class ProductMaterialApiResponse extends BaseApiResponse {
 
 	private double amount;
 
@@ -22,14 +20,6 @@ public class ProductMaterialApiResponse {
 	private RawMaterialCategoryApiResponse rawMaterialCategory;
 
 	private ProductApiResponse product;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public double getAmount() {
 		return amount;

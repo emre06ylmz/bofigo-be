@@ -11,9 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class RawMaterialApiResponse {
-
-	private Integer id;
+public class RawMaterialApiResponse extends BaseApiResponse {
 
 	private String name;
 
@@ -25,13 +23,7 @@ public class RawMaterialApiResponse {
 
 	private double stock;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	private String selectedCurrency;
 
 	public String getName() {
 		return name;
@@ -73,4 +65,11 @@ public class RawMaterialApiResponse {
 		this.stock = stock;
 	}
 
+	public String getSelectedCurrency() {
+		return selectedCurrency;
+	}
+
+	public void setSelectedCurrency(String selectedCurrency) {
+		this.selectedCurrency = selectedCurrency;
+	}
 }

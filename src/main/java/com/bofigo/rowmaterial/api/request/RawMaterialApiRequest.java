@@ -31,6 +31,10 @@ public class RawMaterialApiRequest {
 	@NotNull(message = "Stock cannot be null.")
 	private double stock;
 
+	@NotNull(message = "Currency cannot be null.")
+	@Size(min = 1, max = 10, message = "Currency must be 1-10 characters long.")
+	private String selectedCurrency;
+
 	public String getName() {
 		return name;
 	}
@@ -71,4 +75,11 @@ public class RawMaterialApiRequest {
 		this.stock = stock;
 	}
 
+	public String getSelectedCurrency() {
+		return selectedCurrency;
+	}
+
+	public void setSelectedCurrency(String selectedCurrency) {
+		this.selectedCurrency = selectedCurrency;
+	}
 }
