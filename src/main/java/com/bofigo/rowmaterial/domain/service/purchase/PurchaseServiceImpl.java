@@ -13,7 +13,10 @@ import com.bofigo.rowmaterial.dao.repository.PurchaseRepository;
 import com.bofigo.rowmaterial.dao.repository.RawMaterialRepository;
 import com.bofigo.rowmaterial.dao.repository.SupplierRepository;
 import com.bofigo.rowmaterial.domain.dto.input.PurchaseServiceInput;
+import com.bofigo.rowmaterial.domain.dto.output.ProductMaterialServiceOutput;
+import com.bofigo.rowmaterial.domain.dto.output.ProductServiceOutput;
 import com.bofigo.rowmaterial.domain.dto.output.PurchaseServiceOutput;
+import com.bofigo.rowmaterial.domain.dto.output.RawMaterialServiceOutput;
 import com.bofigo.rowmaterial.exception.DataAlreadyExistException;
 import com.bofigo.rowmaterial.exception.DataNotFoundException;
 import com.bofigo.rowmaterial.mapper.PurchaseMapper;
@@ -136,13 +139,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}
 
 	public PurchaseModel updatePurchaseModel(PurchaseModel purchaseModel, PurchaseServiceInput purchaseServiceInput) {
-		purchaseModel.setAmount(purchaseServiceInput.getAmount());
-		purchaseModel.setDate(purchaseServiceInput.getDate());
-		purchaseModel.setExplanation(purchaseServiceInput.getExplanation());
-		purchaseModel.setPrice(purchaseServiceInput.getPrice());
+		purchaseModel = purchaseMapper.mapServiceInputToModel(purchaseServiceInput);
 
 		return purchaseRepository.save(purchaseModel);
 	}
-
 
 }

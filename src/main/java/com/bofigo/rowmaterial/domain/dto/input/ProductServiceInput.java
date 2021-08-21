@@ -17,7 +17,7 @@ public class ProductServiceInput extends BaseServiceInput {
 
 	private String explanation;
 
-	private double stock;
+	private double cost;
 
 	public String getName() {
 		return name;
@@ -35,12 +35,12 @@ public class ProductServiceInput extends BaseServiceInput {
 		this.explanation = explanation;
 	}
 
-	public double getStock() {
-		return stock;
+	public double getCost() {
+		return cost;
 	}
 
-	public void setStock(double stock) {
-		this.stock = stock;
+	public void setCost(double cost) {
+		this.cost = cost;
 	}
 
 }

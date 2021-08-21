@@ -17,6 +17,16 @@ public class ProductApiResponse extends BaseApiResponse {
 
 	private String explanation;
 
+	private double cost;
+
+	public double getCost() {
+		return cost;
+	}
+
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+
 	public String getName() {
 		return name;
 	}

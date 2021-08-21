@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
 
 	public UserModel updateUserModel(UserModel userModel,
 			UserServiceInput userServiceInput) {
-		userServiceInput.setName(userServiceInput.getName());
+		userModel = userMapper.mapServiceInputToModel(userServiceInput);
 
 		return userRepository.save(userModel);
 	}

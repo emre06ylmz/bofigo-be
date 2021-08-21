@@ -114,8 +114,7 @@ public class RawMaterialCategoryServiceImpl implements RawMaterialCategoryServic
 
 	public RawMaterialCategoryModel updateRawMaterialCategoryModel(RawMaterialCategoryModel rawMaterialCategoryModel,
 			RawMaterialCategoryServiceInput rawMaterialCategoryServiceInput) {
-		rawMaterialCategoryModel.setName(rawMaterialCategoryServiceInput.getName());
-		rawMaterialCategoryModel.setExplanation(rawMaterialCategoryServiceInput.getExplanation());
+		rawMaterialCategoryModel = rawMaterialCategoryMapper.mapServiceInputToModel(rawMaterialCategoryServiceInput);
 
 		return rawMaterialCategoryRepository.save(rawMaterialCategoryModel);
 	}

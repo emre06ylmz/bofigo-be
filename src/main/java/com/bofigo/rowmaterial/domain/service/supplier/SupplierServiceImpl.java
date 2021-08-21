@@ -114,8 +114,7 @@ public class SupplierServiceImpl implements SupplierService {
 
 	public SupplierModel updateSupplierModel(SupplierModel supplierModel,
 			SupplierServiceInput supplierServiceInput) {
-		supplierModel.setName(supplierServiceInput.getName());
-		supplierModel.setExplanation(supplierServiceInput.getExplanation());
+		supplierModel = supplierMapper.mapServiceInputToModel(supplierServiceInput);
 
 		return supplierRepository.save(supplierModel);
 	}

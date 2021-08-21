@@ -128,8 +128,8 @@ public class ProductMaterialServiceImpl implements ProductMaterialService {
 
 	public ProductMaterialModel updateProductMaterialModel(ProductMaterialModel productMaterialModel,
 			ProductMaterialServiceInput productMaterialServiceInput) {
-		productMaterialModel.setAmount(productMaterialServiceInput.getAmount());
-
+		productMaterialModel = productMaterialMapper.mapServiceInputToModel(productMaterialServiceInput);
+		
 		return productMaterialRepository.save(productMaterialModel);
 	}
 

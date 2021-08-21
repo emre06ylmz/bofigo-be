@@ -114,8 +114,7 @@ public class UnitServiceImpl implements UnitService {
 
 	public UnitModel updateUnitModel(UnitModel unitModel,
 			UnitServiceInput unitServiceInput) {
-		unitModel.setName(unitServiceInput.getName());
-		unitModel.setExplanation(unitServiceInput.getExplanation());
+		unitModel = unitMapper.mapServiceInputToModel(unitServiceInput);
 
 		return unitRepository.save(unitModel);
 	}

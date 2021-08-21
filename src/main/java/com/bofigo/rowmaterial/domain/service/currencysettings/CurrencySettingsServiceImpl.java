@@ -100,8 +100,7 @@ public class CurrencySettingsServiceImpl implements CurrencySettingsService {
 	public CurrencySettingsModel updateCurrencySettingsModel(CurrencySettingsModel currenySettingsModel,
 			CurrencySettingsServiceInput currenySettingsServiceInput) {
 		
-		currenySettingsModel.setDollar(currenySettingsServiceInput.getDollar());
-		currenySettingsModel.setEuro(currenySettingsServiceInput.getEuro());
+		currenySettingsModel = currenySettingsMapper.mapServiceInputToModel(currenySettingsServiceInput);
 		currenySettingsModel.setLastUpdateDate(new Date());
 
 		return currenySettingsRepository.save(currenySettingsModel);

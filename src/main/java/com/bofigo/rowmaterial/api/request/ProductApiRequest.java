@@ -24,6 +24,9 @@ public class ProductApiRequest {
 	@Size(min = 3, max = 50, message = "Explanation must be 3-50 characters long.")
 	private String explanation;
 
+	@NotNull(message = "Cost cannot be null.")
+	private double cost;
+
 	public String getName() {
 		return name;
 	}
@@ -40,5 +43,12 @@ public class ProductApiRequest {
 		this.explanation = explanation;
 	}
 
+	public double getCost() {
+		return cost;
+	}
+
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
 
 }

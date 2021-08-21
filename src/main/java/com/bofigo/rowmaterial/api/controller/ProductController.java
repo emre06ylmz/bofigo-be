@@ -20,6 +20,9 @@ import com.bofigo.rowmaterial.api.response.Response;
 import com.bofigo.rowmaterial.domain.dto.input.ProductServiceInput;
 import com.bofigo.rowmaterial.domain.dto.output.ProductServiceOutput;
 import com.bofigo.rowmaterial.domain.service.product.ProductService;
+import com.bofigo.rowmaterial.domain.service.productmaterial.ProductMaterialService;
+import com.bofigo.rowmaterial.domain.service.purchase.PurchaseService;
+import com.bofigo.rowmaterial.domain.service.rawmaterial.RawMaterialService;
 import com.bofigo.rowmaterial.exception.DataAlreadyExistException;
 import com.bofigo.rowmaterial.exception.DataNotFoundException;
 import com.bofigo.rowmaterial.mapper.ProductMapper;
@@ -36,11 +39,19 @@ public class ProductController {
 	private static Logger logger = LoggerFactory.getLogger(ProductController.class);
 
 	private ProductService productService;
+	private PurchaseService purchaseService;
+	private RawMaterialService rawMaterialService;
+	private ProductMaterialService productMaterialService;
 	private ProductMapper productMapper;
 
-	public ProductController(ProductService productService, ProductMapper productMapper) {
+	public ProductController(ProductService productService, ProductMapper productMapper,
+			PurchaseService purchaseService, RawMaterialService rawMaterialService,
+			ProductMaterialService productMaterialService) {
 		this.productService = productService;
 		this.productMapper = productMapper;
+		this.purchaseService = purchaseService;
+		this.productMaterialService = productMaterialService;
+		this.rawMaterialService = rawMaterialService;
 	}
 
 	@GetMapping(path = "")
@@ -49,6 +60,12 @@ public class ProductController {
 		List<ProductApiResponse> productApiResponseList = productMapper
 				.mapServiceOutputToApiResponseList(productServiceOutputList);
 		return new Response<>(productApiResponseList);
+	}
+
+	@GetMapping(path = "/calculate")
+	public Response<String> calculate() throws DataNotFoundException {
+		productService.calculateProductCosts();
+		return new Response<>("OK");
 	}
 
 	@GetMapping(path = "/{id}")

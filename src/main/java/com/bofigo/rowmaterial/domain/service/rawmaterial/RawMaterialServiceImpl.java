@@ -136,11 +136,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 
 	public RawMaterialModel updateRawMaterialModel(RawMaterialModel rawMaterialModel,
 			RawMaterialServiceInput rawMaterialServiceInput) {
-
-		rawMaterialModel.setName(rawMaterialServiceInput.getName());
-		rawMaterialModel.setExplanation(rawMaterialServiceInput.getExplanation());
-		rawMaterialModel.setStock(rawMaterialServiceInput.getStock());
-		rawMaterialModel.setSelectedCurrency(rawMaterialServiceInput.getSelectedCurrency());
+		rawMaterialModel = rawMaterialMapper.mapServiceInputToModel(rawMaterialServiceInput);
 
 		return rawMaterialRepository.save(rawMaterialModel);
 	}

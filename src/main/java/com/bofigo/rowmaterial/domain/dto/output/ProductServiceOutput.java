@@ -17,6 +17,8 @@ public class ProductServiceOutput extends BaseServiceOutput {
 
 	private String explanation;
 
+	private double cost;
+
 	public String getName() {
 		return name;
 	}
@@ -31,6 +33,14 @@ public class ProductServiceOutput extends BaseServiceOutput {
 
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
+	}
+
+	public double getCost() {
+		return cost;
+	}
+
+	public void setCost(double cost) {
+		this.cost = cost;
 	}
 
 }

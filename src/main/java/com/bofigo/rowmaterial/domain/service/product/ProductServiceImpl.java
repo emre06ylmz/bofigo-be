@@ -1,13 +1,21 @@
 package com.bofigo.rowmaterial.domain.service.product;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.bofigo.rowmaterial.constant.ApplicationConstants;
+import com.bofigo.rowmaterial.dao.model.ProductMaterialModel;
 import com.bofigo.rowmaterial.dao.model.ProductModel;
+import com.bofigo.rowmaterial.dao.model.PurchaseModel;
+import com.bofigo.rowmaterial.dao.model.RawMaterialModel;
+import com.bofigo.rowmaterial.dao.repository.ProductMaterialRepository;
 import com.bofigo.rowmaterial.dao.repository.ProductRepository;
+import com.bofigo.rowmaterial.dao.repository.PurchaseRepository;
+import com.bofigo.rowmaterial.dao.repository.RawMaterialRepository;
 import com.bofigo.rowmaterial.domain.dto.input.ProductServiceInput;
 import com.bofigo.rowmaterial.domain.dto.output.ProductServiceOutput;
 import com.bofigo.rowmaterial.exception.DataAlreadyExistException;
@@ -20,9 +28,19 @@ public class ProductServiceImpl implements ProductService {
 	private ProductMapper productMapper;
 	private ProductRepository productRepository;
 
-	public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper) {
+	private ProductMaterialRepository productMaterialRepository;
+
+	private PurchaseRepository purchaseRepository;
+	private RawMaterialRepository rawMaterialRepository;
+
+	public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper,
+			ProductMaterialRepository productMaterialRepository, PurchaseRepository purchaseRepository,
+			RawMaterialRepository rawMaterialRepository) {
 		this.productRepository = productRepository;
 		this.productMapper = productMapper;
+		this.productMaterialRepository = productMaterialRepository;
+		this.purchaseRepository = purchaseRepository;
+		this.rawMaterialRepository = rawMaterialRepository;
 	}
 
 	@Override
@@ -95,7 +113,6 @@ public class ProductServiceImpl implements ProductService {
 
 		productServiceOutput = productMapper.mapModelToServiceOutput(productModel);
 
-		
 		return productServiceOutput;
 	}
 
@@ -107,10 +124,51 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	public ProductModel updateProductModel(ProductModel productModel, ProductServiceInput productServiceInput) {
-		productModel.setName(productServiceInput.getName());
-		productModel.setExplanation(productServiceInput.getExplanation());
+		productModel = productMapper.mapServiceInputToModel(productServiceInput);
 
 		return productRepository.save(productModel);
+	}
+
+	@Override
+	public void calculateProductCosts() {
+		double totalCost = 0;
+		double purchasePrice = 0;
+
+		List<ProductModel> productList = productRepository.findAll();
+
+		for (ProductModel product : productList) {
+
+			// get material list for product
+			List<ProductMaterialModel> productMaterialList = productMaterialRepository
+					.listByProductId(product.getId());
+			totalCost = 0;
+
+			for (ProductMaterialModel productMaterial : productMaterialList) {
+				Optional<RawMaterialModel> rawMaterial = rawMaterialRepository.findById(productMaterial.getRawMaterial().getId());
+
+				// calculate price for material
+				purchasePrice = getMaterialPriceForProduct(rawMaterial.get());
+				totalCost += purchasePrice * productMaterial.getAmount();
+			}
+
+			product.setCost(totalCost);
+			productRepository.save(product);
+
+		}
+	}
+
+	private double getMaterialPriceForProduct(RawMaterialModel rawMaterial) {
+		double purchasePrice = 0;
+		List<PurchaseModel> purchaseList = purchaseRepository.listByMaterialId(rawMaterial.getId());
+
+		Collections.sort(purchaseList, new Comparator<PurchaseModel>() {
+			public int compare(PurchaseModel o1, PurchaseModel o2) {
+				return o2.getDate().compareTo(o1.getDate());
+			}
+		});
+
+		purchasePrice = purchaseList.get(0).getPrice();
+		return purchasePrice;
 	}
 
 }
