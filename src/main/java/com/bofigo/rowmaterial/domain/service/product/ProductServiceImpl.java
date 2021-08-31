@@ -21,6 +21,7 @@ import com.bofigo.rowmaterial.domain.dto.output.ProductServiceOutput;
 import com.bofigo.rowmaterial.exception.DataAlreadyExistException;
 import com.bofigo.rowmaterial.exception.DataNotFoundException;
 import com.bofigo.rowmaterial.mapper.ProductMapper;
+import com.bofigo.rowmaterial.util.CurrencyUtil;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -131,7 +132,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public void calculateProductCosts() {
-		double totalCost = 0;
+		double totalCost_TL = 0;
+		double totalCost_USD = 0;
+		double totalCost_EURO = 0;
 		double purchasePrice = 0;
 
 		List<ProductModel> productList = productRepository.findAll();
@@ -141,17 +144,30 @@ public class ProductServiceImpl implements ProductService {
 			// get material list for product
 			List<ProductMaterialModel> productMaterialList = productMaterialRepository
 					.listByProductId(product.getId());
-			totalCost = 0;
+			totalCost_EURO = 0;
+			totalCost_TL = 0;
+			totalCost_USD = 0;
 
 			for (ProductMaterialModel productMaterial : productMaterialList) {
 				Optional<RawMaterialModel> rawMaterial = rawMaterialRepository.findById(productMaterial.getRawMaterial().getId());
-
+				RawMaterialModel rawMaterialModel = rawMaterial.get();
 				// calculate price for material
-				purchasePrice = getMaterialPriceForProduct(rawMaterial.get());
-				totalCost += purchasePrice * productMaterial.getAmount();
+				purchasePrice = getMaterialPriceForProduct(rawMaterialModel);
+				
+				if(rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_TL)) {
+					totalCost_TL += purchasePrice * productMaterial.getAmount();
+				} else if(rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_TL)) {
+					totalCost_USD += purchasePrice * productMaterial.getAmount();
+				} else if(rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_TL)) {
+					totalCost_EURO += purchasePrice * productMaterial.getAmount();
+				}
+				
+				
 			}
 
-			product.setCost(totalCost);
+			product.setCost_TL(totalCost_TL);
+			product.setCost_USD(totalCost_USD);
+			product.setCost_EURO(totalCost_EURO);
 			productRepository.save(product);
 
 		}

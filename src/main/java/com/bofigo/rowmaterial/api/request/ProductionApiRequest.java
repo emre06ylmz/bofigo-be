@@ -1,4 +1,4 @@
-package com.bofigo.rowmaterial.api.response;
+package com.bofigo.rowmaterial.api.request;
 
 import java.util.Date;
 
@@ -13,15 +13,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class ProductMaterialApiResponse extends BaseApiResponse {
+public class ProductionApiRequest {
 
 	private double count;
+
+	private int productId;
 
 	private String explanation;
 
 	private Date date;
-
-	private ProductApiResponse product;
 
 	public double getCount() {
 		return count;
@@ -29,6 +29,14 @@ public class ProductMaterialApiResponse extends BaseApiResponse {
 
 	public void setCount(double count) {
 		this.count = count;
+	}
+
+	public int getProductId() {
+		return productId;
+	}
+
+	public void setProductId(int productId) {
+		this.productId = productId;
 	}
 
 	public String getExplanation() {
@@ -45,14 +53,6 @@ public class ProductMaterialApiResponse extends BaseApiResponse {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public ProductApiResponse getProduct() {
-		return product;
-	}
-
-	public void setProduct(ProductApiResponse product) {
-		this.product = product;
 	}
 
 }

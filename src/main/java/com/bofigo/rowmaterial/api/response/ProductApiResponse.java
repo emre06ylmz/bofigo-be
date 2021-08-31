@@ -17,15 +17,12 @@ public class ProductApiResponse extends BaseApiResponse {
 
 	private String explanation;
 
-	private double cost;
+	private double cost_TL;
 
-	public double getCost() {
-		return cost;
-	}
+	private double cost_USD;
 
-	public void setCost(double cost) {
-		this.cost = cost;
-	}
+	private double cost_EURO;
+
 
 	public String getName() {
 		return name;
@@ -41,6 +38,30 @@ public class ProductApiResponse extends BaseApiResponse {
 
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
+	}
+
+	public double getCost_TL() {
+		return cost_TL;
+	}
+
+	public void setCost_TL(double cost_TL) {
+		this.cost_TL = cost_TL;
+	}
+
+	public double getCost_USD() {
+		return cost_USD;
+	}
+
+	public void setCost_USD(double cost_USD) {
+		this.cost_USD = cost_USD;
+	}
+
+	public double getCost_EURO() {
+		return cost_EURO;
+	}
+
+	public void setCost_EURO(double cost_EURO) {
+		this.cost_EURO = cost_EURO;
 	}
 
 }
