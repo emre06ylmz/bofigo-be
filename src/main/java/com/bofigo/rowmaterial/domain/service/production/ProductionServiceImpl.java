@@ -7,8 +7,10 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.bofigo.rowmaterial.constant.ApplicationConstants;
+import com.bofigo.rowmaterial.dao.model.ProductMaterialModel;
 import com.bofigo.rowmaterial.dao.model.ProductionModel;
 import com.bofigo.rowmaterial.dao.model.RawMaterialModel;
+import com.bofigo.rowmaterial.dao.repository.ProductMaterialRepository;
 import com.bofigo.rowmaterial.dao.repository.ProductRepository;
 import com.bofigo.rowmaterial.dao.repository.ProductionRepository;
 import com.bofigo.rowmaterial.dao.repository.RawMaterialCategoryRepository;
@@ -27,16 +29,17 @@ public class ProductionServiceImpl implements ProductionService {
 
 	private ProductRepository productRepository;
 	private RawMaterialRepository rawMaterialRepository;
-	private RawMaterialCategoryRepository rawMaterialCategoryRepository;
+	private ProductMaterialRepository productMaterialRepository;
 
 	public ProductionServiceImpl(ProductionRepository productionRepository, ProductionMapper productionMapper,
 			ProductRepository productRepository, RawMaterialRepository rawMaterialRepository,
-			RawMaterialCategoryRepository rawMaterialCategoryRepository) {
+			RawMaterialCategoryRepository rawMaterialCategoryRepository,
+			ProductMaterialRepository productMaterialRepository) {
 		this.productionRepository = productionRepository;
 		this.productionMapper = productionMapper;
 		this.productRepository = productRepository;
 		this.rawMaterialRepository = rawMaterialRepository;
-		this.rawMaterialCategoryRepository = rawMaterialCategoryRepository;
+		this.productMaterialRepository = productMaterialRepository;
 	}
 
 	@Override
@@ -49,6 +52,18 @@ public class ProductionServiceImpl implements ProductionService {
 	public ProductionServiceOutput createProduction(ProductionServiceInput productionServiceInput)
 			throws DataAlreadyExistException {
 		ProductionModel insertedProductionModel = insertProductionModel(productionServiceInput);
+
+		// UPDATE STOCK
+		List<ProductMaterialModel> productMaterialList = productMaterialRepository
+				.listByProductId(insertedProductionModel.getProduct().getId());
+
+		for (ProductMaterialModel productMaterialModel : productMaterialList) {
+			RawMaterialModel rawMaterial = productMaterialModel.getRawMaterial();
+			rawMaterial.setStock(
+					rawMaterial.getStock() - insertedProductionModel.getCount() * productMaterialModel.getAmount());
+			rawMaterialRepository.save(rawMaterial);
+		}
+
 		return prepareProductionServiceOutput(insertedProductionModel);
 	}
 
@@ -56,10 +71,25 @@ public class ProductionServiceImpl implements ProductionService {
 	public ProductionServiceOutput updateProduction(Integer id, ProductionServiceInput productionServiceInput)
 			throws DataNotFoundException {
 		Optional<ProductionModel> productionModel = productionRepository.findById(id);
+		double oldCount = productionModel.get().getCount();
 
 		if (productionModel.isPresent()) {
 			ProductionModel updatedProductionModel = updateProductionModel(productionModel.get(),
 					productionServiceInput);
+
+			// UPDATE STOCK
+			if (updatedProductionModel.getCount() != oldCount) {
+				List<ProductMaterialModel> productMaterialList = productMaterialRepository
+						.listByProductId(updatedProductionModel.getProduct().getId());
+
+				for (ProductMaterialModel productMaterialModel : productMaterialList) {
+					RawMaterialModel rawMaterial = productMaterialModel.getRawMaterial();
+					rawMaterial.setStock(rawMaterial.getStock()
+							- updatedProductionModel.getCount() * productMaterialModel.getAmount());
+					rawMaterialRepository.save(rawMaterial);
+				}
+			}
+
 			return prepareProductionServiceOutput(updatedProductionModel);
 		}
 
@@ -112,9 +142,6 @@ public class ProductionServiceImpl implements ProductionService {
 		productionModel.setDate(new Date());
 		productionModel.setProduct(productRepository.findById(productionServiceInput.getProductId()).get());
 
-		RawMaterialModel rawMaterial = rawMaterialRepository.findById(purchaseServiceInput.getRawMaterialId()).get();
-		rawMaterial.setStock(rawMaterial.getStock() + purchaseServiceInput.getAmount());
-		
 		return productionRepository.save(productionModel);
 	}
 
