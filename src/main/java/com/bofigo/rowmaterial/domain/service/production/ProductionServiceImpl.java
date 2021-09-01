@@ -71,23 +71,30 @@ public class ProductionServiceImpl implements ProductionService {
 	public ProductionServiceOutput updateProduction(Integer id, ProductionServiceInput productionServiceInput)
 			throws DataNotFoundException {
 		Optional<ProductionModel> productionModel = productionRepository.findById(id);
-		double oldCount = productionModel.get().getCount();
 
 		if (productionModel.isPresent()) {
+
+			ProductionModel production = productionModel.get();
+
+			// UPDATE STOCK
+			// eski ürün id sine göre stokları geri ekle
+			List<ProductMaterialModel> productMaterialList = productMaterialRepository
+					.listByProductId(production.getProduct().getId());
+			for (ProductMaterialModel productMaterialModel : productMaterialList) {
+				RawMaterialModel rawMaterial = productMaterialModel.getRawMaterial();
+				rawMaterial.setStock(rawMaterial.getStock() + production.getCount() * productMaterialModel.getAmount());
+				rawMaterialRepository.save(rawMaterial);
+			}
+
 			ProductionModel updatedProductionModel = updateProductionModel(productionModel.get(),
 					productionServiceInput);
 
-			// UPDATE STOCK
-			if (updatedProductionModel.getCount() != oldCount) {
-				List<ProductMaterialModel> productMaterialList = productMaterialRepository
-						.listByProductId(updatedProductionModel.getProduct().getId());
-
-				for (ProductMaterialModel productMaterialModel : productMaterialList) {
-					RawMaterialModel rawMaterial = productMaterialModel.getRawMaterial();
-					rawMaterial.setStock(rawMaterial.getStock()
-							- updatedProductionModel.getCount() * productMaterialModel.getAmount());
-					rawMaterialRepository.save(rawMaterial);
-				}
+			// yeni ürün id ye göre stoklardan düş
+			productMaterialRepository.listByProductId(updatedProductionModel.getProduct().getId());
+			for (ProductMaterialModel productMaterialModel : productMaterialList) {
+				RawMaterialModel rawMaterial = productMaterialModel.getRawMaterial();
+				rawMaterial.setStock(rawMaterial.getStock() + production.getCount() * productMaterialModel.getAmount());
+				rawMaterialRepository.save(rawMaterial);
 			}
 
 			return prepareProductionServiceOutput(updatedProductionModel);

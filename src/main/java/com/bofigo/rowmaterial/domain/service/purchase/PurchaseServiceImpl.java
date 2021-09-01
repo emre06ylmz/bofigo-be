@@ -63,12 +63,10 @@ public class PurchaseServiceImpl implements PurchaseService {
 			PurchaseModel updatedPurchaseModel = updatePurchaseModel(purchaseModel.get(), purchaseServiceInput);
 
 			// UPDATE STOCK
-			if (updatedPurchaseModel.getAmount() != oldStock) {
-				RawMaterialModel rawMaterial = rawMaterialRepository.findById(purchaseServiceInput.getRawMaterialId())
-						.get();
-				rawMaterial.setStock(rawMaterial.getStock() + purchaseServiceInput.getAmount() - oldStock);
-				rawMaterialRepository.save(rawMaterial);
-			}
+			RawMaterialModel rawMaterial = rawMaterialRepository.findById(purchaseServiceInput.getRawMaterialId())
+					.get();
+			rawMaterial.setStock(rawMaterial.getStock() + purchaseServiceInput.getAmount() - oldStock);
+			rawMaterialRepository.save(rawMaterial);
 
 			return preparePurchaseServiceOutput(updatedPurchaseModel);
 		}
