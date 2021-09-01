@@ -107,8 +107,9 @@ public class UserTypeServiceImpl implements UserTypeService {
 	}
 
 	public UserTypeModel updateUserTypeModel(UserTypeModel userTypeModel, UserTypeServiceInput userTypeServiceInput) {
+		int id = userTypeModel.getId();
 		userTypeModel = userTypeMapper.mapServiceInputToModel(userTypeServiceInput);
-
+		userTypeModel.setId(id);
 		return userTypeRepository.save(userTypeModel);
 	}
 

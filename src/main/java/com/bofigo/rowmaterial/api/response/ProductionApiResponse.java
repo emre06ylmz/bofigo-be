@@ -1,5 +1,7 @@
 package com.bofigo.rowmaterial.api.response;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -13,36 +15,36 @@ import lombok.Setter;
 @Getter
 public class ProductionApiResponse extends BaseApiResponse {
 
-	private double amount;
+	private double count;
 
-	private RawMaterialApiResponse rawMaterial;
+	private String explanation;
 
-	private RawMaterialCategoryApiResponse rawMaterialCategory;
+	private Date date;
 
 	private ProductApiResponse product;
 
-	public double getAmount() {
-		return amount;
+	public double getCount() {
+		return count;
 	}
 
-	public void setAmount(double amount) {
-		this.amount = amount;
+	public void setCount(double count) {
+		this.count = count;
 	}
 
-	public RawMaterialApiResponse getRawMaterial() {
-		return rawMaterial;
+	public String getExplanation() {
+		return explanation;
 	}
 
-	public void setRawMaterial(RawMaterialApiResponse rawMaterial) {
-		this.rawMaterial = rawMaterial;
+	public void setExplanation(String explanation) {
+		this.explanation = explanation;
 	}
 
-	public RawMaterialCategoryApiResponse getRawMaterialCategory() {
-		return rawMaterialCategory;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setRawMaterialCategory(RawMaterialCategoryApiResponse rawMaterialCategory) {
-		this.rawMaterialCategory = rawMaterialCategory;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public ProductApiResponse getProduct() {

@@ -99,10 +99,10 @@ public class CurrencySettingsServiceImpl implements CurrencySettingsService {
 
 	public CurrencySettingsModel updateCurrencySettingsModel(CurrencySettingsModel currenySettingsModel,
 			CurrencySettingsServiceInput currenySettingsServiceInput) {
-		
+		int id = currenySettingsModel.getId();
 		currenySettingsModel = currenySettingsMapper.mapServiceInputToModel(currenySettingsServiceInput);
 		currenySettingsModel.setLastUpdateDate(new Date());
-
+		currenySettingsModel.setId(id);
 		return currenySettingsRepository.save(currenySettingsModel);
 	}
 

@@ -13,10 +13,7 @@ import com.bofigo.rowmaterial.dao.repository.PurchaseRepository;
 import com.bofigo.rowmaterial.dao.repository.RawMaterialRepository;
 import com.bofigo.rowmaterial.dao.repository.SupplierRepository;
 import com.bofigo.rowmaterial.domain.dto.input.PurchaseServiceInput;
-import com.bofigo.rowmaterial.domain.dto.output.ProductMaterialServiceOutput;
-import com.bofigo.rowmaterial.domain.dto.output.ProductServiceOutput;
 import com.bofigo.rowmaterial.domain.dto.output.PurchaseServiceOutput;
-import com.bofigo.rowmaterial.domain.dto.output.RawMaterialServiceOutput;
 import com.bofigo.rowmaterial.exception.DataAlreadyExistException;
 import com.bofigo.rowmaterial.exception.DataNotFoundException;
 import com.bofigo.rowmaterial.mapper.PurchaseMapper;
@@ -49,11 +46,11 @@ public class PurchaseServiceImpl implements PurchaseService {
 			throws DataAlreadyExistException {
 		PurchaseModel insertedPurchaseModel = insertPurchaseModel(purchaseServiceInput);
 
-		//UPDATE STOCK
+		// UPDATE STOCK
 		RawMaterialModel rawMaterial = rawMaterialRepository.findById(purchaseServiceInput.getRawMaterialId()).get();
 		rawMaterial.setStock(rawMaterial.getStock() + purchaseServiceInput.getAmount());
 		rawMaterialRepository.save(rawMaterial);
-		
+
 		return preparePurchaseServiceOutput(insertedPurchaseModel);
 	}
 
@@ -65,7 +62,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 		if (purchaseModel.isPresent()) {
 			PurchaseModel updatedPurchaseModel = updatePurchaseModel(purchaseModel.get(), purchaseServiceInput);
 
-			//UPDATE STOCK
+			// UPDATE STOCK
 			if (updatedPurchaseModel.getAmount() != oldStock) {
 				RawMaterialModel rawMaterial = rawMaterialRepository.findById(purchaseServiceInput.getRawMaterialId())
 						.get();
@@ -83,13 +80,12 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public PurchaseServiceOutput deletePurchase(Integer id) throws DataNotFoundException {
 		PurchaseModel purchaseModel = getPurchaseModel(id);
 		purchaseRepository.deleteById(id);
-		
-		//UPDATE STOCK
-		RawMaterialModel rawMaterial = rawMaterialRepository.findById(purchaseModel.getRawMaterial().getId())
-				.get();
+
+		// UPDATE STOCK
+		RawMaterialModel rawMaterial = rawMaterialRepository.findById(purchaseModel.getRawMaterial().getId()).get();
 		rawMaterial.setStock(rawMaterial.getStock() - purchaseModel.getAmount());
 		rawMaterialRepository.save(rawMaterial);
-		
+
 		return purchaseMapper.mapModelToServiceOutput(purchaseModel);
 	}
 
@@ -98,7 +94,6 @@ public class PurchaseServiceImpl implements PurchaseService {
 		List<PurchaseModel> purchaseModelList = purchaseRepository.findAll();
 		return purchaseMapper.mapModelToServiceOutputList(purchaseModelList);
 	}
-	
 
 	@Override
 	public List<PurchaseServiceOutput> listByMaterialId(Integer rawMaterialId) {
@@ -139,8 +134,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}
 
 	public PurchaseModel updatePurchaseModel(PurchaseModel purchaseModel, PurchaseServiceInput purchaseServiceInput) {
+		int id = purchaseModel.getId();
 		purchaseModel = purchaseMapper.mapServiceInputToModel(purchaseServiceInput);
-
+		purchaseModel.setId(id);
 		return purchaseRepository.save(purchaseModel);
 	}
 

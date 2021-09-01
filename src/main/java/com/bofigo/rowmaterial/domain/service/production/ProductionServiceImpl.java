@@ -1,5 +1,6 @@
 package com.bofigo.rowmaterial.domain.service.production;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bofigo.rowmaterial.constant.ApplicationConstants;
 import com.bofigo.rowmaterial.dao.model.ProductionModel;
+import com.bofigo.rowmaterial.dao.model.RawMaterialModel;
 import com.bofigo.rowmaterial.dao.repository.ProductRepository;
 import com.bofigo.rowmaterial.dao.repository.ProductionRepository;
 import com.bofigo.rowmaterial.dao.repository.RawMaterialCategoryRepository;
@@ -107,22 +109,27 @@ public class ProductionServiceImpl implements ProductionService {
 	public ProductionModel insertProductionModel(ProductionServiceInput productionServiceInput) {
 		ProductionModel productionModel = productionMapper.mapServiceInputToModel(productionServiceInput);
 		productionModel.setStatus(ApplicationConstants.ACTIVE);
-
+		productionModel.setDate(new Date());
 		productionModel.setProduct(productRepository.findById(productionServiceInput.getProductId()).get());
 
+		RawMaterialModel rawMaterial = rawMaterialRepository.findById(purchaseServiceInput.getRawMaterialId()).get();
+		rawMaterial.setStock(rawMaterial.getStock() + purchaseServiceInput.getAmount());
+		
 		return productionRepository.save(productionModel);
 	}
 
 	public ProductionModel updateProductionModel(ProductionModel productionModel,
 			ProductionServiceInput productionServiceInput) {
+		int id = productionModel.getId();
 		productionModel = productionMapper.mapServiceInputToModel(productionServiceInput);
-
+		productionModel.setProduct(productRepository.findById(productionServiceInput.getProductId()).get());
+		productionModel.setId(id);
+		productionModel.setDate(new Date());
 		return productionRepository.save(productionModel);
 	}
 
 	@Override
-	public ProductionServiceOutput getProductionByProductId(Integer productId)
-			throws DataNotFoundException {
+	public ProductionServiceOutput getProductionByProductId(Integer productId) throws DataNotFoundException {
 
 		Optional<ProductionModel> production = productionRepository.findByProductId(productId);
 

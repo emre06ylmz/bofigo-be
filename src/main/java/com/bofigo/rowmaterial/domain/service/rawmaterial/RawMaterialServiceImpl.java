@@ -136,8 +136,9 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 
 	public RawMaterialModel updateRawMaterialModel(RawMaterialModel rawMaterialModel,
 			RawMaterialServiceInput rawMaterialServiceInput) {
+		int id = rawMaterialModel.getId();
 		rawMaterialModel = rawMaterialMapper.mapServiceInputToModel(rawMaterialServiceInput);
-
+		rawMaterialModel.setId(id);
 		return rawMaterialRepository.save(rawMaterialModel);
 	}
 

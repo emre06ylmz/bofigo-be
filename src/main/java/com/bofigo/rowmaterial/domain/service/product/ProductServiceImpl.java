@@ -125,8 +125,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	public ProductModel updateProductModel(ProductModel productModel, ProductServiceInput productServiceInput) {
+		int id = productModel.getId();
 		productModel = productMapper.mapServiceInputToModel(productServiceInput);
-
+		productModel.setId(id);
 		return productRepository.save(productModel);
 	}
 
@@ -142,27 +143,26 @@ public class ProductServiceImpl implements ProductService {
 		for (ProductModel product : productList) {
 
 			// get material list for product
-			List<ProductMaterialModel> productMaterialList = productMaterialRepository
-					.listByProductId(product.getId());
+			List<ProductMaterialModel> productMaterialList = productMaterialRepository.listByProductId(product.getId());
 			totalCost_EURO = 0;
 			totalCost_TL = 0;
 			totalCost_USD = 0;
 
 			for (ProductMaterialModel productMaterial : productMaterialList) {
-				Optional<RawMaterialModel> rawMaterial = rawMaterialRepository.findById(productMaterial.getRawMaterial().getId());
+				Optional<RawMaterialModel> rawMaterial = rawMaterialRepository
+						.findById(productMaterial.getRawMaterial().getId());
 				RawMaterialModel rawMaterialModel = rawMaterial.get();
 				// calculate price for material
 				purchasePrice = getMaterialPriceForProduct(rawMaterialModel);
-				
-				if(rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_TL)) {
+
+				if (rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_TL)) {
 					totalCost_TL += purchasePrice * productMaterial.getAmount();
-				} else if(rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_TL)) {
+				} else if (rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_TL)) {
 					totalCost_USD += purchasePrice * productMaterial.getAmount();
-				} else if(rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_TL)) {
+				} else if (rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_TL)) {
 					totalCost_EURO += purchasePrice * productMaterial.getAmount();
 				}
-				
-				
+
 			}
 
 			product.setCost_TL(totalCost_TL);

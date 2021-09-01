@@ -20,8 +20,7 @@ public class UnitServiceImpl implements UnitService {
 	private UnitMapper unitMapper;
 	private UnitRepository unitRepository;
 
-	public UnitServiceImpl(UnitRepository unitRepository,
-			UnitMapper unitMapper) {
+	public UnitServiceImpl(UnitRepository unitRepository, UnitMapper unitMapper) {
 		this.unitRepository = unitRepository;
 		this.unitMapper = unitMapper;
 	}
@@ -39,29 +38,24 @@ public class UnitServiceImpl implements UnitService {
 	}
 
 	@Override
-	public UnitServiceOutput createUnit(
-			UnitServiceInput unitServiceInput) throws DataAlreadyExistException {
-		UnitModel unitModel = unitRepository
-				.findByName(unitServiceInput.getName());
+	public UnitServiceOutput createUnit(UnitServiceInput unitServiceInput) throws DataAlreadyExistException {
+		UnitModel unitModel = unitRepository.findByName(unitServiceInput.getName());
 
 		if (unitModel != null) {
 			throw new DataAlreadyExistException("zaten var");
 		}
 
-		UnitModel insertedUnitModel = insertUnitModel(
-				unitServiceInput);
+		UnitModel insertedUnitModel = insertUnitModel(unitServiceInput);
 
 		return prepareUnitServiceOutput(insertedUnitModel);
 	}
 
 	@Override
-	public UnitServiceOutput updateUnit(Integer id,
-			UnitServiceInput unitServiceInput) throws DataNotFoundException {
+	public UnitServiceOutput updateUnit(Integer id, UnitServiceInput unitServiceInput) throws DataNotFoundException {
 		Optional<UnitModel> unitModel = unitRepository.findById(id);
 
 		if (unitModel.isPresent()) {
-			UnitModel updatedUnitModel = updateUnitModel(
-					unitModel.get(), unitServiceInput);
+			UnitModel updatedUnitModel = updateUnitModel(unitModel.get(), unitServiceInput);
 			return prepareUnitServiceOutput(updatedUnitModel);
 		}
 
@@ -90,8 +84,7 @@ public class UnitServiceImpl implements UnitService {
 		return unit.get();
 	}
 
-	public UnitServiceOutput prepareUnitServiceOutput(
-			UnitModel unitModel) {
+	public UnitServiceOutput prepareUnitServiceOutput(UnitModel unitModel) {
 		UnitServiceOutput unitServiceOutput = new UnitServiceOutput();
 
 		if (unitModel == null) {
@@ -103,19 +96,17 @@ public class UnitServiceImpl implements UnitService {
 		return unitServiceOutput;
 	}
 
-	public UnitModel insertUnitModel(
-			UnitServiceInput unitServiceInput) {
-		UnitModel unitModel = unitMapper
-				.mapServiceInputToModel(unitServiceInput);
+	public UnitModel insertUnitModel(UnitServiceInput unitServiceInput) {
+		UnitModel unitModel = unitMapper.mapServiceInputToModel(unitServiceInput);
 		unitModel.setStatus(ApplicationConstants.ACTIVE);
 
 		return unitRepository.save(unitModel);
 	}
 
-	public UnitModel updateUnitModel(UnitModel unitModel,
-			UnitServiceInput unitServiceInput) {
+	public UnitModel updateUnitModel(UnitModel unitModel, UnitServiceInput unitServiceInput) {
+		int id = unitModel.getId();
 		unitModel = unitMapper.mapServiceInputToModel(unitServiceInput);
-
+		unitModel.setId(id);
 		return unitRepository.save(unitModel);
 	}
 

@@ -62,6 +62,7 @@ public class RawMaterialCategoryServiceImpl implements RawMaterialCategoryServic
 		if (rawMaterialCategoryModel.isPresent()) {
 			RawMaterialCategoryModel updatedRawMaterialCategoryModel = updateRawMaterialCategoryModel(
 					rawMaterialCategoryModel.get(), rawMaterialCategoryServiceInput);
+			updatedRawMaterialCategoryModel.setId(id);
 			return prepareRawMaterialCategoryServiceOutput(updatedRawMaterialCategoryModel);
 		}
 
@@ -114,8 +115,9 @@ public class RawMaterialCategoryServiceImpl implements RawMaterialCategoryServic
 
 	public RawMaterialCategoryModel updateRawMaterialCategoryModel(RawMaterialCategoryModel rawMaterialCategoryModel,
 			RawMaterialCategoryServiceInput rawMaterialCategoryServiceInput) {
+		int id = rawMaterialCategoryModel.getId();
 		rawMaterialCategoryModel = rawMaterialCategoryMapper.mapServiceInputToModel(rawMaterialCategoryServiceInput);
-
+		rawMaterialCategoryModel.setId(id);
 		return rawMaterialCategoryRepository.save(rawMaterialCategoryModel);
 	}
 

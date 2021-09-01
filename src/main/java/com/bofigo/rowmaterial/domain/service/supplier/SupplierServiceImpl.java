@@ -20,8 +20,7 @@ public class SupplierServiceImpl implements SupplierService {
 	private SupplierMapper supplierMapper;
 	private SupplierRepository supplierRepository;
 
-	public SupplierServiceImpl(SupplierRepository supplierRepository,
-			SupplierMapper supplierMapper) {
+	public SupplierServiceImpl(SupplierRepository supplierRepository, SupplierMapper supplierMapper) {
 		this.supplierRepository = supplierRepository;
 		this.supplierMapper = supplierMapper;
 	}
@@ -39,29 +38,26 @@ public class SupplierServiceImpl implements SupplierService {
 	}
 
 	@Override
-	public SupplierServiceOutput createSupplier(
-			SupplierServiceInput supplierServiceInput) throws DataAlreadyExistException {
-		SupplierModel supplierModel = supplierRepository
-				.findByName(supplierServiceInput.getName());
+	public SupplierServiceOutput createSupplier(SupplierServiceInput supplierServiceInput)
+			throws DataAlreadyExistException {
+		SupplierModel supplierModel = supplierRepository.findByName(supplierServiceInput.getName());
 
 		if (supplierModel != null) {
 			throw new DataAlreadyExistException("zaten var");
 		}
 
-		SupplierModel insertedSupplierModel = insertSupplierModel(
-				supplierServiceInput);
+		SupplierModel insertedSupplierModel = insertSupplierModel(supplierServiceInput);
 
 		return prepareSupplierServiceOutput(insertedSupplierModel);
 	}
 
 	@Override
-	public SupplierServiceOutput updateSupplier(Integer id,
-			SupplierServiceInput supplierServiceInput) throws DataNotFoundException {
+	public SupplierServiceOutput updateSupplier(Integer id, SupplierServiceInput supplierServiceInput)
+			throws DataNotFoundException {
 		Optional<SupplierModel> supplierModel = supplierRepository.findById(id);
 
 		if (supplierModel.isPresent()) {
-			SupplierModel updatedSupplierModel = updateSupplierModel(
-					supplierModel.get(), supplierServiceInput);
+			SupplierModel updatedSupplierModel = updateSupplierModel(supplierModel.get(), supplierServiceInput);
 			return prepareSupplierServiceOutput(updatedSupplierModel);
 		}
 
@@ -90,8 +86,7 @@ public class SupplierServiceImpl implements SupplierService {
 		return supplier.get();
 	}
 
-	public SupplierServiceOutput prepareSupplierServiceOutput(
-			SupplierModel supplierModel) {
+	public SupplierServiceOutput prepareSupplierServiceOutput(SupplierModel supplierModel) {
 		SupplierServiceOutput supplierServiceOutput = new SupplierServiceOutput();
 
 		if (supplierModel == null) {
@@ -103,19 +98,17 @@ public class SupplierServiceImpl implements SupplierService {
 		return supplierServiceOutput;
 	}
 
-	public SupplierModel insertSupplierModel(
-			SupplierServiceInput supplierServiceInput) {
-		SupplierModel supplierModel = supplierMapper
-				.mapServiceInputToModel(supplierServiceInput);
+	public SupplierModel insertSupplierModel(SupplierServiceInput supplierServiceInput) {
+		SupplierModel supplierModel = supplierMapper.mapServiceInputToModel(supplierServiceInput);
 		supplierModel.setStatus(ApplicationConstants.ACTIVE);
 
 		return supplierRepository.save(supplierModel);
 	}
 
-	public SupplierModel updateSupplierModel(SupplierModel supplierModel,
-			SupplierServiceInput supplierServiceInput) {
+	public SupplierModel updateSupplierModel(SupplierModel supplierModel, SupplierServiceInput supplierServiceInput) {
+		int id = supplierModel.getId();
 		supplierModel = supplierMapper.mapServiceInputToModel(supplierServiceInput);
-
+		supplierModel.setId(id);
 		return supplierRepository.save(supplierModel);
 	}
 

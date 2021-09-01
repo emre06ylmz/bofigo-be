@@ -20,8 +20,7 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 	private UserRepository userRepository;
 
-	public UserServiceImpl(UserRepository userRepository,
-			UserMapper userMapper) {
+	public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
 		this.userRepository = userRepository;
 		this.userMapper = userMapper;
 	}
@@ -39,33 +38,27 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserServiceOutput createUser(
-			UserServiceInput userServiceInput) throws DataAlreadyExistException {
-		UserModel userModel = userRepository
-				.findByUsername(userServiceInput.getUsername());
+	public UserServiceOutput createUser(UserServiceInput userServiceInput) throws DataAlreadyExistException {
+		UserModel userModel = userRepository.findByUsername(userServiceInput.getUsername());
 
 		if (userModel != null) {
 			throw new DataAlreadyExistException("zaten var");
 		}
 
-		UserModel insertedUserModel = insertUserModel(
-				userServiceInput);
+		UserModel insertedUserModel = insertUserModel(userServiceInput);
 
 		return prepareUserServiceOutput(insertedUserModel);
 	}
 
 	@Override
-	public UserServiceOutput updateUser(Integer id,
-			UserServiceInput userServiceInput) throws DataNotFoundException {
-		UserModel userModel = userRepository
-				.findByUsername(userServiceInput.getUsername());
+	public UserServiceOutput updateUser(Integer id, UserServiceInput userServiceInput) throws DataNotFoundException {
+		UserModel userModel = userRepository.findByUsername(userServiceInput.getUsername());
 
 		if (userModel == null) {
 			throw new DataNotFoundException("bulunamadı");
 		}
 
-		UserModel updatedUserModel = updateUserModel(
-				userModel, userServiceInput);
+		UserModel updatedUserModel = updateUserModel(userModel, userServiceInput);
 
 		return prepareUserServiceOutput(updatedUserModel);
 	}
@@ -92,8 +85,7 @@ public class UserServiceImpl implements UserService {
 		return user.get();
 	}
 
-	public UserServiceOutput prepareUserServiceOutput(
-			UserModel userModel) {
+	public UserServiceOutput prepareUserServiceOutput(UserModel userModel) {
 		UserServiceOutput userServiceOutput = new UserServiceOutput();
 
 		if (userModel == null) {
@@ -105,19 +97,17 @@ public class UserServiceImpl implements UserService {
 		return userServiceOutput;
 	}
 
-	public UserModel insertUserModel(
-			UserServiceInput userServiceInput) {
-		UserModel userModel = userMapper
-				.mapServiceInputToModel(userServiceInput);
+	public UserModel insertUserModel(UserServiceInput userServiceInput) {
+		UserModel userModel = userMapper.mapServiceInputToModel(userServiceInput);
 		userModel.setStatus(ApplicationConstants.ACTIVE);
 
 		return userRepository.save(userModel);
 	}
 
-	public UserModel updateUserModel(UserModel userModel,
-			UserServiceInput userServiceInput) {
+	public UserModel updateUserModel(UserModel userModel, UserServiceInput userServiceInput) {
+		int id = userModel.getId();
 		userModel = userMapper.mapServiceInputToModel(userServiceInput);
-
+		userModel.setId(id);
 		return userRepository.save(userModel);
 	}
 
