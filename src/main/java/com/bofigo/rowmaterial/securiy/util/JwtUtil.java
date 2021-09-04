@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
+import com.bofigo.rowmaterial.api.controller.CurrencySettingsController;
 import com.bofigo.rowmaterial.dao.model.UserModel;
 
 import io.jsonwebtoken.Claims;
@@ -16,12 +19,14 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Configuration
 public class JwtUtil {
 
+	private static Logger logger = LoggerFactory.getLogger(JwtUtil.class);
+	
 	private static final int JWT_TOKEN_VALIDIY = 5 * 60 * 60;
 
-	public static final String JWT_TOKEN = "JWT_TOKEN";
+	public static final String JWT_TOKEN = "BOFIGO_JWT_TOKEN";
 
 	// TODO
-	private String secret = "bbofigo";
+	private String secret = "bofigo";
 
 	public String generateToken(UserModel userModel) {
 		Map<String, Object> claims = new HashMap<>();

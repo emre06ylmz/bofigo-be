@@ -9,6 +9,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -24,6 +26,8 @@ import com.bofigo.rowmaterial.securiy.util.JwtUtil;
 
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
+
+	private static Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
 	private JwtUtil jwtUtil;
 	private JwtUserDetailService jwtUserDetailService;
@@ -43,7 +47,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 		Cookie cookie = WebUtils.getCookie(httpServletRequest, JwtUtil.JWT_TOKEN);
 
+		
 		if (cookie != null) {
+
+			logger.info("cookie: " + cookie.getName());
+			
 			String jwtToken = cookie.getValue();
 			SecurityContext securityContext = SecurityContextHolder.getContext();
 
@@ -54,10 +62,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 					JWTAuthenticationToken authenticationToken = new JWTAuthenticationToken(userModel, jwtToken,
 							Arrays.asList(simpleGrantedAuthority));
 					securityContext.setAuthentication(authenticationToken);
+					logger.info("auth is setted.");
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
 			}
+		}else {
+			logger.info("cookie is null");
 		}
 		filterChain.doFilter(request, response);
 

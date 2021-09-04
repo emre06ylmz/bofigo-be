@@ -86,13 +86,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.headers().cacheControl();
 	}
 
-	public CorsConfigurationSource cors() {
-		CorsConfiguration corsConfiguration = new CorsConfiguration();
-		corsConfiguration.applyPermitDefaultValues();
-		corsConfiguration.setAllowCredentials(true);
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", corsConfiguration);
-		return source;
-	}
-
 }
