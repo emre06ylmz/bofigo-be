@@ -40,7 +40,6 @@ public class AuthenticationSucessHandler extends SimpleUrlAuthenticationSuccessH
 		JWTAuthenticationToken jwtAuthenticationToken = (JWTAuthenticationToken) authentication;
 		Cookie cookie = new Cookie(JwtUtil.JWT_TOKEN, jwtAuthenticationToken.getToken());
 		cookie.setPath("/");
-		cookie.setMaxAge((int) Duration.of(1, ChronoUnit.HOURS).toSeconds());
 		cookie.setHttpOnly(true);
 		response.addCookie(cookie);
 		// cookie.setDomain("bofigo");
