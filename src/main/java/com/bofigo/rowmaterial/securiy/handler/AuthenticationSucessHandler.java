@@ -1,8 +1,7 @@
 package com.bofigo.rowmaterial.securiy.handler;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -45,6 +44,10 @@ public class AuthenticationSucessHandler extends SimpleUrlAuthenticationSuccessH
 		// cookie.setDomain("bofigo");
 		response.setCharacterEncoding("UTF-8");
 		logger.info("cookie is setted as: " + cookie.getValue());
+
+		response.addHeader("Access-Control-Request-Method", "GET, POST, DELETE, PUT");
+		response.addHeader("Access-Control-Request-Origin", "https://bofigo-fe.herokuapp.com/");
+
 		response.getWriter().print(new ObjectMapper().writeValueAsString(jwtAuthenticationToken.getPrincipal()));
 	}
 
