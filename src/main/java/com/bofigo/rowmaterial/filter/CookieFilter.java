@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.bofigo.rowmaterial.BofigoBeApplication;
+
 @Component
 public class CookieFilter implements Filter {
 
@@ -25,8 +27,10 @@ public class CookieFilter implements Filter {
 
 		HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
 		HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
-		httpResponse.addHeader("A", "A");
-		httpResponse.addHeader("Access-Control-Allow-Origin", "https://bofigo-fe.herokuapp.com/");
+
+		httpResponse.addHeader("Access-Control-Request-Method", "GET, POST, DELETE, PUT");
+		httpResponse.addHeader("Access-Control-Request-Origin", BofigoBeApplication.FE_DOMAIN);
+		httpResponse.addHeader("Access-Control-Allow-Credentials", "true");
 
 		filterChain.doFilter(servletRequest, servletResponse);
 

@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import com.bofigo.rowmaterial.BofigoBeApplication;
 import com.bofigo.rowmaterial.securiy.model.JWTAuthenticationToken;
 import com.bofigo.rowmaterial.securiy.util.JwtUtil;
 
@@ -46,8 +48,9 @@ public class AuthenticationSucessHandler extends SimpleUrlAuthenticationSuccessH
 		logger.info("cookie is setted as: " + cookie.getValue());
 
 		response.addHeader("Access-Control-Request-Method", "GET, POST, DELETE, PUT");
-		response.addHeader("Access-Control-Request-Origin", "https://bofigo-fe.herokuapp.com/");
-
+		response.addHeader("Access-Control-Request-Origin", BofigoBeApplication.FE_DOMAIN);
+		response.addHeader("Access-Control-Allow-Credentials", "true");
+		
 		response.getWriter().print(new ObjectMapper().writeValueAsString(jwtAuthenticationToken.getPrincipal()));
 	}
 
