@@ -8,7 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableAutoConfiguration
 public class BofigoBeApplication {
 
-	public static String FE_DOMAIN = "https://bofigo-fe.herokuapp.com:443";
+	public static String FE_ORIGIN = "https://bofigo-fe.herokuapp.com:443";
+	public static String FE_DOMAIN = "bofigo-be.herokuapp.com";
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BofigoBeApplication.class, args);

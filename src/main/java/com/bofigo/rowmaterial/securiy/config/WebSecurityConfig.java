@@ -1,7 +1,5 @@
 package com.bofigo.rowmaterial.securiy.config;
 
-import java.util.Arrays;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +13,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.bofigo.rowmaterial.BofigoBeApplication;
+import com.bofigo.rowmaterial.filter.CookieFilter;
 import com.bofigo.rowmaterial.securiy.authentication.AuthenticationProviderService;
 import com.bofigo.rowmaterial.securiy.authentication.JwtAuthenticationTokenFilter;
 import com.bofigo.rowmaterial.securiy.handler.AuthenticationFailureHandler;
@@ -76,6 +73,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	protected void configure(HttpSecurity http) throws Exception {
+
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		final CorsConfiguration config = new CorsConfiguration();
+
+		config.addAllowedOrigin("*");
+		config.addAllowedHeader("*");
+		config.addAllowedMethod("GET");
+		config.addAllowedMethod("PUT");
+		config.addAllowedMethod("POST");
+		source.registerCorsConfiguration("/**", config);
+
+		http.addFilterAfter(new CookieFilter(), UsernamePasswordAuthenticationFilter.class);
+
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unAuthorizedEntryPoint).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				.requestMatchers(requestMatcher()).authenticated().and().formLogin()
@@ -87,16 +97,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 		http.headers().cacheControl();
-	}
-
-	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList(BofigoBeApplication.FE_DOMAIN));
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT"));
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration);
-		return source;
 	}
 
 }
