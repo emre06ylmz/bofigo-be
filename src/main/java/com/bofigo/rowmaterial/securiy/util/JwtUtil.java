@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
-import com.bofigo.rowmaterial.api.controller.CurrencySettingsController;
 import com.bofigo.rowmaterial.dao.model.UserModel;
 
 import io.jsonwebtoken.Claims;

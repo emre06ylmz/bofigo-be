@@ -1,13 +1,16 @@
 package com.bofigo.rowmaterial.securiy.handler;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -18,6 +21,8 @@ import com.bofigo.rowmaterial.securiy.util.JwtUtil;
 
 @Component
 public class AuthenticationSucessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
+	private static Logger logger = LoggerFactory.getLogger(AuthenticationSucessHandler.class);
 
 	private JwtUtil jwtUtil;
 
@@ -33,10 +38,14 @@ public class AuthenticationSucessHandler extends SimpleUrlAuthenticationSuccessH
 			return;
 		}
 		JWTAuthenticationToken jwtAuthenticationToken = (JWTAuthenticationToken) authentication;
-		Cookie cookie = new Cookie(jwtUtil.JWT_TOKEN, jwtAuthenticationToken.getToken());
+		Cookie cookie = new Cookie(JwtUtil.JWT_TOKEN, jwtAuthenticationToken.getToken());
 		cookie.setPath("/");
+		cookie.setMaxAge((int) Duration.of(1, ChronoUnit.HOURS).toSeconds());
+		cookie.setHttpOnly(true);
 		response.addCookie(cookie);
+		// cookie.setDomain("bofigo");
 		response.setCharacterEncoding("UTF-8");
+		logger.info("cookie is setted as: " + cookie.getValue());
 		response.getWriter().print(new ObjectMapper().writeValueAsString(jwtAuthenticationToken.getPrincipal()));
 	}
 
