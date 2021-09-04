@@ -75,5 +75,9 @@ public class UserModel extends BaseModel {
 		this.role = role;
 	}
 	
+	@Override
+	public String toString() {
+		return this.getName() + " " + this.getSurname();
+	}
 	
 }
