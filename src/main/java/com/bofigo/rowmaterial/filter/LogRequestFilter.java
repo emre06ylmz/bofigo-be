@@ -29,7 +29,6 @@ public class LogRequestFilter implements Filter {
 
 		HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
 		HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
-		httpResponse.addHeader("Access-Control-Allow-Origin", "https://bofigo-fe.herokuapp.com/");
 		
 		if (Arrays.asList("POST", "PUT").contains(httpRequest.getMethod())) {
 			CustomHttpRequestWrapper requestWrapper = new CustomHttpRequestWrapper(httpRequest);
