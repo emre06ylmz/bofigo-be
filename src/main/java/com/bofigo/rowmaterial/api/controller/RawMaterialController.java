@@ -32,7 +32,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Api("Raw Material")
 @RequestMapping("/api/rawmaterial")
-@CrossOrigin(origins = "https://bofigo-fe.herokuapp.com", allowCredentials = "true")
 public class RawMaterialController {
 
 	private static Logger logger = LoggerFactory.getLogger(RawMaterialController.class);

@@ -18,7 +18,6 @@ import com.bofigo.rowmaterial.securiy.util.JwtUtil;
 
 @RestController
 @RequestMapping(ApplicationConstants.ROUTE_AUTHENTICATION)
-@CrossOrigin(origins = "https://bofigo-fe.herokuapp.com", allowCredentials = "true")
 public class AuthenticationController {
 
 	private static Logger logger = LoggerFactory.getLogger(AuthenticationController.class);

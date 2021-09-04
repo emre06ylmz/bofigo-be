@@ -1,5 +1,7 @@
 package com.bofigo.rowmaterial.securiy.config;
 
+import java.util.Arrays;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.bofigo.rowmaterial.BofigoBeApplication;
 import com.bofigo.rowmaterial.securiy.authentication.AuthenticationProviderService;
 import com.bofigo.rowmaterial.securiy.authentication.JwtAuthenticationTokenFilter;
 import com.bofigo.rowmaterial.securiy.handler.AuthenticationFailureHandler;
@@ -62,8 +65,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			public boolean matches(HttpServletRequest request) {
 				String resource = request.getRequestURI();
 				if ((resource.contains("/actuator/") || resource.contains("swagger") || resource.contains("/api-docs")
-						|| resource.contains("/error") || resource.contains("login")
-						|| resource.contains("/actuator/")) || request.getMethod().equals("OPTIONS")) {
+						|| resource.contains("/error") || resource.contains("login") || resource.contains("/actuator/"))
+						|| request.getMethod().equals("OPTIONS")) {
 					return false;
 				}
 
@@ -84,6 +87,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 		http.headers().cacheControl();
+	}
+
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList(BofigoBeApplication.FE_DOMAIN));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
 	}
 
 }
