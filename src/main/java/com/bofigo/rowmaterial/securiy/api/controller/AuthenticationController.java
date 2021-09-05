@@ -39,7 +39,7 @@ public class AuthenticationController {
 			return ResponseEntity.ok().body(userModel);
 		}
 		logger.error("UNAUTHORIZED");
-		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new UserModel());
+		return ResponseEntity.status(HttpStatus.OK).body(new UserModel());
 	}
 
 }

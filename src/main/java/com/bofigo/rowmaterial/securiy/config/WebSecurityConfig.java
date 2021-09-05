@@ -15,6 +15,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.bofigo.rowmaterial.BofigoBeApplication;
 import com.bofigo.rowmaterial.filter.CookieFilter;
 import com.bofigo.rowmaterial.securiy.authentication.AuthenticationProviderService;
 import com.bofigo.rowmaterial.securiy.authentication.JwtAuthenticationTokenFilter;
@@ -61,8 +62,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			@Override
 			public boolean matches(HttpServletRequest request) {
 				String resource = request.getRequestURI();
-				if ((resource.contains("/actuator/") || resource.contains("swagger") || resource.contains("/api-docs")
-						|| resource.contains("/error") || resource.contains("login") || resource.contains("/actuator/"))
+				if ((resource.contains("/actuator/") 
+						|| resource.contains("swagger") 
+						|| resource.contains("/api-docs")
+						|| resource.contains("/error") 
+						|| resource.contains("login")  
+						|| resource.contains("api") 
+						|| resource.contains("/actuator/"))
 						|| request.getMethod().equals("OPTIONS")) {
 					return false;
 				}
@@ -77,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		final CorsConfiguration config = new CorsConfiguration();
 
-		config.addAllowedOrigin("*");
+		config.addAllowedOrigin(BofigoBeApplication.FE_ORIGIN);
 		config.addAllowedHeader("*");
 		config.addAllowedMethod("GET");
 		config.addAllowedMethod("PUT");
