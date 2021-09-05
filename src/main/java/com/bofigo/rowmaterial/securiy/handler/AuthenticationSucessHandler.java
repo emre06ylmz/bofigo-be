@@ -47,9 +47,9 @@ public class AuthenticationSucessHandler extends SimpleUrlAuthenticationSuccessH
 		response.setCharacterEncoding("UTF-8");
 		logger.info("cookie is setted as: " + cookie.getValue());
 
-		response.addHeader("Access-Control-Request-Method", "GET, POST, DELETE, PUT");
-		response.addHeader("Access-Control-Request-Origin", BofigoBeApplication.FE_ORIGIN);
-		response.addHeader("Access-Control-Allow-Credentials", "true");
+		//response.addHeader("Access-Control-Request-Method", "GET, POST, DELETE, PUT");
+		//response.addHeader("Access-Control-Request-Origin", BofigoBeApplication.FE_ORIGIN);
+		//response.addHeader("Access-Control-Allow-Credentials", "true");
 		
 		response.getWriter().print(new ObjectMapper().writeValueAsString(jwtAuthenticationToken.getPrincipal()));
 	}
