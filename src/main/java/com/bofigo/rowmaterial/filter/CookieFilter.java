@@ -28,7 +28,7 @@ public class CookieFilter extends OncePerRequestFilter {
 
 		final String origin = "http://localhost:3000";
 
-		response.addHeader("Access-Control-Allow-Origin", origin);
+		//response.addHeader("Access-Control-Allow-Origin", origin);
 		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 		response.setHeader("Access-Control-Allow-Headers",
