@@ -39,36 +39,4 @@ public class ProductMaterialModel extends BaseModel {
 	@Column(nullable = false)
 	private double amount;
 
-	public RawMaterialModel getRawMaterial() {
-		return rawMaterial;
-	}
-
-	public void setRawMaterial(RawMaterialModel rawMaterial) {
-		this.rawMaterial = rawMaterial;
-	}
-
-	public RawMaterialCategoryModel getRawMaterialCategory() {
-		return rawMaterialCategory;
-	}
-
-	public void setRawMaterialCategory(RawMaterialCategoryModel rawMaterialCategory) {
-		this.rawMaterialCategory = rawMaterialCategory;
-	}
-
-	public ProductModel getProduct() {
-		return product;
-	}
-
-	public void setProduct(ProductModel product) {
-		this.product = product;
-	}
-
-	public double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
-
 }

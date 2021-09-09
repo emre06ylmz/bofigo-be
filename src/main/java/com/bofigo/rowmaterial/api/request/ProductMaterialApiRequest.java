@@ -24,36 +24,4 @@ public class ProductMaterialApiRequest {
 
 	private int productId;
 
-	public double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
-
-	public int getRawMaterialId() {
-		return rawMaterialId;
-	}
-
-	public void setRawMaterialId(int rawMaterialId) {
-		this.rawMaterialId = rawMaterialId;
-	}
-
-	public int getRawMaterialCategoryId() {
-		return rawMaterialCategoryId;
-	}
-
-	public void setRawMaterialCategoryId(int rawMaterialCategoryId) {
-		this.rawMaterialCategoryId = rawMaterialCategoryId;
-	}
-
-	public int getProductId() {
-		return productId;
-	}
-
-	public void setProductId(int productId) {
-		this.productId = productId;
-	}
-
 }

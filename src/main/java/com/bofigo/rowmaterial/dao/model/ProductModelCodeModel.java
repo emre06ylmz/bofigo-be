@@ -30,28 +30,4 @@ public class ProductModelCodeModel extends BaseModel {
 	@OneToMany(mappedBy = "productCategory", cascade = CascadeType.ALL)
 	private List<ProductModel> products;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getExplanation() {
-		return explanation;
-	}
-
-	public void setExplanation(String explanation) {
-		this.explanation = explanation;
-	}
-
-	public List<ProductModel> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<ProductModel> products) {
-		this.products = products;
-	}
-
 }

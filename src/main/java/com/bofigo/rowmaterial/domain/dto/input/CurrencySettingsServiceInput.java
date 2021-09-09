@@ -21,28 +21,4 @@ public class CurrencySettingsServiceInput {
 	
 	private Date lastUpdateDate;
 
-	public double getDollar() {
-		return dollar;
-	}
-
-	public void setDollar(double dollar) {
-		this.dollar = dollar;
-	}
-
-	public double getEuro() {
-		return euro;
-	}
-
-	public void setEuro(double euro) {
-		this.euro = euro;
-	}
-
-	public Date getLastUpdateDate() {
-		return lastUpdateDate;
-	}
-
-	public void setLastUpdateDate(Date lastUpdateDate) {
-		this.lastUpdateDate = lastUpdateDate;
-	}
-
 }

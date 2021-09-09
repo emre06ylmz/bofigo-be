@@ -21,36 +21,4 @@ public class ProductMaterialServiceOutput extends BaseServiceOutput {
 
 	private ProductServiceOutput product;
 
-	public double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
-
-	public RawMaterialServiceOutput getRawMaterial() {
-		return rawMaterial;
-	}
-
-	public void setRawMaterial(RawMaterialServiceOutput rawMaterial) {
-		this.rawMaterial = rawMaterial;
-	}
-
-	public RawMaterialCategoryServiceOutput getRawMaterialCategory() {
-		return rawMaterialCategory;
-	}
-
-	public void setRawMaterialCategory(RawMaterialCategoryServiceOutput rawMaterialCategory) {
-		this.rawMaterialCategory = rawMaterialCategory;
-	}
-
-	public ProductServiceOutput getProduct() {
-		return product;
-	}
-
-	public void setProduct(ProductServiceOutput product) {
-		this.product = product;
-	}
-
 }

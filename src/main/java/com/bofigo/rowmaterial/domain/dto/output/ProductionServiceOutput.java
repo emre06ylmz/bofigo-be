@@ -25,44 +25,4 @@ public class ProductionServiceOutput extends BaseServiceOutput {
 
 	private ProductServiceOutput product;
 
-	public double getCount() {
-		return count;
-	}
-
-	public void setCount(double count) {
-		this.count = count;
-	}
-
-	public int getProductId() {
-		return productId;
-	}
-
-	public void setProductId(int productId) {
-		this.productId = productId;
-	}
-
-	public String getExplanation() {
-		return explanation;
-	}
-
-	public void setExplanation(String explanation) {
-		this.explanation = explanation;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	public ProductServiceOutput getProduct() {
-		return product;
-	}
-
-	public void setProduct(ProductServiceOutput product) {
-		this.product = product;
-	}
-
 }

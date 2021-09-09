@@ -33,28 +33,4 @@ public class SupplierModel extends BaseModel {
 	@OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
 	private List<PurchaseModel> purchases;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getExplanation() {
-		return explanation;
-	}
-
-	public void setExplanation(String explanation) {
-		this.explanation = explanation;
-	}
-
-	public List<PurchaseModel> getPurchases() {
-		return purchases;
-	}
-
-	public void setPurchases(List<PurchaseModel> purchases) {
-		this.purchases = purchases;
-	}
-
 }

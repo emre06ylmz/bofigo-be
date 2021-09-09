@@ -21,36 +21,4 @@ public class ProductMaterialApiResponse extends BaseApiResponse {
 
 	private ProductApiResponse product;
 
-	public double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
-
-	public RawMaterialApiResponse getRawMaterial() {
-		return rawMaterial;
-	}
-
-	public void setRawMaterial(RawMaterialApiResponse rawMaterial) {
-		this.rawMaterial = rawMaterial;
-	}
-
-	public RawMaterialCategoryApiResponse getRawMaterialCategory() {
-		return rawMaterialCategory;
-	}
-
-	public void setRawMaterialCategory(RawMaterialCategoryApiResponse rawMaterialCategory) {
-		this.rawMaterialCategory = rawMaterialCategory;
-	}
-
-	public ProductApiResponse getProduct() {
-		return product;
-	}
-
-	public void setProduct(ProductApiResponse product) {
-		this.product = product;
-	}
-
 }

@@ -127,8 +127,8 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 		RawMaterialModel rawMaterialModel = rawMaterialMapper.mapServiceInputToModel(rawMaterialServiceInput);
 		rawMaterialModel.setStatus(ApplicationConstants.ACTIVE);
 
-		rawMaterialModel.setUnitModel(unitRepository.findById(rawMaterialServiceInput.getUnitId()).get());
-		rawMaterialModel.setRawMaterialCategoryModel(
+		rawMaterialModel.setUnit(unitRepository.findById(rawMaterialServiceInput.getUnitId()).get());
+		rawMaterialModel.setRawMaterialCategory(
 				rawMaterialCategoryRepository.findById(rawMaterialServiceInput.getRawMaterialCategoryId()).get());
 
 		return rawMaterialRepository.save(rawMaterialModel);

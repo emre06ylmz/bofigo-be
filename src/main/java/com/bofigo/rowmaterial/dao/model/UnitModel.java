@@ -33,28 +33,4 @@ public class UnitModel extends BaseModel {
 	@OneToMany(mappedBy = "unit", cascade = CascadeType.ALL)
 	private List<RawMaterialModel> rawMaterials;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getExplanation() {
-		return explanation;
-	}
-
-	public void setExplanation(String explanation) {
-		this.explanation = explanation;
-	}
-
-	public List<RawMaterialModel> getRawMaterials() {
-		return rawMaterials;
-	}
-
-	public void setRawMaterials(List<RawMaterialModel> rawMaterials) {
-		this.rawMaterials = rawMaterials;
-	}
-
 }

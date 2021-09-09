@@ -35,36 +35,4 @@ public class ProductionModel extends BaseModel {
 	@Column(length = 100, nullable = false)
 	private String explanation;
 
-	public ProductModel getProduct() {
-		return product;
-	}
-
-	public void setProduct(ProductModel product) {
-		this.product = product;
-	}
-
-	public double getCount() {
-		return count;
-	}
-
-	public void setCount(double count) {
-		this.count = count;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	public String getExplanation() {
-		return explanation;
-	}
-
-	public void setExplanation(String explanation) {
-		this.explanation = explanation;
-	}
-
 }

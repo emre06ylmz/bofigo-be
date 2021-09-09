@@ -7,6 +7,11 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.bofigo.rowmaterial.dao.model.UserModel;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class JWTAuthenticationToken extends AbstractAuthenticationToken {
 
 	private UserModel userModel;
@@ -30,22 +35,6 @@ public class JWTAuthenticationToken extends AbstractAuthenticationToken {
 	@Override
 	public Object getPrincipal() {
 		return userModel;
-	}
-
-	public UserModel getUserModel() {
-		return userModel;
-	}
-
-	public void setUserModel(UserModel userModel) {
-		this.userModel = userModel;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
 	}
 
 }

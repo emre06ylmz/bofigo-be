@@ -24,20 +24,4 @@ public class ProductModelCodeApiRequest {
 	@Size(min = 3, max = 50, message = "Explanation must be 1-200 characters long.")
 	private String explanation;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getExplanation() {
-		return explanation;
-	}
-
-	public void setExplanation(String explanation) {
-		this.explanation = explanation;
-	}
-
 }

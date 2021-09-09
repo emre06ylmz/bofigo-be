@@ -17,21 +17,4 @@ public class SupplierServiceOutput extends BaseServiceOutput {
 	
 	private String explanation;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getExplanation() {
-		return explanation;
-	}
-
-	public void setExplanation(String explanation) {
-		this.explanation = explanation;
-	}
-
-	
 }
