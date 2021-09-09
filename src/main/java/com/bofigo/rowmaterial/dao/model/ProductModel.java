@@ -1,7 +1,10 @@
-package com.bofigo.rowmaterial.dao.model;
+	package com.bofigo.rowmaterial.dao.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,44 +35,22 @@ public class ProductModel extends BaseModel {
 	@Column(nullable = false)
 	private double cost_EURO;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getExplanation() {
-		return explanation;
-	}
-
-	public void setExplanation(String explanation) {
-		this.explanation = explanation;
-	}
-
-	public double getCost_TL() {
-		return cost_TL;
-	}
-
-	public void setCost_TL(double cost_TL) {
-		this.cost_TL = cost_TL;
-	}
-
-	public double getCost_USD() {
-		return cost_USD;
-	}
-
-	public void setCost_USD(double cost_USD) {
-		this.cost_USD = cost_USD;
-	}
-
-	public double getCost_EURO() {
-		return cost_EURO;
-	}
-
-	public void setCost_EURO(double cost_EURO) {
-		this.cost_EURO = cost_EURO;
-	}
+	@Column(nullable = false)
+	private double tax;
+	
+	@Column(length = 100, nullable = false)
+	private String barcode;
+	
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "product_category_id", referencedColumnName = "id", nullable = false)
+	private ProductCategoryModel productCategory;
+	
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "product_model_code_id", referencedColumnName = "id", nullable = false)
+	private ProductModelCodeModel productModelCode;
+	
+	
+	
+	
 
 }
