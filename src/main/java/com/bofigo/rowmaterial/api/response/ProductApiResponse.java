@@ -1,5 +1,8 @@
 package com.bofigo.rowmaterial.api.response;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -23,4 +26,13 @@ public class ProductApiResponse extends BaseApiResponse {
 
 	private double cost_EURO;
 
+	private double cargo;
+	
+	private double tax;
+	
+	private String barcode;
+
+	private ProductCategoryApiResponse productCategory;
+
+	private ProductModelCodeApiResponse productModelCode;
 }

@@ -12,7 +12,9 @@ import com.bofigo.rowmaterial.dao.model.ProductMaterialModel;
 import com.bofigo.rowmaterial.dao.model.ProductModel;
 import com.bofigo.rowmaterial.dao.model.PurchaseModel;
 import com.bofigo.rowmaterial.dao.model.RawMaterialModel;
+import com.bofigo.rowmaterial.dao.repository.ProductCategoryRepository;
 import com.bofigo.rowmaterial.dao.repository.ProductMaterialRepository;
+import com.bofigo.rowmaterial.dao.repository.ProductModelCodeRepository;
 import com.bofigo.rowmaterial.dao.repository.ProductRepository;
 import com.bofigo.rowmaterial.dao.repository.PurchaseRepository;
 import com.bofigo.rowmaterial.dao.repository.RawMaterialRepository;
@@ -31,17 +33,23 @@ public class ProductServiceImpl implements ProductService {
 
 	private ProductMaterialRepository productMaterialRepository;
 
+	private ProductCategoryRepository productCategoryRepository;
+	private ProductModelCodeRepository productModelCodeRepository;
+
 	private PurchaseRepository purchaseRepository;
 	private RawMaterialRepository rawMaterialRepository;
 
 	public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper,
 			ProductMaterialRepository productMaterialRepository, PurchaseRepository purchaseRepository,
-			RawMaterialRepository rawMaterialRepository) {
+			RawMaterialRepository rawMaterialRepository, ProductCategoryRepository productCategoryRepository,
+			ProductModelCodeRepository productModelCodeRepository) {
 		this.productRepository = productRepository;
 		this.productMapper = productMapper;
 		this.productMaterialRepository = productMaterialRepository;
 		this.purchaseRepository = purchaseRepository;
 		this.rawMaterialRepository = rawMaterialRepository;
+		this.productCategoryRepository = productCategoryRepository;
+		this.productModelCodeRepository = productModelCodeRepository;
 	}
 
 	@Override
@@ -120,6 +128,10 @@ public class ProductServiceImpl implements ProductService {
 	public ProductModel insertProductModel(ProductServiceInput productServiceInput) {
 		ProductModel productModel = productMapper.mapServiceInputToModel(productServiceInput);
 		productModel.setStatus(ApplicationConstants.ACTIVE);
+		productModel.setProductCategory(
+				productCategoryRepository.findById(productServiceInput.getProductCategoryId()).get());
+		productModel.setProductModelCode(
+				productModelCodeRepository.findById(productServiceInput.getProductModelCodeId()).get());
 
 		return productRepository.save(productModel);
 	}
@@ -127,6 +139,10 @@ public class ProductServiceImpl implements ProductService {
 	public ProductModel updateProductModel(ProductModel productModel, ProductServiceInput productServiceInput) {
 		int id = productModel.getId();
 		productModel = productMapper.mapServiceInputToModel(productServiceInput);
+		productModel.setProductCategory(
+				productCategoryRepository.findById(productServiceInput.getProductCategoryId()).get());
+		productModel.setProductModelCode(
+				productModelCodeRepository.findById(productServiceInput.getProductModelCodeId()).get());
 		productModel.setId(id);
 		return productRepository.save(productModel);
 	}

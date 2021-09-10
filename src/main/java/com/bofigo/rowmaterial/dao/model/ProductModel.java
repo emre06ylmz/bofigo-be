@@ -36,6 +36,9 @@ public class ProductModel extends BaseModel {
 	private double cost_EURO;
 
 	@Column(nullable = false)
+	private double cargo;
+	
+	@Column(nullable = false)
 	private double tax;
 	
 	@Column(length = 100, nullable = false)
@@ -48,9 +51,5 @@ public class ProductModel extends BaseModel {
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "product_model_code_id", referencedColumnName = "id", nullable = false)
 	private ProductModelCodeModel productModelCode;
-	
-	
-	
-	
 
 }

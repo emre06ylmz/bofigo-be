@@ -1,5 +1,13 @@
 package com.bofigo.rowmaterial.domain.dto.input;
 
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.bofigo.rowmaterial.dao.model.ProductCategoryModel;
+import com.bofigo.rowmaterial.dao.model.ProductModelCodeModel;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -23,4 +31,13 @@ public class ProductServiceInput extends BaseServiceInput {
 
 	private double cost_EURO;
 
+	private double cargo;
+	
+	private double tax;
+	
+	private String barcode;
+	
+	private int productCategoryId;
+	
+	private int productModelCodeId;
 }

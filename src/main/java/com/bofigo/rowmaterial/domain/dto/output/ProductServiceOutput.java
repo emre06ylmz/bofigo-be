@@ -1,5 +1,8 @@
 package com.bofigo.rowmaterial.domain.dto.output;
 
+import com.bofigo.rowmaterial.api.response.ProductCategoryApiResponse;
+import com.bofigo.rowmaterial.api.response.ProductModelCodeApiResponse;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -23,4 +26,13 @@ public class ProductServiceOutput extends BaseServiceOutput {
 
 	private double cost_EURO;
 
+	private double cargo;
+	
+	private double tax;
+	
+	private String barcode;
+
+	private ProductCategoryServiceOutput productCategory;
+
+	private ProductModelCodeServiceOutput productModelCode;
 }
