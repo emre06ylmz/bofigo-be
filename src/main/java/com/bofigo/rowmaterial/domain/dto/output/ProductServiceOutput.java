@@ -30,6 +30,8 @@ public class ProductServiceOutput extends BaseServiceOutput {
 	
 	private double tax;
 	
+	private double stock;
+	
 	private String barcode;
 
 	private ProductCategoryServiceOutput productCategory;

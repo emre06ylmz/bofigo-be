@@ -38,6 +38,9 @@ public class ProductApiRequest {
 	
 	@NotNull(message = "Tax cannot be null.")
 	private double tax;
+
+	@NotNull(message = "Stock cannot be null.")
+	private double stock;
 	
 	@NotNull(message = "Barcode cannot be null.")
 	@Size(min = 3, max = 50, message = "Barcode must be 3-100 characters long.")

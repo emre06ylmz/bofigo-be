@@ -22,6 +22,7 @@ import com.bofigo.rowmaterial.domain.dto.input.ProductServiceInput;
 import com.bofigo.rowmaterial.domain.dto.output.ProductServiceOutput;
 import com.bofigo.rowmaterial.exception.DataAlreadyExistException;
 import com.bofigo.rowmaterial.exception.DataNotFoundException;
+import com.bofigo.rowmaterial.exception.OperationNotValidException;
 import com.bofigo.rowmaterial.mapper.ProductMapper;
 import com.bofigo.rowmaterial.util.CurrencyUtil;
 
@@ -92,9 +93,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ProductServiceOutput deleteProduct(Integer id) throws DataNotFoundException {
+	public ProductServiceOutput deleteProduct(Integer id) throws DataNotFoundException, OperationNotValidException {
 		ProductModel productModel = getProductModel(id);
-		productRepository.deleteById(id);
+
+		try {
+			productRepository.deleteById(id);
+		} catch (Exception e) {
+			throw new OperationNotValidException("Silme işlemi gerçekleştirilemedi");
+		}
+
 		return productMapper.mapModelToServiceOutput(productModel);
 	}
 

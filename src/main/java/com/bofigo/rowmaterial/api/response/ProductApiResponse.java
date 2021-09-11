@@ -30,6 +30,8 @@ public class ProductApiResponse extends BaseApiResponse {
 	
 	private double tax;
 	
+	private double stock;
+	
 	private String barcode;
 
 	private ProductCategoryApiResponse productCategory;

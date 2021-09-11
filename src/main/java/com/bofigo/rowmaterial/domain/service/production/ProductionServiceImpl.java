@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bofigo.rowmaterial.constant.ApplicationConstants;
 import com.bofigo.rowmaterial.dao.model.ProductMaterialModel;
+import com.bofigo.rowmaterial.dao.model.ProductModel;
 import com.bofigo.rowmaterial.dao.model.ProductionModel;
 import com.bofigo.rowmaterial.dao.model.RawMaterialModel;
 import com.bofigo.rowmaterial.dao.repository.ProductMaterialRepository;
@@ -53,7 +54,12 @@ public class ProductionServiceImpl implements ProductionService {
 			throws DataAlreadyExistException {
 		ProductionModel insertedProductionModel = insertProductionModel(productionServiceInput);
 
-		// UPDATE STOCK
+		// UPDATE PRODUCT STOCK
+		ProductModel product = productRepository.findById(productionServiceInput.getProductId()).get();
+		product.setStock( product.getStock() + productionServiceInput.getCount());
+		productRepository.save(product);
+		
+		// UPDATE MATERIAL STOCK
 		List<ProductMaterialModel> productMaterialList = productMaterialRepository
 				.listByProductId(insertedProductionModel.getProduct().getId());
 
@@ -76,7 +82,13 @@ public class ProductionServiceImpl implements ProductionService {
 
 			ProductionModel production = productionModel.get();
 
-			// UPDATE STOCK
+			// UPDATE PRODUCT STOCK
+			ProductModel product = productRepository.findById(productionServiceInput.getProductId()).get();
+			product.setStock( product.getStock() - production.getCount() + productionServiceInput.getCount() );
+			productRepository.save(product);
+			
+			
+			// UPDATE MATERIAL STOCK
 			// eski ürün id sine göre stokları geri ekle
 			List<ProductMaterialModel> productMaterialList = productMaterialRepository
 					.listByProductId(production.getProduct().getId());
@@ -93,7 +105,7 @@ public class ProductionServiceImpl implements ProductionService {
 			productMaterialRepository.listByProductId(updatedProductionModel.getProduct().getId());
 			for (ProductMaterialModel productMaterialModel : productMaterialList) {
 				RawMaterialModel rawMaterial = productMaterialModel.getRawMaterial();
-				rawMaterial.setStock(rawMaterial.getStock() + production.getCount() * productMaterialModel.getAmount());
+				rawMaterial.setStock(rawMaterial.getStock() - production.getCount() * productMaterialModel.getAmount());
 				rawMaterialRepository.save(rawMaterial);
 			}
 

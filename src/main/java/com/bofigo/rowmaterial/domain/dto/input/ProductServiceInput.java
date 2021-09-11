@@ -34,6 +34,8 @@ public class ProductServiceInput extends BaseServiceInput {
 	private double cargo;
 	
 	private double tax;
+
+	private double stock;
 	
 	private String barcode;
 	

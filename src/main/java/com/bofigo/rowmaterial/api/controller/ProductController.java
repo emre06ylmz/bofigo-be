@@ -25,6 +25,7 @@ import com.bofigo.rowmaterial.domain.service.purchase.PurchaseService;
 import com.bofigo.rowmaterial.domain.service.rawmaterial.RawMaterialService;
 import com.bofigo.rowmaterial.exception.DataAlreadyExistException;
 import com.bofigo.rowmaterial.exception.DataNotFoundException;
+import com.bofigo.rowmaterial.exception.OperationNotValidException;
 import com.bofigo.rowmaterial.mapper.ProductMapper;
 
 import io.swagger.annotations.Api;
@@ -102,7 +103,7 @@ public class ProductController {
 
 	@DeleteMapping(path = "/{id}")
 	public Response<ProductApiResponse> deleteProduct(@PathVariable("id") Integer id)
-			throws DataNotFoundException, DataAlreadyExistException {
+			throws DataNotFoundException, DataAlreadyExistException, OperationNotValidException {
 
 		ProductServiceOutput productServiceOutput = productService.deleteProduct(id);
 

@@ -7,17 +7,15 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.bofigo.rowmaterial.constant.ApplicationConstants;
-import com.bofigo.rowmaterial.dao.model.ProductMaterialModel;
 import com.bofigo.rowmaterial.dao.model.DeliveryModel;
-import com.bofigo.rowmaterial.dao.model.RawMaterialModel;
+import com.bofigo.rowmaterial.dao.model.ProductModel;
+import com.bofigo.rowmaterial.dao.repository.DeliveryRepository;
 import com.bofigo.rowmaterial.dao.repository.ProductMaterialRepository;
 import com.bofigo.rowmaterial.dao.repository.ProductRepository;
-import com.bofigo.rowmaterial.dao.repository.DeliveryRepository;
 import com.bofigo.rowmaterial.dao.repository.RawMaterialCategoryRepository;
 import com.bofigo.rowmaterial.dao.repository.RawMaterialRepository;
 import com.bofigo.rowmaterial.domain.dto.input.DeliveryServiceInput;
 import com.bofigo.rowmaterial.domain.dto.output.DeliveryServiceOutput;
-import com.bofigo.rowmaterial.domain.service.delivery.DeliveryService;
 import com.bofigo.rowmaterial.exception.DataAlreadyExistException;
 import com.bofigo.rowmaterial.exception.DataNotFoundException;
 import com.bofigo.rowmaterial.mapper.DeliveryMapper;
@@ -54,16 +52,10 @@ public class DeliveryServiceImpl implements DeliveryService {
 			throws DataAlreadyExistException {
 		DeliveryModel insertedDeliveryModel = insertDeliveryModel(deliveryServiceInput);
 
-		// UPDATE STOCK
-		List<ProductMaterialModel> productMaterialList = productMaterialRepository
-				.listByProductId(insertedDeliveryModel.getProduct().getId());
-
-		for (ProductMaterialModel productMaterialModel : productMaterialList) {
-			RawMaterialModel rawMaterial = productMaterialModel.getRawMaterial();
-			rawMaterial.setStock(
-					rawMaterial.getStock() - insertedDeliveryModel.getCount() * productMaterialModel.getAmount());
-			rawMaterialRepository.save(rawMaterial);
-		}
+		// UPDATE PRODUCT STOCK
+		ProductModel product = productRepository.findById(deliveryServiceInput.getProductId()).get();
+		product.setStock(product.getStock() - deliveryServiceInput.getCount());
+		productRepository.save(product);
 
 		return prepareDeliveryServiceOutput(insertedDeliveryModel);
 	}
@@ -76,27 +68,12 @@ public class DeliveryServiceImpl implements DeliveryService {
 		if (deliveryModel.isPresent()) {
 
 			DeliveryModel delivery = deliveryModel.get();
+			DeliveryModel updatedDeliveryModel = updateDeliveryModel(deliveryModel.get(), deliveryServiceInput);
 
-			// UPDATE STOCK
-			// eski ürün id sine göre stokları geri ekle
-			List<ProductMaterialModel> productMaterialList = productMaterialRepository
-					.listByProductId(delivery.getProduct().getId());
-			for (ProductMaterialModel productMaterialModel : productMaterialList) {
-				RawMaterialModel rawMaterial = productMaterialModel.getRawMaterial();
-				rawMaterial.setStock(rawMaterial.getStock() + delivery.getCount() * productMaterialModel.getAmount());
-				rawMaterialRepository.save(rawMaterial);
-			}
-
-			DeliveryModel updatedDeliveryModel = updateDeliveryModel(deliveryModel.get(),
-					deliveryServiceInput);
-
-			// yeni ürün id ye göre stoklardan düş
-			productMaterialRepository.listByProductId(updatedDeliveryModel.getProduct().getId());
-			for (ProductMaterialModel productMaterialModel : productMaterialList) {
-				RawMaterialModel rawMaterial = productMaterialModel.getRawMaterial();
-				rawMaterial.setStock(rawMaterial.getStock() + delivery.getCount() * productMaterialModel.getAmount());
-				rawMaterialRepository.save(rawMaterial);
-			}
+			// UPDATE PRODUCT STOCK
+			ProductModel product = productRepository.findById(deliveryServiceInput.getProductId()).get();
+			product.setStock(product.getStock() + delivery.getCount() - deliveryServiceInput.getCount());
+			productRepository.save(product);
 
 			return prepareDeliveryServiceOutput(updatedDeliveryModel);
 		}
@@ -153,8 +130,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 		return deliveryRepository.save(deliveryModel);
 	}
 
-	public DeliveryModel updateDeliveryModel(DeliveryModel deliveryModel,
-			DeliveryServiceInput deliveryServiceInput) {
+	public DeliveryModel updateDeliveryModel(DeliveryModel deliveryModel, DeliveryServiceInput deliveryServiceInput) {
 		int id = deliveryModel.getId();
 		deliveryModel = deliveryMapper.mapServiceInputToModel(deliveryServiceInput);
 		deliveryModel.setProduct(productRepository.findById(deliveryServiceInput.getProductId()).get());

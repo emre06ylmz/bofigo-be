@@ -40,6 +40,9 @@ public class ProductModel extends BaseModel {
 	
 	@Column(nullable = false)
 	private double tax;
+
+	@Column(nullable = false)
+	private double stock;
 	
 	@Column(length = 100, nullable = false)
 	private String barcode;

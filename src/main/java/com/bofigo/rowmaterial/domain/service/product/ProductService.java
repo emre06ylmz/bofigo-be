@@ -7,6 +7,7 @@ import com.bofigo.rowmaterial.domain.dto.output.ProductServiceOutput;
 import com.bofigo.rowmaterial.domain.service.Service;
 import com.bofigo.rowmaterial.exception.DataAlreadyExistException;
 import com.bofigo.rowmaterial.exception.DataNotFoundException;
+import com.bofigo.rowmaterial.exception.OperationNotValidException;
 
 public interface ProductService extends Service {
 
@@ -20,7 +21,7 @@ public interface ProductService extends Service {
 	ProductServiceOutput updateProduct(Integer id,
 			ProductServiceInput productServiceInput) throws DataNotFoundException;
 
-	ProductServiceOutput deleteProduct(Integer id) throws DataNotFoundException;
+	ProductServiceOutput deleteProduct(Integer id) throws DataNotFoundException, OperationNotValidException;
 
 	List<ProductServiceOutput> listAll();
 
