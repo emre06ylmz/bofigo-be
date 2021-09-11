@@ -62,7 +62,7 @@ public class AuthenticationSucessHandler extends SimpleUrlAuthenticationSuccessH
 				firstHeader = false;
 				continue;
 			}
-			response.addHeader(HttpHeaders.SET_COOKIE, String.format("%s; %s", header, "SameSite=Strict"));
+			response.addHeader(HttpHeaders.SET_COOKIE, String.format("%s; %s", header, "SameSite=None"));
 		}
 	}
 
