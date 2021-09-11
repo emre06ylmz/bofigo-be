@@ -58,7 +58,7 @@ public class AuthenticationSucessHandler extends SimpleUrlAuthenticationSuccessH
 		boolean firstHeader = true;
 		for (String header : headers) { // there can be multiple Set-Cookie attributes
 			if (firstHeader) {
-				response.setHeader(HttpHeaders.SET_COOKIE, String.format("%s; %s", header, "SameSite=Strict"));
+				response.setHeader(HttpHeaders.SET_COOKIE, String.format("%s; %s", header, "SameSite=None"));
 				firstHeader = false;
 				continue;
 			}
