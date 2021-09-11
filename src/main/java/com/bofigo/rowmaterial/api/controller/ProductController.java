@@ -64,7 +64,7 @@ public class ProductController {
 	}
 
 	@GetMapping(path = "/calculate")
-	public Response<String> calculate() throws DataNotFoundException {
+	public Response<String> calculate() throws DataNotFoundException, OperationNotValidException {
 		productService.calculateProductCosts();
 		return new Response<>("OK");
 	}

@@ -155,7 +155,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void calculateProductCosts() {
+	public void calculateProductCosts() throws OperationNotValidException {
 		double totalCost_TL = 0;
 		double totalCost_USD = 0;
 		double totalCost_EURO = 0;
@@ -196,10 +196,14 @@ public class ProductServiceImpl implements ProductService {
 		}
 	}
 
-	private double getMaterialPriceForProduct(RawMaterialModel rawMaterial) {
+	private double getMaterialPriceForProduct(RawMaterialModel rawMaterial) throws OperationNotValidException {
 		double purchasePrice = 0;
 		List<PurchaseModel> purchaseList = purchaseRepository.listByMaterialId(rawMaterial.getId());
 
+		if(purchaseList.size() == 0) {
+			throw new OperationNotValidException(rawMaterial.getName() + " hammaddesi için satınalma bulunmamaktadır.");
+		}
+		
 		Collections.sort(purchaseList, new Comparator<PurchaseModel>() {
 			public int compare(PurchaseModel o1, PurchaseModel o2) {
 				return o2.getDate().compareTo(o1.getDate());

@@ -25,5 +25,5 @@ public interface ProductService extends Service {
 
 	List<ProductServiceOutput> listAll();
 
-	void calculateProductCosts();
+	void calculateProductCosts() throws OperationNotValidException;
 }
