@@ -42,6 +42,7 @@ public class AuthenticationSucessHandler extends SimpleUrlAuthenticationSuccessH
 		Cookie cookie = new Cookie(JwtUtil.JWT_TOKEN, jwtAuthenticationToken.getToken());
 		cookie.setPath("/");
 		cookie.setHttpOnly(true);
+		cookie.setSecure(true);
 		response.addCookie(cookie);
 		cookie.setDomain(BofigoBeApplication.FE_DOMAIN);
 		response.setCharacterEncoding("UTF-8");
