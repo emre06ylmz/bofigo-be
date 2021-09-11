@@ -67,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						|| resource.contains("/api-docs")
 						|| resource.contains("/error") 
 						|| resource.contains("login")  
-						|| resource.contains("api") 
+						//|| resource.contains("api") 
 						|| resource.contains("/actuator/"))
 						|| request.getMethod().equals("OPTIONS")) {
 					return false;
