@@ -1,7 +1,7 @@
 package com.bofigo.rowmaterial.securiy.handler;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collection;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -48,12 +48,22 @@ public class AuthenticationSucessHandler extends SimpleUrlAuthenticationSuccessH
 		logger.info("cookie is setted as: " + cookie.getValue());
 
 		response.setHeader("SameSite", "None");
-		
-		//response.addHeader("Access-Control-Request-Method", "GET, POST, DELETE, PUT");
-		//response.addHeader("Access-Control-Request-Origin", BofigoBeApplication.FE_ORIGIN);
-		//response.addHeader("Access-Control-Allow-Credentials", "true");
-		
+
+		addSameSiteCookieAttribute(response);
 		response.getWriter().print(new ObjectMapper().writeValueAsString(jwtAuthenticationToken.getPrincipal()));
+	}
+
+	private void addSameSiteCookieAttribute(HttpServletResponse response) {
+		Collection<String> headers = response.getHeaders(HttpHeaders.SET_COOKIE);
+		boolean firstHeader = true;
+		for (String header : headers) { // there can be multiple Set-Cookie attributes
+			if (firstHeader) {
+				response.setHeader(HttpHeaders.SET_COOKIE, String.format("%s; %s", header, "SameSite=Strict"));
+				firstHeader = false;
+				continue;
+			}
+			response.addHeader(HttpHeaders.SET_COOKIE, String.format("%s; %s", header, "SameSite=Strict"));
+		}
 	}
 
 }
