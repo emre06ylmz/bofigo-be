@@ -8,10 +8,12 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.bofigo.rowmaterial.constant.ApplicationConstants;
+import com.bofigo.rowmaterial.dao.model.CurrencySettingsModel;
 import com.bofigo.rowmaterial.dao.model.ProductMaterialModel;
 import com.bofigo.rowmaterial.dao.model.ProductModel;
 import com.bofigo.rowmaterial.dao.model.PurchaseModel;
 import com.bofigo.rowmaterial.dao.model.RawMaterialModel;
+import com.bofigo.rowmaterial.dao.repository.CurrencySettingsRepository;
 import com.bofigo.rowmaterial.dao.repository.ProductCategoryRepository;
 import com.bofigo.rowmaterial.dao.repository.ProductMaterialRepository;
 import com.bofigo.rowmaterial.dao.repository.ProductModelCodeRepository;
@@ -40,10 +42,13 @@ public class ProductServiceImpl implements ProductService {
 	private PurchaseRepository purchaseRepository;
 	private RawMaterialRepository rawMaterialRepository;
 
+	private CurrencySettingsRepository currencySettingsRepository;
+
 	public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper,
 			ProductMaterialRepository productMaterialRepository, PurchaseRepository purchaseRepository,
 			RawMaterialRepository rawMaterialRepository, ProductCategoryRepository productCategoryRepository,
-			ProductModelCodeRepository productModelCodeRepository) {
+			ProductModelCodeRepository productModelCodeRepository,
+			CurrencySettingsRepository currencySettingsRepository) {
 		this.productRepository = productRepository;
 		this.productMapper = productMapper;
 		this.productMaterialRepository = productMaterialRepository;
@@ -51,6 +56,7 @@ public class ProductServiceImpl implements ProductService {
 		this.rawMaterialRepository = rawMaterialRepository;
 		this.productCategoryRepository = productCategoryRepository;
 		this.productModelCodeRepository = productModelCodeRepository;
+		this.currencySettingsRepository = currencySettingsRepository;
 	}
 
 	@Override
@@ -157,9 +163,14 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void calculateProductCosts() throws OperationNotValidException {
 		double totalCost_TL = 0;
-		double totalCost_USD = 0;
-		double totalCost_EURO = 0;
 		double purchasePrice = 0;
+
+		List<CurrencySettingsModel> currencyList = currencySettingsRepository.findAll();
+		if (currencyList.size() == 0) {
+			throw new OperationNotValidException("Döviz ayarlarını kontrol ediniz.");
+		}
+
+		CurrencySettingsModel currencySettings = currencyList.get(0);
 
 		List<ProductModel> productList = productRepository.findAll();
 
@@ -167,9 +178,7 @@ public class ProductServiceImpl implements ProductService {
 
 			// get material list for product
 			List<ProductMaterialModel> productMaterialList = productMaterialRepository.listByProductId(product.getId());
-			totalCost_EURO = 0;
 			totalCost_TL = 0;
-			totalCost_USD = 0;
 
 			for (ProductMaterialModel productMaterial : productMaterialList) {
 				Optional<RawMaterialModel> rawMaterial = rawMaterialRepository
@@ -180,17 +189,19 @@ public class ProductServiceImpl implements ProductService {
 
 				if (rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_TL)) {
 					totalCost_TL += purchasePrice * productMaterial.getAmount();
-				} else if (rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_TL)) {
-					totalCost_USD += purchasePrice * productMaterial.getAmount();
-				} else if (rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_TL)) {
-					totalCost_EURO += purchasePrice * productMaterial.getAmount();
+				} else if (rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_USD)) {
+					totalCost_TL += purchasePrice * productMaterial.getAmount() * currencySettings.getDollar();
+				} else if (rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_EURO)) {
+					totalCost_TL += purchasePrice * productMaterial.getAmount() * currencySettings.getEuro();
 				}
 
 			}
 
 			product.setCost_TL(totalCost_TL);
-			product.setCost_USD(totalCost_USD);
-			product.setCost_EURO(totalCost_EURO);
+
+			totalCost_TL = totalCost_TL + (totalCost_TL * product.getTax() / 100) + product.getCargo();
+			product.setCost_Total(totalCost_TL);
+
 			productRepository.save(product);
 
 		}
@@ -200,10 +211,10 @@ public class ProductServiceImpl implements ProductService {
 		double purchasePrice = 0;
 		List<PurchaseModel> purchaseList = purchaseRepository.listByMaterialId(rawMaterial.getId());
 
-		if(purchaseList.size() == 0) {
+		if (purchaseList.size() == 0) {
 			throw new OperationNotValidException(rawMaterial.getName() + " hammaddesi için satınalma bulunmamaktadır.");
 		}
-		
+
 		Collections.sort(purchaseList, new Comparator<PurchaseModel>() {
 			public int compare(PurchaseModel o1, PurchaseModel o2) {
 				return o2.getDate().compareTo(o1.getDate());

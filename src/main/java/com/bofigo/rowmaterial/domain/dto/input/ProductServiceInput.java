@@ -27,9 +27,7 @@ public class ProductServiceInput extends BaseServiceInput {
 
 	private double cost_TL;
 
-	private double cost_USD;
-
-	private double cost_EURO;
+	private double cost_Total;
 
 	private double cargo;
 	

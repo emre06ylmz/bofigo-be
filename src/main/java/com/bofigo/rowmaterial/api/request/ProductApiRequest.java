@@ -28,10 +28,7 @@ public class ProductApiRequest {
 	private double cost_TL;
 
 	@NotNull(message = "Cost cannot be null.")
-	private double cost_USD;
-
-	@NotNull(message = "Cost cannot be null.")
-	private double cost_EURO;
+	private double cost_Total;
 
 	@NotNull(message = "Cargo cannot be null.")
 	private double cargo;

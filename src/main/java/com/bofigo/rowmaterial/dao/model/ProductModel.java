@@ -30,10 +30,7 @@ public class ProductModel extends BaseModel {
 	private double cost_TL;
 
 	@Column(nullable = false)
-	private double cost_USD;
-
-	@Column(nullable = false)
-	private double cost_EURO;
+	private double cost_Total;
 
 	@Column(nullable = false)
 	private double cargo;
