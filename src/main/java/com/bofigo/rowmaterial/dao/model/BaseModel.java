@@ -11,6 +11,9 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import com.bofigo.rowmaterial.util.StringUtil;
 
 import lombok.AllArgsConstructor;
@@ -28,12 +31,12 @@ import lombok.Setter;
 public abstract class BaseModel implements Serializable {
 
 	private static final long serialVersionUID = -6349295907409000764L;
-	
+
 	@Id
 	@Column(unique = true, updatable = false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	@Column
 	private String status;
 
@@ -53,9 +56,8 @@ public abstract class BaseModel implements Serializable {
 	public void prePersist() {
 		this.createDate = new Date();
 		this.updateDate = new Date();
-
-		this.createdBy = StringUtil.isNullOrEmpty(this.createdBy) ? "DEFAULT" : this.createdBy;
-		this.updatedBy = StringUtil.isNullOrEmpty(this.updatedBy) ? "DEFAULT" : this.updatedBy;
+		this.createdBy = ((UserModel)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getName();
+		this.updatedBy = ((UserModel)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getName();
 
 		this.status = StringUtil.isNullOrEmpty(this.status) ? "ACTIVE" : this.status;
 	}
@@ -63,8 +65,7 @@ public abstract class BaseModel implements Serializable {
 	@PreUpdate
 	public void preUpdate() {
 		this.updateDate = new Date();
-		this.updatedBy = StringUtil.isNullOrEmpty(this.updatedBy) ? "DEFAULT" : this.updatedBy;
-
+		this.updatedBy = ((UserModel)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getName();
 		this.status = StringUtil.isNullOrEmpty(this.status) ? "ACTIVE" : this.status;
 	}
 

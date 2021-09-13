@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bofigo.rowmaterial.constant.ApplicationConstants;
 import com.bofigo.rowmaterial.dao.model.DeliveryModel;
@@ -47,6 +49,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 		return prepareDeliveryServiceOutput(deliveryModel);
 	}
 
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public DeliveryServiceOutput createDelivery(DeliveryServiceInput deliveryServiceInput)
 			throws DataAlreadyExistException {

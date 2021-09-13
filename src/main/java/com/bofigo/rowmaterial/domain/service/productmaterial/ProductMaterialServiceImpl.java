@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.bofigo.rowmaterial.constant.ApplicationConstants;
 import com.bofigo.rowmaterial.dao.model.ProductMaterialModel;
+import com.bofigo.rowmaterial.dao.model.ProductModel;
+import com.bofigo.rowmaterial.dao.model.RawMaterialCategoryModel;
+import com.bofigo.rowmaterial.dao.model.RawMaterialModel;
 import com.bofigo.rowmaterial.dao.repository.ProductMaterialRepository;
 import com.bofigo.rowmaterial.dao.repository.ProductRepository;
 import com.bofigo.rowmaterial.dao.repository.RawMaterialCategoryRepository;
@@ -129,7 +132,16 @@ public class ProductMaterialServiceImpl implements ProductMaterialService {
 	public ProductMaterialModel updateProductMaterialModel(ProductMaterialModel productMaterialModel,
 			ProductMaterialServiceInput productMaterialServiceInput) {
 		int id = productMaterialModel.getId();
+		ProductModel product = productRepository.findById(productMaterialModel.getProduct().getId()).get();
+		RawMaterialModel rawMaterial = rawMaterialRepository.findById(productMaterialModel.getRawMaterial().getId())
+				.get();
+		RawMaterialCategoryModel rawMaterialCategpry = rawMaterialCategoryRepository
+				.findById(productMaterialModel.getRawMaterialCategory().getId()).get();
+
 		productMaterialModel = productMaterialMapper.mapServiceInputToModel(productMaterialServiceInput);
+		productMaterialModel.setProduct(product);
+		productMaterialModel.setRawMaterial(rawMaterial);
+		productMaterialModel.setRawMaterialCategory(rawMaterialCategpry);
 		productMaterialModel.setId(id);
 		return productMaterialRepository.save(productMaterialModel);
 	}

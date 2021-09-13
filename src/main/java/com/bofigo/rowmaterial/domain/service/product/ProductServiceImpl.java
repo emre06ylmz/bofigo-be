@@ -114,7 +114,19 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ProductServiceOutput> listAll() {
 		List<ProductModel> productModelList = productRepository.findAll();
-		return productMapper.mapModelToServiceOutputList(productModelList);
+		List<ProductServiceOutput> products = productMapper.mapModelToServiceOutputList(productModelList);;
+
+		products.forEach(product -> {
+			double cost = product.getCost_TL();
+			double tax = product.getTax();
+			double cargo = product.getCargo();
+			double taxRatio = (100 + tax) / 100;
+			product.setCost_Plus(cost * 1.05);
+			product.setCost_PlusTax(cost * 1.05 * taxRatio );
+			product.setCost_Total(cost * 1.05 * taxRatio + cargo);
+		});
+
+		return products;
 	}
 
 	private ProductModel getProductModel(Integer id) throws DataNotFoundException {
@@ -151,12 +163,14 @@ public class ProductServiceImpl implements ProductService {
 
 	public ProductModel updateProductModel(ProductModel productModel, ProductServiceInput productServiceInput) {
 		int id = productModel.getId();
+		productServiceInput.setStock(productModel.getStock());
 		productModel = productMapper.mapServiceInputToModel(productServiceInput);
 		productModel.setProductCategory(
 				productCategoryRepository.findById(productServiceInput.getProductCategoryId()).get());
 		productModel.setProductModelCode(
 				productModelCodeRepository.findById(productServiceInput.getProductModelCodeId()).get());
 		productModel.setId(id);
+
 		return productRepository.save(productModel);
 	}
 
