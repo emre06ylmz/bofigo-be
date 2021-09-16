@@ -45,6 +45,7 @@ public class AuthenticationSucessHandler extends SimpleUrlAuthenticationSuccessH
 		cookie.setSecure(true);
 		response.addCookie(cookie);
 		cookie.setDomain(BofigoBeApplication.FE_DOMAIN);
+		cookie.setMaxAge(BofigoBeApplication.TIMEOUT);
 		response.setCharacterEncoding("UTF-8");
 		logger.info("cookie is setted as: " + cookie.getValue());
 
