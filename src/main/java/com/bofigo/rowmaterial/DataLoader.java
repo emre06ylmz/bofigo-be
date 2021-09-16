@@ -44,31 +44,47 @@ public class DataLoader implements ApplicationRunner {
 
 	private void insertUsers() {
 		UserModel user1 = new UserModel();
-		user1.setUsername("h@gmail.com");
-		user1.setName("Halil");
-		user1.setSurname("Dany");
-		user1.setPassword("a");
-		user1.setRole(ApplicationConstants.ROLE_DEVELOPER);
+		user1.setUsername("eneshelvaci@bofigo.com");
+		user1.setName("enes");
+		user1.setSurname("helvaci");
+		user1.setPassword("12345");
+		user1.setRole(ApplicationConstants.ROLE_ADMIN);
 
 		UserModel user2 = new UserModel();
-		user2.setUsername("m@gmail.com");
-		user2.setName("Mahmut");
-		user2.setSurname("Alkan");
-		user2.setPassword("a");
+		user2.setUsername("emresonmez@bofigo.com");
+		user2.setName("emre");
+		user2.setSurname("sonmez");
+		user2.setPassword("12345");
 		user2.setRole(ApplicationConstants.ROLE_STANDARD);
 
 		UserModel user3 = new UserModel();
-		user3.setUsername("k@gmail.com");
-		user3.setName("Kamil");
-		user3.setSurname("Zenci");
-		user3.setPassword("a");
-		user3.setRole(ApplicationConstants.ROLE_ADMIN);
+		user3.setUsername("senemguvener@bofigo.com");
+		user3.setName("senem");
+		user3.setSurname("guvener");
+		user3.setPassword("12345");
+		user3.setRole(ApplicationConstants.ROLE_STANDARD);
+
+		UserModel user4 = new UserModel();
+		user4.setUsername("batuhankacmaz@bofigo.com");
+		user4.setName("batuhan");
+		user4.setSurname("kacmaz");
+		user4.setPassword("12345");
+		user4.setRole(ApplicationConstants.ROLE_STANDARD);
+
+		UserModel user5 = new UserModel();
+		user5.setUsername("omertalas@bofigo.com");
+		user5.setName("omer");
+		user5.setSurname("talas");
+		user5.setPassword("12345");
+		user5.setRole(ApplicationConstants.ROLE_STANDARD);
 
 		List<UserModel> list = userRepository.findAll();
 		if (list.size() < 1) {
 			userRepository.save(user1);
 			userRepository.save(user2);
 			userRepository.save(user3);
+			userRepository.save(user4);
+			userRepository.save(user5);
 		}
 
 	}

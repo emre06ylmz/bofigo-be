@@ -11,7 +11,6 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.bofigo.rowmaterial.util.StringUtil;
@@ -56,8 +55,14 @@ public abstract class BaseModel implements Serializable {
 	public void prePersist() {
 		this.createDate = new Date();
 		this.updateDate = new Date();
-		this.createdBy = ((UserModel)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getName();
-		this.updatedBy = ((UserModel)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getName();
+
+		try {
+			this.createdBy = ((UserModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+					.getName();
+			this.updatedBy = ((UserModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+					.getName();
+		} catch (Exception ex) {
+		}
 
 		this.status = StringUtil.isNullOrEmpty(this.status) ? "ACTIVE" : this.status;
 	}
@@ -65,7 +70,14 @@ public abstract class BaseModel implements Serializable {
 	@PreUpdate
 	public void preUpdate() {
 		this.updateDate = new Date();
-		this.updatedBy = ((UserModel)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getName();
+
+		try {
+			this.updatedBy = ((UserModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+					.getName();
+
+		} catch (Exception ex) {
+		}
+
 		this.status = StringUtil.isNullOrEmpty(this.status) ? "ACTIVE" : this.status;
 	}
 

@@ -163,7 +163,7 @@ public class ProductServiceImpl implements ProductService {
 
 	public ProductModel updateProductModel(ProductModel productModel, ProductServiceInput productServiceInput) {
 		int id = productModel.getId();
-		productServiceInput.setStock(productModel.getStock());
+		//productServiceInput.setStock(productModel.getStock());
 		productServiceInput.setCost_TL(productModel.getCost_TL());
 		productModel = productMapper.mapServiceInputToModel(productServiceInput);
 		productModel.setProductCategory(

@@ -12,8 +12,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableAutoConfiguration
 public class BofigoBeApplication {
 
-	public static String FE_ORIGIN = "https://bofigo-fe.herokuapp.com:443";
-	public static String FE_DOMAIN = "bofigo-be.herokuapp.com";
+	public static String FE_ORIGIN = "http://213.238.181.234:80";
+	public static String FE_DOMAIN = "213.238.181.234";
 
 	public static void main(String[] args) {
 		SpringApplication.run(BofigoBeApplication.class, args);

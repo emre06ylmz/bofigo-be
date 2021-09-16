@@ -32,8 +32,10 @@ public class AuthenticationProviderService implements AuthenticationProvider {
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = (UsernamePasswordAuthenticationToken) authentication;
 
 		//TODO
-		String username = "h@gmail.com"; //usernamePasswordAuthenticationToken.getName();
-		String password = "a"; //usernamePasswordAuthenticationToken.getCredentials().toString();
+		
+		String username = authentication.getName();
+        String password = authentication.getCredentials().toString();
+
 
 		boolean isAuthenticated = true;
 
