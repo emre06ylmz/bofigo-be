@@ -29,7 +29,7 @@ public class UnAuthorizedEntryPoint implements AuthenticationEntryPoint {
 	private Response<String> getFailureResponse() {
 		Response<String> response = new Response<>();
 		response.setStatus(ResponseStatus.FAILURE);
-		response.setMessage("yetki hatası");
+		response.setMessage("login olduktan sonra tekrar deneyiniz");
 		return response;
 	}
 
