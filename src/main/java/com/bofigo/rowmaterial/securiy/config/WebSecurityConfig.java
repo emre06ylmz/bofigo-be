@@ -103,6 +103,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 		http.headers().cacheControl();
+		
+		 http.logout()
+	        .clearAuthentication(true)
+	        .invalidateHttpSession(true);
+		
 	}
 
 }
