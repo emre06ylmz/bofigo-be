@@ -24,5 +24,7 @@ public class RawMaterialServiceOutput extends BaseServiceOutput {
 	private double stock;
 
 	private String selectedCurrency;
+	
+	private double lastPrice;
 
 }

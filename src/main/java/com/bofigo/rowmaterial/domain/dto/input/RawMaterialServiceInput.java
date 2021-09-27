@@ -28,5 +28,7 @@ public class RawMaterialServiceInput extends BaseServiceInput {
 	private double stock;
 
 	private String selectedCurrency;
+	
+	private double lastPrice;
 
 }

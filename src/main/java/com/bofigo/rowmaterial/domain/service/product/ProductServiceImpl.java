@@ -209,6 +209,9 @@ public class ProductServiceImpl implements ProductService {
 				} else if (rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_EURO)) {
 					totalCost_TL += purchasePrice * productMaterial.getAmount() * currencySettings.getEuro();
 				}
+				
+				rawMaterialModel.setLastPrice(purchasePrice);
+				rawMaterialRepository.save(rawMaterialModel);
 
 			}
 

@@ -49,6 +49,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 		// UPDATE STOCK
 		RawMaterialModel rawMaterial = rawMaterialRepository.findById(purchaseServiceInput.getRawMaterialId()).get();
 		rawMaterial.setStock(rawMaterial.getStock() + purchaseServiceInput.getAmount());
+		rawMaterial.setLastPrice(purchaseServiceInput.getPrice());
 		rawMaterialRepository.save(rawMaterial);
 
 		return preparePurchaseServiceOutput(insertedPurchaseModel);

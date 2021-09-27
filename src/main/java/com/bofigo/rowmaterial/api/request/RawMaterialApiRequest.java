@@ -34,5 +34,8 @@ public class RawMaterialApiRequest {
 	@NotNull(message = "Currency cannot be null.")
 	@Size(min = 1, max = 10, message = "Currency must be 1-10 characters long.")
 	private String selectedCurrency;
+	
+	@NotNull(message = "Last Price cannot be null.")
+	private double lastPrice;
 
 }

@@ -24,5 +24,7 @@ public class RawMaterialApiResponse extends BaseApiResponse {
 	private double stock;
 
 	private String selectedCurrency;
+	
+	private double lastPrice;
 
 }

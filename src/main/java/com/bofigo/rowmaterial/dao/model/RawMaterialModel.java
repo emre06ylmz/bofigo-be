@@ -46,5 +46,8 @@ public class RawMaterialModel extends BaseModel {
 
 	@Column(length = 10, nullable = false, name = "selectedCurrency")
 	private String selectedCurrency;
+	
+	@Column(nullable = false)
+	private double lastPrice;
 
 }
