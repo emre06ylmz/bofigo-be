@@ -15,6 +15,7 @@ public class BofigoBeApplication {
 	public static String FE_ORIGIN = "http://213.238.181.234:80";
 	public static String FE_DOMAIN = "213.238.181.234";
 	public static int TIMEOUT = 60 * 60 * 2;
+	public static boolean IS_SECURE = true;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BofigoBeApplication.class, args);
