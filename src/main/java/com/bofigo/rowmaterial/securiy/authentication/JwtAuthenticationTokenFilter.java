@@ -2,6 +2,7 @@ package com.bofigo.rowmaterial.securiy.authentication;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Queue;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +34,17 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 	private JwtUtil jwtUtil;
 	private JwtUserDetailService jwtUserDetailService;
 	private UserService userService;
+	private Queue<String> blackList = new CircularFifoQueue<String>(100);
 
 	public JwtAuthenticationTokenFilter(JwtUtil jwtUtil, JwtUserDetailService jwtUserDetailService,
 			UserService userService) {
 		this.jwtUtil = jwtUtil;
 		this.jwtUserDetailService = jwtUserDetailService;
 		this.userService = userService;
+	}
+	
+	public Queue<String> getBlackList() {
+		return blackList;
 	}
 
 	@Override
@@ -53,20 +60,26 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 			logger.info("cookie: " + cookie.getName());
 			
 			String jwtToken = cookie.getValue();
-			SecurityContext securityContext = SecurityContextHolder.getContext();
+			
+			if (!blackList.contains(jwtToken)) {
+				SecurityContext securityContext = SecurityContextHolder.getContext();
 
-			if (securityContext.getAuthentication() == null) {
-				try {
-					UserModel userModel = jwtUtil.getUserModelFromToken(jwtToken);
-					SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(userModel.getRole());
-					JWTAuthenticationToken authenticationToken = new JWTAuthenticationToken(userModel, jwtToken,
-							Arrays.asList(simpleGrantedAuthority));
-					securityContext.setAuthentication(authenticationToken);
-					logger.info("auth is setted.");
-				} catch (Exception e) {
-					// TODO: handle exception
+				if (securityContext.getAuthentication() == null) {
+					try {
+						UserModel userModel = jwtUtil.getUserModelFromToken(jwtToken);
+						SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(userModel.getRole());
+						JWTAuthenticationToken authenticationToken = new JWTAuthenticationToken(userModel, jwtToken,
+								Arrays.asList(simpleGrantedAuthority));
+						securityContext.setAuthentication(authenticationToken);
+						logger.info("auth is setted.");
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
 				}
+			}else {
+				logger.info("jwtToken is in blacklist");
 			}
+			
 		}else {
 			logger.info("cookie is null");
 		}
