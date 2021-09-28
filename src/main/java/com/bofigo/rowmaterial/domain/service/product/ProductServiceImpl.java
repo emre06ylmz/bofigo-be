@@ -105,7 +105,9 @@ public class ProductServiceImpl implements ProductService {
 		try {
 			productRepository.deleteById(id);
 		} catch (Exception e) {
-			throw new OperationNotValidException("Silme işlemi gerçekleştirilemedi");
+			e.printStackTrace();
+			throw new OperationNotValidException(
+					"Silme işlemi gerçekleştirilemedi, ürün-hammade, üretim, ve sevkiyat girişlerini kontrol ediniz.");
 		}
 
 		return productMapper.mapModelToServiceOutput(productModel);
@@ -114,7 +116,8 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ProductServiceOutput> listAll() {
 		List<ProductModel> productModelList = productRepository.findAll();
-		List<ProductServiceOutput> products = productMapper.mapModelToServiceOutputList(productModelList);;
+		List<ProductServiceOutput> products = productMapper.mapModelToServiceOutputList(productModelList);
+		;
 
 		products.forEach(product -> {
 			double cost = product.getCost_TL();
@@ -122,7 +125,7 @@ public class ProductServiceImpl implements ProductService {
 			double cargo = product.getCargo();
 			double taxRatio = (100 + tax) / 100;
 			product.setCost_Plus(cost * 1.05);
-			product.setCost_PlusTax(cost * 1.05 * taxRatio );
+			product.setCost_PlusTax(cost * 1.05 * taxRatio);
 			product.setCost_Total(cost * 1.05 * taxRatio + cargo);
 		});
 
@@ -163,7 +166,7 @@ public class ProductServiceImpl implements ProductService {
 
 	public ProductModel updateProductModel(ProductModel productModel, ProductServiceInput productServiceInput) {
 		int id = productModel.getId();
-		//productServiceInput.setStock(productModel.getStock());
+		// productServiceInput.setStock(productModel.getStock());
 		productServiceInput.setCost_TL(productModel.getCost_TL());
 		productModel = productMapper.mapServiceInputToModel(productServiceInput);
 		productModel.setProductCategory(
@@ -209,7 +212,7 @@ public class ProductServiceImpl implements ProductService {
 				} else if (rawMaterialModel.getSelectedCurrency().equals(CurrencyUtil.CURRENCY_EURO)) {
 					totalCost_TL += purchasePrice * productMaterial.getAmount() * currencySettings.getEuro();
 				}
-				
+
 				rawMaterialModel.setLastPrice(purchasePrice);
 				rawMaterialRepository.save(rawMaterialModel);
 
