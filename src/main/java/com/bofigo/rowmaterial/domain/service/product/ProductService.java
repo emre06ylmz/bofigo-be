@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bofigo.rowmaterial.domain.dto.input.ProductServiceInput;
 import com.bofigo.rowmaterial.domain.dto.output.ProductServiceOutput;
+import com.bofigo.rowmaterial.domain.dto.output.RawMaterialServiceOutput;
 import com.bofigo.rowmaterial.domain.service.Service;
 import com.bofigo.rowmaterial.exception.DataAlreadyExistException;
 import com.bofigo.rowmaterial.exception.DataNotFoundException;
@@ -26,4 +27,6 @@ public interface ProductService extends Service {
 	List<ProductServiceOutput> listAll();
 
 	void calculateProductCosts() throws OperationNotValidException;
+
+	List<ProductServiceOutput> listByCategoryId(int productCategoryId);
 }

@@ -246,4 +246,10 @@ public class ProductServiceImpl implements ProductService {
 		return purchasePrice;
 	}
 
+	@Override
+	public List<ProductServiceOutput> listByCategoryId(int productCategoryId) {
+		List<ProductModel> productModelList = productRepository.listByCategoryId(productCategoryId);
+		return productMapper.mapModelToServiceOutputList(productModelList);
+	}
+
 }

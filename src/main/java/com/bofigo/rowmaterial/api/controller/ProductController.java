@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bofigo.rowmaterial.api.request.ProductApiRequest;
 import com.bofigo.rowmaterial.api.response.ProductApiResponse;
+import com.bofigo.rowmaterial.api.response.RawMaterialApiResponse;
 import com.bofigo.rowmaterial.api.response.Response;
 import com.bofigo.rowmaterial.domain.dto.input.ProductServiceInput;
 import com.bofigo.rowmaterial.domain.dto.output.ProductServiceOutput;
+import com.bofigo.rowmaterial.domain.dto.output.RawMaterialServiceOutput;
 import com.bofigo.rowmaterial.domain.service.product.ProductService;
 import com.bofigo.rowmaterial.domain.service.productmaterial.ProductMaterialService;
 import com.bofigo.rowmaterial.domain.service.purchase.PurchaseService;
@@ -69,6 +71,16 @@ public class ProductController {
 		return new Response<>("OK");
 	}
 
+	@GetMapping(path = "/listByCategoryId/{id}")
+	public Response<List<ProductApiResponse>> listProductByRawMaterialCategoryId(
+			@PathVariable("id") Integer productCategoryId) throws DataNotFoundException {
+		List<ProductServiceOutput> productServiceOutputList = productService
+				.listByCategoryId(productCategoryId);
+		List<ProductApiResponse> productApiResponseList = productMapper
+				.mapServiceOutputToApiResponseList(productServiceOutputList);
+		return new Response<>(productApiResponseList);
+	}
+	
 	@GetMapping(path = "/{id}")
 	public Response<ProductApiResponse> getProduct(@PathVariable("id") Integer id) throws DataNotFoundException {
 		ProductServiceOutput productServiceOutput = productService.getProductById(id);
