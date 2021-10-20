@@ -29,6 +29,8 @@ public class ProductServiceInput extends BaseServiceInput {
 
 	private double cost_Total;
 
+	private double sale;
+	
 	private double cargo;
 	
 	private double tax;

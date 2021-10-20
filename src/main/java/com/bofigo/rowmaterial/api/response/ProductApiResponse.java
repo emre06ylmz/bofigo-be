@@ -26,6 +26,8 @@ public class ProductApiResponse extends BaseApiResponse {
 	
 	private double cost_PlusTax;
 	
+	private double sale;
+	
 	private double cost_Total;
 
 	private double cargo;

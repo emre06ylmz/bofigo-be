@@ -33,6 +33,9 @@ public class ProductModel extends BaseModel {
 	private double cost_Total;
 
 	@Column(nullable = false)
+	private double sale;
+	
+	@Column(nullable = false)
 	private double cargo;
 	
 	@Column(nullable = false)

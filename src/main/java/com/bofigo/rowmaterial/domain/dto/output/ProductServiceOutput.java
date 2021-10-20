@@ -25,6 +25,8 @@ public class ProductServiceOutput extends BaseServiceOutput {
 	private double cost_Plus;
 	
 	private double cost_PlusTax;
+
+	private double sale;
 	
 	private double cost_Total;
 	
