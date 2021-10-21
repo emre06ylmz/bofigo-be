@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bofigo.rowmaterial.api.request.ProductApiRequest;
+import com.bofigo.rowmaterial.api.request.ProductSaleApiRequest;
 import com.bofigo.rowmaterial.api.response.ProductApiResponse;
 import com.bofigo.rowmaterial.api.response.RawMaterialApiResponse;
 import com.bofigo.rowmaterial.api.response.Response;
@@ -74,13 +75,12 @@ public class ProductController {
 	@GetMapping(path = "/listByCategoryId/{id}")
 	public Response<List<ProductApiResponse>> listProductByRawMaterialCategoryId(
 			@PathVariable("id") Integer productCategoryId) throws DataNotFoundException {
-		List<ProductServiceOutput> productServiceOutputList = productService
-				.listByCategoryId(productCategoryId);
+		List<ProductServiceOutput> productServiceOutputList = productService.listByCategoryId(productCategoryId);
 		List<ProductApiResponse> productApiResponseList = productMapper
 				.mapServiceOutputToApiResponseList(productServiceOutputList);
 		return new Response<>(productApiResponseList);
 	}
-	
+
 	@GetMapping(path = "/{id}")
 	public Response<ProductApiResponse> getProduct(@PathVariable("id") Integer id) throws DataNotFoundException {
 		ProductServiceOutput productServiceOutput = productService.getProductById(id);
@@ -110,6 +110,15 @@ public class ProductController {
 
 		ProductApiResponse productApiResponse = productMapper.mapServiceOutputToApiResponse(productServiceOutput);
 
+		return new Response<>(productApiResponse);
+	}
+
+	@PutMapping(path = "/sale/{id}")
+	public Response<ProductApiResponse> updateProduct(@PathVariable("id") Integer id,
+			@RequestBody @Validated ProductSaleApiRequest productApiRequest)
+			throws DataNotFoundException, DataAlreadyExistException {
+		ProductServiceOutput productServiceOutput = productService.updateProductSale(id, productApiRequest.getSale());
+		ProductApiResponse productApiResponse = productMapper.mapServiceOutputToApiResponse(productServiceOutput);
 		return new Response<>(productApiResponse);
 	}
 

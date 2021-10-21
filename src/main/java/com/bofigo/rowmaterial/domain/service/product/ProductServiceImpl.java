@@ -99,6 +99,20 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public ProductServiceOutput updateProductSale(Integer id, double sale) throws DataNotFoundException {
+		Optional<ProductModel> productModelOptional = productRepository.findById(id);
+
+		if (productModelOptional.isPresent()) {
+			ProductModel productModel = productModelOptional.get();
+			productModel.setSale(sale);
+			ProductModel updatedProductModel = productRepository.save(productModel);
+			return prepareProductServiceOutput(updatedProductModel);
+		}
+
+		throw new DataNotFoundException("bulunamadı");
+	}
+
+	@Override
 	public ProductServiceOutput deleteProduct(Integer id) throws DataNotFoundException, OperationNotValidException {
 		ProductModel productModel = getProductModel(id);
 
