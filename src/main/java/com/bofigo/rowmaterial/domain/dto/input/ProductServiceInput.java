@@ -25,6 +25,8 @@ public class ProductServiceInput extends BaseServiceInput {
 
 	private String explanation;
 
+	private String image;
+	
 	private double cost_TL;
 
 	private double cost_Total;

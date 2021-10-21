@@ -20,6 +20,8 @@ public class ProductServiceOutput extends BaseServiceOutput {
 
 	private String explanation;
 
+	private String image;
+	
 	private double cost_TL;
 
 	private double cost_Plus;

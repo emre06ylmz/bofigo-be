@@ -24,6 +24,9 @@ public class ProductApiRequest {
 	@Size(min = 3, max = 50, message = "Explanation must be 3-50 characters long.")
 	private String explanation;
 
+	@Size(min = 0, max = 500, message = "Image must be 0-50 characters long.")
+	private String image;
+	
 	@NotNull(message = "Cost cannot be null.")
 	private double cost_TL;
 

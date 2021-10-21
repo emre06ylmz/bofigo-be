@@ -26,6 +26,9 @@ public class ProductModel extends BaseModel {
 	@Column(length = 100, nullable = false)
 	private String explanation;
 
+	@Column(length = 500, nullable = false)
+	private String image;
+	
 	@Column(nullable = false)
 	private double cost_TL;
 
